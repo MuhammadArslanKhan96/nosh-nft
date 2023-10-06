@@ -1,5 +1,6 @@
 "use client";
 import Label from "@/components/Label/Label";
+import { UserContext } from "@/context/userContext";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
@@ -7,14 +8,16 @@ import axios from "axios";
 import { Route } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 const CreateCollectionPage = ({}) => {
   const homeRouter = useRouter();
+  const userContext = useContext(UserContext);
+  if (!userContext) return <></>;
+  const userId = userContext.user.userId;
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
-  const userId = localStorage.getItem("userId");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
