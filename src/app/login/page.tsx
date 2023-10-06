@@ -47,7 +47,9 @@ const PageLogin = () => {
           username: response.data.result.name,
           email: response.data.result.email,
         });
-        Cookies.set("loginToken", response.data.result.token);
+        Cookies.set("loginToken", response.data.result.token, {
+          expires: 1 / 24,
+        });
         toast.success(response.data.message);
         homeRouter.push("/");
       })

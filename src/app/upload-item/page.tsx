@@ -36,7 +36,7 @@ interface collection {
   description: string;
 }
 
-const PageUploadItem = ({}) => {
+const PageUploadItem = () => {
   const homeRouter = useRouter();
   const userContext = useContext(UserContext);
   if (!userContext) {
@@ -525,5 +525,4 @@ function CheckIcon(props: any) {
     </svg>
   );
 }
-
 export default dynamic(() => Promise.resolve(PageUploadItem), { ssr: false });
