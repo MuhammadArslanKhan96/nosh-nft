@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { UserContext } from "@/context/userContext";
+import Loading from "../loading";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -54,6 +55,7 @@ const PageUploadItem = ({}) => {
   const userId = userContext?.user.userId;
   const loginToken = localStorage.getItem("loginToken");
   const formData = new FormData();
+  const [isLoadingCustom, setIsLoadingCustom] = useState(true);
   const [collections, setCollections] = useState<collection[]>([]);
   const [collectionRows, setCollectionRows] = useState<number | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -74,6 +76,7 @@ const PageUploadItem = ({}) => {
     console.log(userContext.user);
   }, [userContext.user]);
   useEffect(() => {
+    setIsLoadingCustom(true);
     axios
       .get(`${apiBaseUrl}/collection/get/${userId}`, {
         headers: {
@@ -85,11 +88,17 @@ const PageUploadItem = ({}) => {
         setCollectionRows(res.data.result.length);
         setCollections(res.data.result);
         console.log(res.data.result.length);
+        setIsLoadingCustom(false);
       })
       .catch((err) => {
         console.log(err);
+        setIsLoadingCustom(false);
       });
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
