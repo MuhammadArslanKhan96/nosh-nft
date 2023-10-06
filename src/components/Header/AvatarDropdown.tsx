@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Route } from "next";
 import Link from "next/link";
 import { UserContext } from "@/context/userContext";
+import Cookies from "js-cookie";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export default function AvatarDropdown() {
@@ -38,6 +39,7 @@ export default function AvatarDropdown() {
       username: null,
       email: null,
     });
+    Cookies.remove("loginToken");
     loginRouter.push("/login");
   };
 

@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { UserContext } from "@/context/userContext";
 import { useContext } from "react";
+import Cookies from "js-cookie";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const loginSchema = z.object({
@@ -46,6 +47,7 @@ const PageLogin = () => {
           username: response.data.result.name,
           email: response.data.result.email,
         });
+        Cookies.set("loginToken", response.data.result.token);
         toast.success(response.data.message);
         homeRouter.push("/");
       })
