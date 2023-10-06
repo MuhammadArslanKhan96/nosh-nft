@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useState, useEffect, ReactNode } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 interface User {
@@ -21,18 +22,13 @@ interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  let token: string | null;
-  token = "";
+  const token = Cookies.get("loginToken");
   const [user, setUser] = useState<User>({
     userId: null,
     username: null,
     email: null,
   });
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    token = localStorage.getItem("loginToken");
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
