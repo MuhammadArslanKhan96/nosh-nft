@@ -96,7 +96,7 @@ const PageUploadItem = ({}) => {
       });
   }, []);
 
-  if (isLoading) {
+  if (isLoadingCustom) {
     return <Loading />;
   }
 
