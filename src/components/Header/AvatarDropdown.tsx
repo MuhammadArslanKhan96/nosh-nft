@@ -31,7 +31,13 @@ export default function AvatarDropdown() {
       .catch((err) => console.error(err));
   };
   const pushLogin = async () => {
+    if (!userContext) return <></>;
     localStorage.removeItem("loginToken");
+    userContext.setUser({
+      userId: null,
+      username: null,
+      email: null,
+    });
     loginRouter.push("/login");
   };
 
