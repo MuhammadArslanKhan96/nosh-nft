@@ -58,7 +58,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">
             <div className="w-32 lg:w-44 flex-shrink-0 mt-12 sm:mt-0">
               <NcImage
-                src={nftsImgs[2]}
+                src={!user.imageUrl ? nftsImgs[2] : user.imageUrl}
                 containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden z-0 relative"
                 fill
                 sizes="200px"

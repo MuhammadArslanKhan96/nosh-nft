@@ -38,15 +38,14 @@ const PageLogin = () => {
     await axios
       .post(`${apiBaseUrl}/user/login`, { email, password })
       .then((response) => {
+        Cookies.set("loginToken", response.data.result.token, {
+          expires: 1 / 24,
+        });
         console.log(response.data);
-        localStorage.setItem("loginToken", response.data.result.token);
         setUser({
           id: response.data.result.userId,
           name: response.data.result.name,
           email: response.data.result.email,
-        });
-        Cookies.set("loginToken", response.data.result.token, {
-          expires: 1 / 24,
         });
         toast.success(response.data.message);
         homeRouter.push("/");

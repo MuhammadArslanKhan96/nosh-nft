@@ -1,10 +1,10 @@
 import { nftsImgs } from "@/contains/fakeData";
-import { FC, useContext } from "react";
+import { FC } from "react";
 import Avatar from "@/shared/Avatar/Avatar";
 import NcImage from "@/shared/NcImage/NcImage";
 import VerifyIcon from "./VerifyIcon";
 import Link from "next/link";
-import { UserContext } from "@/context/userContext";
+import { useUserContext } from "@/hooks/useUserContext";
 
 export interface CollectionCardProps {
   className?: string;
@@ -19,8 +19,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
   name,
   description,
 }) => {
-  const userContext = useContext(UserContext);
-  const username = userContext?.user.name;
+  const { user } = useUserContext();
   return (
     <div
       className={`CollectionCard relative p-4 rounded-2xl overflow-hidden h-[410px] flex flex-col group ${className}`}
@@ -35,11 +34,15 @@ const CollectionCard: FC<CollectionCardProps> = ({
       <div className="relative mt-auto">
         {/* AUTHOR */}
         <div className="flex items-center">
-          <Avatar sizeClass="h-6 w-6" containerClassName="ring-2 ring-white" />
+          <Avatar
+            imgUrl={user.imageUrl ? user.imageUrl : ""}
+            sizeClass="h-6 w-6"
+            containerClassName="ring-2 ring-white"
+          />
           <div className="ml-2 text-xs text-white">
             <span className="font-normal">by</span>
             {` `}
-            <span className="font-medium">{username}</span>
+            <span className="font-medium">{user.name}</span>
           </div>
           <VerifyIcon iconClass="w-4 h-4" />
         </div>

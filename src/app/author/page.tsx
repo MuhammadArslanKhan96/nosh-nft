@@ -1,10 +1,10 @@
 "use client";
 import CardNFT from "@/components/CardNFT";
-import { UserContext } from "@/context/userContext";
+import { useUserContext } from "@/hooks/useUserContext";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Pagination from "@/shared/Pagination/Pagination";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useLayoutEffect } from "react";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
@@ -18,13 +18,12 @@ interface nft {
 }
 
 const page = () => {
-  const userContext = useContext(UserContext);
-  const userId = userContext?.user.id;
+  const { user } = useUserContext();
   const [nft, setNft] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
   useLayoutEffect(() => {
     axios
-      .get(`${apiBaseUrl}/nfts/get/${userId}`)
+      .get(`${apiBaseUrl}/nfts/get/${user.id}`)
       .then((response) => {
         console.log(response.data.result);
         console.log(response.data.result.length);

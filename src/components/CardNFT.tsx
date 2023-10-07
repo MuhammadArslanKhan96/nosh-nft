@@ -88,7 +88,7 @@ const CardNFT: FC<CardNFTProps> = ({
           <Image
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
             fill
-            sizes=""
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             src={imageUrl as string}
             alt="NFT Image"
           />

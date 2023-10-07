@@ -14,12 +14,12 @@ export default function AvatarDropdown() {
   const { user, setUser } = useUserContext();
   const loginRouter = useRouter();
   const handleSubmit = async () => {
-    const userToken = localStorage.getItem("loginToken");
+    const token = Cookies.get("loginToken");
     await axios
       .delete(`${apiBaseUrl}/user/delete-user/${user.id}`, {
         headers: {
           Accept: "application/json",
-          Authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
@@ -29,13 +29,13 @@ export default function AvatarDropdown() {
       .catch((err) => console.error(err));
   };
   const pushLogin = async () => {
-    localStorage.removeItem("loginToken");
+    Cookies.remove("loginToken");
     setUser({
       id: null,
       name: null,
       email: null,
     });
-    Cookies.remove("loginToken");
+
     loginRouter.push("/login");
   };
 

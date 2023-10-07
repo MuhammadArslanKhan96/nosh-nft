@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Loading from "../loading";
 import { useUserContext } from "@/hooks/useUserContext";
+import Cookies from "js-cookie";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -39,17 +40,7 @@ interface collection {
 const PageUploadItem = () => {
   const homeRouter = useRouter();
   const { user } = useUserContext();
-  // useLayoutEffect(() => {
-  //   if (
-  //     userContext.user.email == null &&
-  //     userContext.user.username == null &&
-  //     userContext.user.userId == null
-  //   ) {
-  //     homeRouter.replace("/login");
-  //     toast.error("Log In to perform this action");
-  //   }
-  // }, []);
-  const loginToken = localStorage.getItem("loginToken");
+  const token = Cookies.get("loginToken");
   const formData = new FormData();
   const [isLoadingCustom, setIsLoadingCustom] = useState(true);
   const [collections, setCollections] = useState<collection[]>([]);
@@ -148,7 +139,7 @@ const PageUploadItem = () => {
         {
           headers: {
             Accept: "application/json",
-            Authorization: `Bearer ${loginToken}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       )
