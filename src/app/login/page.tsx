@@ -43,8 +43,8 @@ const PageLogin = () => {
         console.log(response.data);
         localStorage.setItem("loginToken", response.data.result.token);
         userContext.setUser({
-          userId: response.data.result.userId,
-          username: response.data.result.name,
+          id: response.data.result.userId,
+          name: response.data.result.name,
           email: response.data.result.email,
         });
         Cookies.set("loginToken", response.data.result.token, {

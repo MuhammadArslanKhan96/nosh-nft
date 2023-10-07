@@ -19,7 +19,7 @@ interface nft {
 
 const page = () => {
   const userContext = useContext(UserContext);
-  const userId = userContext?.user.userId;
+  const userId = userContext?.user.id;
   const [nft, setNft] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
   useLayoutEffect(() => {

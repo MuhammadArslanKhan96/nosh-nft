@@ -8,6 +8,7 @@ import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import Image from "next/image";
+import { useUserContext } from "@/hooks/useUserContext";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export interface CardNFTProps {
@@ -31,6 +32,8 @@ const CardNFT: FC<CardNFTProps> = ({
   price,
   currentOwner,
 }) => {
+  const { user } = useUserContext();
+  const userId = user.id;
   const [itemType, setItemType] = useState<"video" | "audio" | "default">(
     "default"
   );
@@ -66,7 +69,6 @@ const CardNFT: FC<CardNFTProps> = ({
     );
   };
   const handleSubmit = async () => {
-    const userId = localStorage.getItem("userId");
     await axios
       .put(`${apiBaseUrl}/nfts/update/${userId}`, {
         id: id,
@@ -122,7 +124,7 @@ const CardNFT: FC<CardNFTProps> = ({
             href={"/nft-detail" as Route}
             className="absolute inset-0"
           ></Link> */}
-          {localStorage.getItem("userId") == currentOwner ? (
+          {userId == currentOwner ? (
             <> </>
           ) : (
             <>

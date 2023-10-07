@@ -20,7 +20,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
   description,
 }) => {
   const userContext = useContext(UserContext);
-  const username = userContext?.user.username;
+  const username = userContext?.user.name;
   return (
     <div
       className={`CollectionCard relative p-4 rounded-2xl overflow-hidden h-[410px] flex flex-col group ${className}`}

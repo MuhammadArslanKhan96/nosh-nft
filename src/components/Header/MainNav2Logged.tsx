@@ -23,7 +23,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
 
   useEffect(() => {
     console.log(userContext.user);
-  }, [router, userContext, userContext.user, userContext.user.userId]);
+  }, [router, userContext, userContext.user, userContext.user.id]);
 
   // useLayoutEffect(() => {
   //   if (user !== false) {
@@ -90,7 +90,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
               >
                 Create
               </ButtonPrimary>
-              {userContext.user.userId ? (
+              {userContext.user.id ? (
                 <></>
               ) : (
                 <>
@@ -105,7 +105,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
               )}
 
               <div></div>
-              {userContext.user.userId ? (
+              {userContext.user.id ? (
                 <>
                   <AvatarDropdown />
                 </>
@@ -127,7 +127,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
               >
                 Create
               </ButtonPrimary>
-              {userContext.user.userId ? (
+              {userContext.user.id ? (
                 <>
                   <AvatarDropdown />
                 </>

@@ -24,7 +24,7 @@ const AccountPage = ({}) => {
   let imageUrl: string;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   if (!userContext) <></>;
-  const userId = userContext?.user.userId;
+  const userId = userContext?.user.id;
   const {
     register,
     handleSubmit,
@@ -143,7 +143,7 @@ const AccountPage = ({}) => {
                   <Input
                     {...register("username")}
                     className="mt-1.5"
-                    defaultValue={userContext?.user.username as string}
+                    defaultValue={userContext?.user.name as string}
                   />
                 </div>
 

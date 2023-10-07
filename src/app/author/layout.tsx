@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useContext } from "react";
+import { ReactNode } from "react";
 import authorBanner from "@/images/nfts/authorBanner.png";
 import NcImage from "@/shared/NcImage/NcImage";
 import { nftsImgs } from "@/contains/fakeData";
@@ -12,11 +12,10 @@ import ArchiveFilterListBox from "@/components/ArchiveFilterListBox";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Route } from "next";
-import { UserContext } from "@/context/userContext";
+import { useUserContext } from "@/hooks/useUserContext";
 
 const Layout = ({ children }: { children: ReactNode }) => {
-  const userContext = useContext(UserContext);
-  if (!userContext) <></>;
+  const { user } = useUserContext();
   let navs: { name: string; href: Route }[] = [
     {
       name: "Collectibles",
@@ -68,7 +67,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             <div className="pt-5 md:pt-1 md:ml-6 xl:ml-14 flex-grow">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-flex items-center text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                  <span>{userContext?.user.username}</span>
+                  <span>{user.name}</span>
                   <VerifyIcon
                     className="ml-2"
                     iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
@@ -76,7 +75,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 </h2>
                 <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
                   <span className="text-neutral-700 dark:text-neutral-300">
-                    {userContext?.user.email}
+                    {user.email}
                   </span>
                   <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <path
@@ -97,8 +96,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 </div>
 
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  Punk #4786 / An OG Cryptopunk Collector, hoarder of NFTs.
-                  Contributing to @ether_cards, an NFT Monetization Platform.
+                  {user.bio}
                 </span>
               </div>
               <div className="mt-4 ">

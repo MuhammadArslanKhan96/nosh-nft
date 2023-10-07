@@ -1,9 +1,9 @@
 "use client";
 import CardNFT from "@/components/CardNFT";
-import { UserContext } from "@/context/userContext";
+import { useUserContext } from "@/hooks/useUserContext";
 import axios from "axios";
 import dynamic from "next/dynamic";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 interface nft {
   id: number;
@@ -14,8 +14,8 @@ interface nft {
   current_owner: string;
 }
 const MyNftPage = ({}) => {
-  const userContext = useContext(UserContext);
-  const userId = userContext?.user.userId;
+  const { user } = useUserContext();
+  const userId = user.id;
   const [nft, setNft] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
   useEffect(() => {

@@ -14,7 +14,7 @@ interface nft {
 }
 const MyCollectionPage = ({}) => {
   const userContext = useContext(UserContext);
-  const userId = userContext?.user.userId;
+  const userId = userContext?.user.id;
   const [collections, setCollections] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
   useEffect(() => {

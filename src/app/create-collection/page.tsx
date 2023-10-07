@@ -15,7 +15,7 @@ const CreateCollectionPage = ({}) => {
   const homeRouter = useRouter();
   const userContext = useContext(UserContext);
   if (!userContext) return <></>;
-  const userId = userContext.user.userId;
+  const userId = userContext.user.id;
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

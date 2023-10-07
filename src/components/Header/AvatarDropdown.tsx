@@ -9,6 +9,7 @@ import { Route } from "next";
 import Link from "next/link";
 import { UserContext } from "@/context/userContext";
 import Cookies from "js-cookie";
+import { useUserContext } from "@/hooks/useUserContext";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export default function AvatarDropdown() {
@@ -17,7 +18,8 @@ export default function AvatarDropdown() {
   const loginRouter = useRouter();
   const handleSubmit = async () => {
     const userToken = localStorage.getItem("loginToken");
-    const userId = localStorage.getItem("userId");
+    const { user } = useUserContext();
+    const userId = user.id;
     await axios
       .delete(`${apiBaseUrl}/user/delete-user/${userId}`, {
         headers: {
@@ -35,8 +37,8 @@ export default function AvatarDropdown() {
     if (!userContext) return <></>;
     localStorage.removeItem("loginToken");
     userContext.setUser({
-      userId: null,
-      username: null,
+      id: null,
+      name: null,
       email: null,
     });
     Cookies.remove("loginToken");
@@ -73,7 +75,7 @@ export default function AvatarDropdown() {
 
                       <div className="flex-grow">
                         <h4 className="font-semibold">
-                          {userContext?.user.username}
+                          {userContext?.user.name}
                         </h4>
                         <p className="text-xs mt-0.5">
                           {userContext?.user.email}

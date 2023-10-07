@@ -5,9 +5,15 @@ import Cookies from "js-cookie";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 interface User {
-  userId: string | null;
-  username: string | null;
+  id: string | null;
+  name: string | null;
   email: string | null;
+  bio?: string | null;
+  website?: string | null;
+  facebook?: string | null;
+  twitter?: string | null;
+  telegram?: string | null;
+  imageUrl?: string | null;
 }
 
 interface UserContextProps {
@@ -24,9 +30,15 @@ interface UserProviderProps {
 export function UserProvider({ children }: UserProviderProps) {
   const token = Cookies.get("loginToken");
   const [user, setUser] = useState<User>({
-    userId: null,
-    username: null,
+    id: null,
+    name: null,
     email: null,
+    bio: null,
+    website: null,
+    facebook: null,
+    twitter: null,
+    telegram: null,
+    imageUrl: null,
   });
   const [loading, setLoading] = useState(true);
 
@@ -43,9 +55,15 @@ export function UserProvider({ children }: UserProviderProps) {
             console.log(response.data.id);
             console.log(response.data.name);
             setUser({
-              userId: response.data.id,
-              username: response.data.name,
+              id: response.data.id,
+              name: response.data.name,
               email: response.data.email,
+              bio: response.data?.bio,
+              website: response.data?.website,
+              facebook: response.data?.facebook,
+              twitter: response.data?.twitter,
+              telegram: response.data?.telegram,
+              imageUrl: response.data?.image_url,
             });
             setLoading(false);
           });

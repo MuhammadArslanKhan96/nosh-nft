@@ -52,7 +52,7 @@ const PageUploadItem = () => {
   //     toast.error("Log In to perform this action");
   //   }
   // }, []);
-  const userId = userContext?.user.userId;
+  const userId = userContext?.user.id;
   const loginToken = localStorage.getItem("loginToken");
   const formData = new FormData();
   const [isLoadingCustom, setIsLoadingCustom] = useState(true);
