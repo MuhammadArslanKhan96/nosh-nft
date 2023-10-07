@@ -5,8 +5,8 @@ import "rc-slider/assets/index.css";
 import Footer from "@/shared/Footer/Footer";
 import MusicPlayer from "@/components/MusicPlayer/MusicPlayer";
 import SiteHeader from "@/app/SiteHeader";
-import ToastContainerWrapper from "./toastContainer";
 import { UserProvider } from "@/context/userContext";
+import { Toaster } from "sonner";
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
@@ -31,7 +31,15 @@ export default function RootLayout({
           {children}
           <Footer />
           <MusicPlayer />
-          <ToastContainerWrapper />
+          {/* <ToastContainerWrapper /> */}
+          <Toaster
+            position="bottom-left"
+            invert
+            closeButton
+            toastOptions={{
+              style: { background: "#1e2a42" },
+            }}
+          />
         </UserProvider>
       </body>
     </html>

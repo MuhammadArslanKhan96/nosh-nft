@@ -8,7 +8,7 @@ import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import ImageAvatar from "../../images/avatars/ImageAvatar.png";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/hooks/useUserContext";

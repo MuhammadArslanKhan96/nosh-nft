@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import { Route } from "next";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

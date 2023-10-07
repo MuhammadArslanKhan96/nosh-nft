@@ -1,3 +1,4 @@
+"use client";
 import ItemTypeVideoIcon from "@/components/ItemTypeVideoIcon";
 import LikeButton from "@/components/LikeButton";
 import { nftsLargeImgs, personNames } from "@/contains/fakeData";
@@ -11,8 +12,10 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Link from "next/link";
 import { Route } from "next";
 import AccordionInfo from "@/components/AccordionInfo";
+import { useUserContext } from "@/hooks/useUserContext";
 
 const NftDetailPage = ({}) => {
+  const { user } = useUserContext();
   const renderSection1 = () => {
     return (
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
@@ -27,7 +30,7 @@ const NftDetailPage = ({}) => {
             <LikeSaveBtns />
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-            BearX #3636
+            {user.name}
           </h2>
 
           {/* ---------- 4 ----------  */}

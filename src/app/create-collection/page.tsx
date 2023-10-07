@@ -9,7 +9,8 @@ import { Route } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
+
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 const CreateCollectionPage = ({}) => {
   const homeRouter = useRouter();

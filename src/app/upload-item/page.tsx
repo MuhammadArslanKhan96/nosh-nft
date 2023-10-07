@@ -14,7 +14,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import Loading from "../loading";
 import { useUserContext } from "@/hooks/useUserContext";
 import Cookies from "js-cookie";
@@ -250,10 +250,10 @@ const PageUploadItem = () => {
                     className="!rounded-l-none"
                     placeholder="abc.com"
                   />
-                  {errors.nftUrl && (
-                    <p className="text-sm text-red-500 pt-3">{`${errors.nftUrl.message}`}</p>
-                  )}
                 </div>
+                {errors.nftUrl && (
+                  <p className="text-sm text-red-500 pt-3">{`${errors.nftUrl.message}`}</p>
+                )}
               </FormItem>
 
               {/* ---- */}
@@ -480,10 +480,7 @@ const PageUploadItem = () => {
                   Upload item
                 </ButtonPrimary>
 
-                <ButtonSecondary
-                  href={"/nft-detail" as Route}
-                  className="flex-1"
-                >
+                <ButtonSecondary href="/nft-detail" className="flex-1">
                   Preview item
                 </ButtonSecondary>
               </div>
