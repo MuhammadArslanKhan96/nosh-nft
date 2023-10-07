@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Label from "@/components/Label/Label";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
@@ -15,8 +15,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { UserContext } from "@/context/userContext";
 import Loading from "../loading";
+import { useUserContext } from "@/hooks/useUserContext";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -38,10 +38,7 @@ interface collection {
 
 const PageUploadItem = () => {
   const homeRouter = useRouter();
-  const userContext = useContext(UserContext);
-  if (!userContext) {
-    return <></>;
-  }
+  const { user } = useUserContext();
   // useLayoutEffect(() => {
   //   if (
   //     userContext.user.email == null &&
@@ -52,7 +49,6 @@ const PageUploadItem = () => {
   //     toast.error("Log In to perform this action");
   //   }
   // }, []);
-  const userId = userContext?.user.id;
   const loginToken = localStorage.getItem("loginToken");
   const formData = new FormData();
   const [isLoadingCustom, setIsLoadingCustom] = useState(true);
@@ -73,12 +69,12 @@ const PageUploadItem = () => {
     resolver: zodResolver(nftSchema),
   });
   useEffect(() => {
-    console.log(userContext.user);
-  }, [userContext.user]);
+    console.log(user.id);
+  }, [user.id]);
   useEffect(() => {
     setIsLoadingCustom(true);
     axios
-      .get(`${apiBaseUrl}/collection/get/${userId}`, {
+      .get(`${apiBaseUrl}/collection/get/${user.id}`, {
         headers: {
           Accept: "application/json",
         },
@@ -133,7 +129,7 @@ const PageUploadItem = () => {
       });
     await axios
       .post(
-        `${apiBaseUrl}/nfts/create/${userId}`,
+        `${apiBaseUrl}/nfts/create/${user.id}`,
         {
           name: data.name,
           nftUrl: data.nftUrl,
@@ -145,8 +141,8 @@ const PageUploadItem = () => {
           properties: data.properties,
           price: data.price,
           onSale: true,
-          primaryOwner: userId,
-          currentOwner: userId,
+          primaryOwner: user.id,
+          currentOwner: user.id,
           collectionId: selectedCollectionId,
         },
         {

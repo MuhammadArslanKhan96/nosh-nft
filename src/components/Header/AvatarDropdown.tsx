@@ -1,27 +1,22 @@
 "use client";
 import axios from "axios";
 import { Popover, Transition } from "@headlessui/react";
-import { avatarImgs } from "@/contains/fakeData";
-import { Fragment, useContext } from "react";
-import Avatar from "@/shared/Avatar/Avatar";
+import { Fragment } from "react";
 import { useRouter } from "next/navigation";
 import { Route } from "next";
 import Link from "next/link";
-import { UserContext } from "@/context/userContext";
 import Cookies from "js-cookie";
 import { useUserContext } from "@/hooks/useUserContext";
+import Avatar from "@/shared/Avatar/Avatar";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export default function AvatarDropdown() {
-  const userContext = useContext(UserContext);
-  if (!userContext) <></>;
+  const { user, setUser } = useUserContext();
   const loginRouter = useRouter();
   const handleSubmit = async () => {
     const userToken = localStorage.getItem("loginToken");
-    const { user } = useUserContext();
-    const userId = user.id;
     await axios
-      .delete(`${apiBaseUrl}/user/delete-user/${userId}`, {
+      .delete(`${apiBaseUrl}/user/delete-user/${user.id}`, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${userToken}`,
@@ -34,9 +29,8 @@ export default function AvatarDropdown() {
       .catch((err) => console.error(err));
   };
   const pushLogin = async () => {
-    if (!userContext) return <></>;
     localStorage.removeItem("loginToken");
-    userContext.setUser({
+    setUser({
       id: null,
       name: null,
       email: null,
@@ -54,7 +48,7 @@ export default function AvatarDropdown() {
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <Avatar
-                imgUrl={avatarImgs[7]}
+                imgUrl={user.imageUrl as string}
                 sizeClass="w-8 h-8 sm:w-9 sm:h-9"
               />
             </Popover.Button>
@@ -71,15 +65,14 @@ export default function AvatarDropdown() {
                 <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="relative grid grid-cols-1 gap-6 bg-white dark:bg-neutral-800 py-7 px-6">
                     <div className="flex items-center space-x-3">
-                      <Avatar imgUrl={avatarImgs[7]} sizeClass="w-12 h-12" />
+                      <Avatar
+                        imgUrl={user.imageUrl as string}
+                        sizeClass="w-12 h-12"
+                      />
 
                       <div className="flex-grow">
-                        <h4 className="font-semibold">
-                          {userContext?.user.name}
-                        </h4>
-                        <p className="text-xs mt-0.5">
-                          {userContext?.user.email}
-                        </p>
+                        <h4 className="font-semibold">{user.name}</h4>
+                        <p className="text-xs mt-0.5">{user.email}</p>
                       </div>
                     </div>
 

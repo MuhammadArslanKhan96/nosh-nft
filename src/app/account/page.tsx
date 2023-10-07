@@ -1,30 +1,28 @@
 "use client";
 import Label from "@/components/Label/Label";
-import { UserContext } from "@/context/userContext";
 import Avatar from "@/shared/Avatar/Avatar";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ImageAvatar from "../../images/avatars/ImageAvatar.png";
 import { useRouter } from "next/navigation";
+import { useUserContext } from "@/hooks/useUserContext";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const AccountPage = ({}) => {
   const homeRouter = useRouter();
-  const userContext = useContext(UserContext);
+  const { user } = useUserContext();
   const [file, setFile] = useState<File | null>();
   const formData = new FormData();
   let imageName: string;
   let imageUrl: string;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  if (!userContext) <></>;
-  const userId = userContext?.user.id;
   const {
     register,
     handleSubmit,
@@ -63,7 +61,7 @@ const AccountPage = ({}) => {
         console.error(error);
       });
     await axios
-      .put(`${apiBaseUrl}/user/update-user/${userId}`, {
+      .put(`${apiBaseUrl}/user/update-user/${user.id}`, {
         name: data.username,
         email: data.email,
         bio: data.bio,
@@ -143,7 +141,7 @@ const AccountPage = ({}) => {
                   <Input
                     {...register("username")}
                     className="mt-1.5"
-                    defaultValue={userContext?.user.name as string}
+                    defaultValue={user.name as string}
                   />
                 </div>
 
@@ -158,7 +156,7 @@ const AccountPage = ({}) => {
                       {...register("email")}
                       className="!rounded-l-none"
                       placeholder="example@email.com"
-                      defaultValue={userContext?.user.email as string}
+                      defaultValue={user.email as string}
                       readOnly
                     />
                   </div>

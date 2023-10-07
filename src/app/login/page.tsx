@@ -12,9 +12,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { UserContext } from "@/context/userContext";
-import { useContext } from "react";
 import Cookies from "js-cookie";
+import { useUserContext } from "@/hooks/useUserContext";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const loginSchema = z.object({
@@ -24,7 +23,7 @@ const loginSchema = z.object({
 
 const PageLogin = () => {
   const homeRouter = useRouter();
-  const userContext = useContext(UserContext);
+  const { user, setUser } = useUserContext();
 
   const {
     register,
@@ -36,13 +35,12 @@ const PageLogin = () => {
 
   const onSubmit = async (data: FieldValues) => {
     const { email, password } = data;
-    if (!userContext) return <></>;
     await axios
       .post(`${apiBaseUrl}/user/login`, { email, password })
       .then((response) => {
         console.log(response.data);
         localStorage.setItem("loginToken", response.data.result.token);
-        userContext.setUser({
+        setUser({
           id: response.data.result.userId,
           name: response.data.result.name,
           email: response.data.result.email,

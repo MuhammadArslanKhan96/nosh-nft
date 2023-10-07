@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC } from "react";
+import { FC } from "react";
 import { avatarColors } from "@/contains/contants";
 import VerifyIcon from "@/components/VerifyIcon";
 import Image, { StaticImageData } from "next/image";
@@ -27,7 +27,7 @@ const Avatar: FC<AvatarProps> = ({
 }) => {
   const { avatarRd } = useGetRandomData();
 
-  const url = imgUrl || avatarRd;
+  const url = imgUrl;
   const name = userName || "John Doe";
   const _setBgColor = (name: string) => {
     const backgroundIndex = Math.floor(
