@@ -17,7 +17,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const AccountPage = ({}) => {
   const homeRouter = useRouter();
-  const { user } = useUserContext();
+  const { user, fetchUser } = useUserContext();
   const [file, setFile] = useState<File | null>();
   const formData = new FormData();
   let imageName: string;
@@ -75,6 +75,7 @@ const AccountPage = ({}) => {
       .then((response) => {
         console.log(response.data);
         toast.success("Update profile successfully!");
+        fetchUser();
         homeRouter.push("/");
       })
       .catch((error) => {

@@ -30,12 +30,12 @@ export default function AvatarDropdown() {
   };
   const pushLogin = async () => {
     Cookies.remove("loginToken");
+    Cookies.remove("userId");
     setUser({
       id: null,
       name: null,
       email: null,
     });
-
     loginRouter.push("/login");
   };
 

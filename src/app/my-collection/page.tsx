@@ -1,9 +1,10 @@
 "use client";
 import CollectionCard from "@/components/CollectionCard";
-import { UserContext } from "@/context/userContext";
+import { useUserContext } from "@/hooks/useUserContext";
 import axios from "axios";
+import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 interface nft {
   id: number;
@@ -13,8 +14,8 @@ interface nft {
   current_owner: string;
 }
 const MyCollectionPage = ({}) => {
-  const userContext = useContext(UserContext);
-  const userId = userContext?.user.id;
+  const { user } = useUserContext();
+  const userId = Cookies.get("userId");
   const [collections, setCollections] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
   useEffect(() => {
@@ -26,7 +27,7 @@ const MyCollectionPage = ({}) => {
         },
       })
       .then((res) => {
-        console.log(res.data.result);
+        console.log(res.data);
         setCollections(res.data.result);
         setRows(res.data.result.length);
       })

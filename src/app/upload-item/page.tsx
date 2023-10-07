@@ -41,6 +41,7 @@ const PageUploadItem = () => {
   const homeRouter = useRouter();
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");
+  const userId = Cookies.get("userId");
   const formData = new FormData();
   const [isLoadingCustom, setIsLoadingCustom] = useState(true);
   const [collections, setCollections] = useState<collection[]>([]);
@@ -60,12 +61,9 @@ const PageUploadItem = () => {
     resolver: zodResolver(nftSchema),
   });
   useEffect(() => {
-    console.log(user.id);
-  }, [user.id]);
-  useEffect(() => {
     setIsLoadingCustom(true);
     axios
-      .get(`${apiBaseUrl}/collection/get/${user.id}`, {
+      .get(`${apiBaseUrl}/collection/get/${userId}`, {
         headers: {
           Accept: "application/json",
         },
@@ -74,7 +72,6 @@ const PageUploadItem = () => {
         console.log(res.data.result);
         setCollectionRows(res.data.result.length);
         setCollections(res.data.result);
-        console.log(res.data.result.length);
         setIsLoadingCustom(false);
       })
       .catch((err) => {

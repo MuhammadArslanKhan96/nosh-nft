@@ -2,6 +2,7 @@
 import CardNFT from "@/components/CardNFT";
 import { useUserContext } from "@/hooks/useUserContext";
 import axios from "axios";
+import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
@@ -15,13 +16,13 @@ interface nft {
 }
 const NftForSalePage = ({}) => {
   const { user } = useUserContext();
-  const userId = user.id;
+  const userId = Cookies.get("userId");
   const [nft, setNft] = useState<nft[]>([]);
   useEffect(() => {
     axios
       .get(`${apiBaseUrl}/nfts/getsale/${userId}`)
       .then((response) => {
-        console.log(response.data.result);
+        console.log(response.data);
         setNft(response.data.result);
       })
       .catch((err) => {

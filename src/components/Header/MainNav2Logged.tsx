@@ -1,5 +1,5 @@
 "use client";
-import { FC, useContext, useEffect } from "react";
+import { FC, useEffect } from "react";
 import Logo from "@/shared/Logo/Logo";
 import MenuBar from "@/shared/MenuBar/MenuBar";
 import SwitchDarkMode from "@/shared/SwitchDarkMode/SwitchDarkMode";
@@ -12,27 +12,18 @@ import { Route } from "next";
 import { usePathname } from "next/navigation";
 import Avatar from "@/shared/Avatar/Avatar";
 import ImageAvatar from "../../images/avatars/ImageAvatar.png";
-import { UserContext } from "@/context/userContext";
+import { useUserContext } from "@/hooks/useUserContext";
 
 export interface MainNav2LoggedProps {}
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
-  const userContext = useContext(UserContext);
-  if (!userContext) return <></>;
+  const userContext = useUserContext();
   const router = usePathname();
 
   useEffect(() => {
     console.log(userContext.user);
   }, [router, userContext, userContext.user, userContext.user.id]);
 
-  // useLayoutEffect(() => {
-  //   if (user !== false) {
-  //     console.log(user);
-  //   }
-  //   if (user == false) {
-  //     console.log(user);
-  //   }
-  // }, [user]);
   return (
     <div className={`nc-MainNav2Logged relative z-10`}>
       <div className="container">

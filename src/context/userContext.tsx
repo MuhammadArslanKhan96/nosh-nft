@@ -19,6 +19,7 @@ interface User {
 interface UserContextProps {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
+  fetchUser: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserContextProps | null>(null);
@@ -29,6 +30,7 @@ interface UserProviderProps {
 
 export function UserProvider({ children }: UserProviderProps) {
   const token = Cookies.get("loginToken");
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>({
     id: null,
     name: null,
@@ -40,7 +42,34 @@ export function UserProvider({ children }: UserProviderProps) {
     telegram: null,
     imageUrl: null,
   });
-  const [loading, setLoading] = useState(true);
+  const fetchUser = async () => {
+    if (token) {
+      await axios
+        .get(`${apiBaseUrl}/user/get-context`, {
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then((response) => {
+          setUser({
+            id: response.data.id,
+            name: response.data.name,
+            email: response.data.email,
+            bio: response.data?.bio,
+            website: response.data?.website,
+            facebook: response.data?.facebook,
+            twitter: response.data?.twitter,
+            telegram: response.data?.telegram,
+            imageUrl: response.data?.image_url,
+          });
+          setLoading(false);
+        });
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [token]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,7 +102,7 @@ export function UserProvider({ children }: UserProviderProps) {
   }, [token]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, fetchUser }}>
       {children}
     </UserContext.Provider>
   );
