@@ -81,8 +81,8 @@ export function UserProvider({ children }: UserProviderProps) {
             },
           })
           .then((response) => {
-            console.log(response.data.id);
-            console.log(response.data.name);
+            // console.log(response.data.id);
+            // console.log(response.data.name);
             setUser({
               id: response.data.id,
               name: response.data.name,

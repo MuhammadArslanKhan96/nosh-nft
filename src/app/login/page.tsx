@@ -41,7 +41,9 @@ const PageLogin = () => {
         Cookies.set("loginToken", response.data.result.token, {
           expires: 1 / 24,
         });
-        Cookies.set("userId", response.data.result.userId);
+        Cookies.set("userId", response.data.result.userId, {
+          expires: 1 / 24,
+        });
         console.log(response.data);
         setUser({
           id: response.data.result.userId,

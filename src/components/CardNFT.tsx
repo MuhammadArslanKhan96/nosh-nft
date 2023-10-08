@@ -32,6 +32,25 @@ const CardNFT: FC<CardNFTProps> = ({
   price,
   currentOwner,
 }) => {
+  const [username, setUserName] = useState<string | null>();
+  useEffect(() => {
+    axios
+      .get(`${apiBaseUrl}/user/get/${currentOwner}`)
+      .then((response) => {
+        response.data.result.forEach((item: any) => {
+          if (item.name) {
+            console.log(item.name);
+            setUserName(item.name);
+          } else {
+            console.log("Name property does not exist");
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const { user } = useUserContext();
   const userId = user.id;
   const [itemType, setItemType] = useState<"video" | "audio" | "default">(
@@ -74,7 +93,7 @@ const CardNFT: FC<CardNFTProps> = ({
         id: id,
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.status);
       })
       .catch((error) => {
         console.log(error);
@@ -112,7 +131,15 @@ const CardNFT: FC<CardNFTProps> = ({
         {/* <div className="flex justify-between">{renderAvatars()}</div> */}
         <h2 className={`text-lg font-medium`}>{name}</h2>
         <h2 className={`text-lg font-medium`}>{description}</h2>
-
+        {userId == currentOwner ? (
+          <></>
+        ) : (
+          <>
+            <div>
+              <h5>By {username}</h5>
+            </div>
+          </>
+        )}
         <div className="w-full border-b border-neutral-200/70 dark:border-neutral-700"></div>
 
         <div className="flex justify-between items-end">
@@ -136,6 +163,7 @@ const CardNFT: FC<CardNFTProps> = ({
               </button>
             </>
           )}
+
           {/* <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
             <ClockIcon className="w-4 h-4" />
             <span className="ml-1 mt-0.5">14 hours left</span>
