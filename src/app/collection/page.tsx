@@ -13,6 +13,7 @@ import axios from "axios";
 import CardNFT from "@/components/CardNFT";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../loading";
+import { useSearchParams } from "next/navigation";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
@@ -60,12 +61,13 @@ const PageCollection = ({
     description: string;
   };
 }) => {
+  const params = useSearchParams();
   const [nfts, setNfts] = useState<nft[]>([]);
   const { isLoading } = useQuery({
     queryKey: ["nft"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${apiBaseUrl}/nfts/get/${searchParams.id}`
+        `${apiBaseUrl}/nfts/get/${params.get("id")}`
       );
       console.log(data.result);
       setNfts(data.result);
@@ -169,10 +171,10 @@ const PageCollection = ({
             <div className="mt-5 md:mt-0 md:ml-8 xl:ml-14 flex-grow">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-block text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                  {searchParams.name}
+                  {params.get("name")}
                 </h2>
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  {searchParams.description}
+                  {params.get("description")}
                 </span>
               </div>
               {/* <div className="mt-6 xl:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 xl:gap-6">
