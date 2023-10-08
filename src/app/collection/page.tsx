@@ -14,6 +14,8 @@ import CardNFT from "@/components/CardNFT";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../loading";
 
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
+
 interface nft {
   id: string;
   image_url: string;
@@ -63,7 +65,7 @@ const PageCollection = ({
     queryKey: ["nft"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:8080/nfts/get/${searchParams.id}`
+        `${apiBaseUrl}/nfts/get/${searchParams.id}`
       );
       console.log(data.result);
       setNfts(data.result);
