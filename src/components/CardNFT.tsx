@@ -39,7 +39,6 @@ const CardNFT: FC<CardNFTProps> = ({
       .then((response) => {
         response.data.result.forEach((item: any) => {
           if (item.name) {
-            console.log(item.name);
             setUserName(item.name);
           } else {
             console.log("Name property does not exist");

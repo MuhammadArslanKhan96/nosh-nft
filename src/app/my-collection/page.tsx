@@ -1,11 +1,12 @@
 "use client";
 import CollectionCard from "@/components/CollectionCard";
 import { useUserContext } from "@/hooks/useUserContext";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Loading from "../loading";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 interface collection {
   id: string;
@@ -15,28 +16,47 @@ interface collection {
   current_owner: string;
 }
 const MyCollectionPage = ({}) => {
-  const collectionRouter = useRouter();
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const [collections, setCollections] = useState<collection[]>([]);
   const [row, setRows] = useState<number | null>(null);
-  useEffect(() => {
-    axios
-      .get(`${apiBaseUrl}/collection/get/${userId}`, {
-        headers: {
-          Accept: "application/json",
-          // Authorization: `Bearer ${loginToken}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setCollections(res.data.result);
-        setRows(res.data.result.length);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const { isLoading } = useQuery({
+    queryKey: ["collection"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${apiBaseUrl}/collection/get/${userId}`
+      );
+      console.log(data.result);
+      setRows(data.result.length);
+      setCollections(data.result);
+      return data;
+    },
+    cacheTime: Infinity,
+  });
+
+  if (isLoading)
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  // useEffect(() => {
+  //   axios
+  //     .get(`${apiBaseUrl}/collection/get/${userId}`, {
+  //       headers: {
+  //         Accept: "application/json",
+  //         // Authorization: `Bearer ${loginToken}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       setCollections(res.data.result);
+  //       setRows(res.data.result.length);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <div className={`nc-MyCollectionPage`}>

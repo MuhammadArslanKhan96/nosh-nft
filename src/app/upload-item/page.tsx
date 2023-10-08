@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Label from "@/components/Label/Label";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import Loading from "../loading";
 import { useUserContext } from "@/hooks/useUserContext";
 import Cookies from "js-cookie";
+import { useQuery } from "@tanstack/react-query";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -43,7 +44,6 @@ const PageUploadItem = () => {
   const token = Cookies.get("loginToken");
   const userId = Cookies.get("userId");
   const formData = new FormData();
-  const [isLoadingCustom, setIsLoadingCustom] = useState(true);
   const [collections, setCollections] = useState<collection[]>([]);
   const [collectionRows, setCollectionRows] = useState<number | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -56,32 +56,48 @@ const PageUploadItem = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting, isLoading },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(nftSchema),
   });
-  useEffect(() => {
-    setIsLoadingCustom(true);
-    axios
-      .get(`${apiBaseUrl}/collection/get/${userId}`, {
-        headers: {
-          Accept: "application/json",
-        },
-      })
-      .then((res) => {
-        console.log(res.data.result);
-        setCollectionRows(res.data.result.length);
-        setCollections(res.data.result);
-        setIsLoadingCustom(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoadingCustom(false);
-      });
-  }, []);
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ["collections"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${apiBaseUrl}/collection/get/${userId}`
+      );
+      console.log(data.result);
+      setCollectionRows(data.result.length);
+      setCollections(data.result);
+      return data.result;
+    },
+    cacheTime: Infinity,
+  });
+  // useEffect(() => {
+  //   setIsLoadingCustom(true);
+  //   axios
+  //     .get(`${apiBaseUrl}/collection/get/${userId}`, {
+  //       headers: {
+  //         Accept: "application/json",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data.result);
+  //       setCollectionRows(res.data.result.length);
+  //       setCollections(res.data.result);
+  //       setIsLoadingCustom(false);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       setIsLoadingCustom(false);
+  //     });
+  // }, []);
 
-  if (isLoadingCustom) {
+  if (isLoading) {
     return <Loading />;
+  }
+  if (isError) {
+    return <>An error occured. Try again</>;
   }
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -472,7 +488,6 @@ const PageUploadItem = () => {
               {/* ---- */}
               <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
                 <ButtonPrimary
-                  loading={isLoading}
                   disabled={isSubmitting}
                   type="submit"
                   className="flex-1"

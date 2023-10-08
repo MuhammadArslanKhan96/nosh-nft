@@ -1,10 +1,12 @@
 "use client";
 import CardNFT from "@/components/CardNFT";
 import { useUserContext } from "@/hooks/useUserContext";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Loading from "../loading";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 interface nft {
   id: number;
@@ -19,18 +21,35 @@ const MyNftPage = ({}) => {
   const userId = Cookies.get("userId");
   const [nft, setNft] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
-  useEffect(() => {
-    axios
-      .get(`${apiBaseUrl}/nfts/get/${userId}`)
-      .then((response) => {
-        console.log(response.data);
-        setRows(response.data.result.length);
-        setNft(response.data.result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+
+  const { isLoading } = useQuery({
+    queryKey: ["nft"],
+    queryFn: async () => {
+      const { data } = await axios.get(`${apiBaseUrl}/nfts/get/${userId}`);
+      console.log(data.result);
+      setRows(data.result.length);
+      setNft(data.result);
+      return data;
+    },
+  });
+  if (isLoading)
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  // useEffect(() => {
+  //   axios
+  //     .get(`${apiBaseUrl}/nfts/get/${userId}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setRows(response.data.result.length);
+  //       setNft(response.data.result);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <div className={`nc-MyNftPage`}>

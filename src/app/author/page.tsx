@@ -2,10 +2,10 @@
 import CardNFT from "@/components/CardNFT";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Pagination from "@/shared/Pagination/Pagination";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { useLayoutEffect } from "react";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 interface nft {
@@ -21,19 +21,30 @@ const page = () => {
   const userId = Cookies.get("userId");
   const [nft, setNft] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
-  useLayoutEffect(() => {
-    axios
-      .get(`${apiBaseUrl}/nfts/get/${userId}`)
-      .then((response) => {
-        console.log(response.data.result);
-        console.log(response.data.result.length);
-        setRows(response.data.result.length);
-        setNft(response.data.result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const {} = useQuery({
+    queryKey: ["nft"],
+    queryFn: async () => {
+      const { data } = await axios.get(`${apiBaseUrl}/nfts/get/${userId}`);
+      console.log(data.result);
+      setRows(data.result.length);
+      setNft(data.result);
+      return data.result;
+    },
+    cacheTime: Infinity,
+  });
+  // useLayoutEffect(() => {
+  //   axios
+  //     .get(`${apiBaseUrl}/nfts/get/${userId}`)
+  //     .then((response) => {
+  //       console.log(response.data.result);
+  //       console.log(response.data.result.length);
+  //       setRows(response.data.result.length);
+  //       setNft(response.data.result);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
   return (
     <div>
       {row === 0 ? (

@@ -8,9 +8,11 @@ import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor/SectionBec
 import BackgroundSection from "@/components/BackgroundSection/BackgroundSection";
 import SectionSliderCollections from "@/components/SectionSliderCollections";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import CardNFT from "@/components/CardNFT";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../loading";
 
 interface nft {
   id: string;
@@ -57,17 +59,36 @@ const PageCollection = ({
   };
 }) => {
   const [nfts, setNfts] = useState<nft[]>([]);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8080/nfts/get/${searchParams.id}`)
-      .then((response) => {
-        console.log(response.data);
-        setNfts(response.data.result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const { isLoading } = useQuery({
+    queryKey: ["nft"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `http://localhost:8080/nfts/get/${searchParams.id}`
+      );
+      console.log(data.result);
+      setNfts(data.result);
+      return data;
+    },
+    cacheTime: Infinity,
+  });
+
+  if (isLoading)
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:8080/nfts/get/${searchParams.id}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setNfts(response.data.result);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
   return (
     <div className={`nc-PageCollection`}>
       {/* HEADER */}

@@ -7,6 +7,7 @@ import MusicPlayer from "@/components/MusicPlayer/MusicPlayer";
 import SiteHeader from "@/app/SiteHeader";
 import { UserProvider } from "@/context/userContext";
 import { Toaster } from "sonner";
+import Providers from "@/utils/queryProvider";
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
@@ -26,21 +27,22 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
-        <UserProvider>
-          <SiteHeader />
-          {children}
-          <Footer />
-          <MusicPlayer />
-          {/* <ToastContainerWrapper /> */}
-          <Toaster
-            position="bottom-left"
-            invert
-            closeButton
-            toastOptions={{
-              style: { background: "#1e2a42" },
-            }}
-          />
-        </UserProvider>
+        <Providers>
+          <UserProvider>
+            <SiteHeader />
+            {children}
+            <Footer />
+            <MusicPlayer />
+            <Toaster
+              position="bottom-left"
+              invert
+              closeButton
+              toastOptions={{
+                style: { background: "#1e2a42" },
+              }}
+            />
+          </UserProvider>
+        </Providers>
       </body>
     </html>
   );
