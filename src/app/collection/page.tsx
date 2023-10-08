@@ -9,9 +9,18 @@ import BackgroundSection from "@/components/BackgroundSection/BackgroundSection"
 import SectionSliderCollections from "@/components/SectionSliderCollections";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Pagination from "@/shared/Pagination/Pagination";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import CardNFT from "@/components/CardNFT";
-import TabFilters from "@/components/TabFilters";
 
+interface nft {
+  id: string;
+  image_url: string;
+  price: string;
+  name: string;
+  description: string;
+  current_owner: string;
+}
 let AccountActions = [
   {
     id: "copylink",
@@ -39,7 +48,27 @@ let AccountActions = [
   },
 ];
 
-const PageCollection = () => {
+const PageCollection = ({
+  searchParams,
+}: {
+  searchParams: {
+    id: string;
+    name: string;
+    description: string;
+  };
+}) => {
+  const [nfts, setNfts] = useState<nft[]>([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/nfts/get/${searchParams.id}`)
+      .then((response) => {
+        console.log(response.data);
+        setNfts(response.data.result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
     <div className={`nc-PageCollection`}>
       {/* HEADER */}
@@ -118,16 +147,13 @@ const PageCollection = () => {
             <div className="mt-5 md:mt-0 md:ml-8 xl:ml-14 flex-grow">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-block text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                  {"Awesome NFTs collection "}
+                  {searchParams.name}
                 </h2>
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  Karafuru is home to 5,555 generative arts where colors reign
-                  supreme. Leave the drab reality and enter the world of
-                  Karafuru by Museum of Toys.
+                  {searchParams.description}
                 </span>
               </div>
-              <div className="mt-6 xl:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 xl:gap-6">
-                {/* ----- 1 ----- */}
+              {/* <div className="mt-6 xl:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 xl:gap-6">
                 <div className="dark:bg-neutral-800 bg-green-50 rounded-2xl flex flex-col items-center justify-center p-5 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
                     Floor Price
@@ -138,7 +164,6 @@ const PageCollection = () => {
                   <span className="text-xs text-green-500 mt-1">+2.11%</span>
                 </div>
 
-                {/* ----- Volume ----- */}
                 <div className="dark:bg-neutral-800 bg-fuchsia-50 rounded-2xl flex flex-col items-center justify-center p-5 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
                     Volume
@@ -150,7 +175,6 @@ const PageCollection = () => {
                     total
                   </span>
                 </div>
-                {/* ----- Latest Price ----- */}
                 <div className="dark:bg-neutral-800 bg-sky-50 rounded-2xl flex flex-col items-center justify-center p-5 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
                     Latest Price
@@ -161,7 +185,6 @@ const PageCollection = () => {
                   <span className="text-xs text-green-500 mt-1"> --</span>
                 </div>
 
-                {/* -----Items ----- */}
                 <div className="dark:bg-neutral-800 bg-yellow-50 rounded-2xl flex flex-col items-center justify-center p-5 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
                     Items
@@ -173,20 +196,26 @@ const PageCollection = () => {
                     total
                   </span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
-      {/* ====================== END HEADER ====================== */}
 
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-20 lg:space-y-28">
         <main>
-          <TabFilters />
+          {/* <TabFilters /> */}
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10  mt-8 lg:mt-10">
-            {Array.from("11111111").map((_, index) => (
-              <CardNFT key={index} />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+            {nfts.map((nft) => (
+              <CardNFT
+                key={nft.id}
+                name={nft.name}
+                currentOwner={nft.current_owner}
+                imageUrl={nft.image_url}
+                price={nft.price}
+                description={nft.description}
+              />
             ))}
           </div>
 

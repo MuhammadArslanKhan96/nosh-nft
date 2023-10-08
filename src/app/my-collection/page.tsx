@@ -4,19 +4,21 @@ import { useUserContext } from "@/hooks/useUserContext";
 import axios from "axios";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-interface nft {
-  id: number;
+interface collection {
+  id: string;
   name: string;
   description: string;
   price: string;
   current_owner: string;
 }
 const MyCollectionPage = ({}) => {
+  const collectionRouter = useRouter();
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
-  const [collections, setCollections] = useState<nft[]>([]);
+  const [collections, setCollections] = useState<collection[]>([]);
   const [row, setRows] = useState<number | null>(null);
   useEffect(() => {
     axios
@@ -44,7 +46,7 @@ const MyCollectionPage = ({}) => {
           {row == 0 ? (
             <>
               <div className="max-w-2xl">
-                <h2 className="text-3xl sm:text-4xl font-semibold">
+                <h2 className="text-3xl sm:tex  t-4xl font-semibold">
                   No Nfts collection found
                 </h2>
                 <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
@@ -69,6 +71,7 @@ const MyCollectionPage = ({}) => {
                 {collections.map((collection, index) => (
                   <CollectionCard
                     key={collection.id}
+                    id={collection.id}
                     name={collection.name}
                     description={collection.description}
                   />

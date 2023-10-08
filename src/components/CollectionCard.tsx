@@ -10,6 +10,7 @@ export interface CollectionCardProps {
   className?: string;
   imgs?: string[];
   name?: string;
+  id: string;
   description?: string;
 }
 
@@ -17,6 +18,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
   className,
   imgs = [nftsImgs[9], nftsImgs[10], nftsImgs[11], nftsImgs[8]],
   name,
+  id,
   description,
 }) => {
   const { user } = useUserContext();
@@ -67,7 +69,17 @@ const CollectionCard: FC<CollectionCardProps> = ({
           />
         </div>
       </div>
-      <Link href={"/collection"} className="absolute inset-0"></Link>
+      <Link
+        href={{
+          pathname: "/collection",
+          query: {
+            id: id,
+            name: name,
+            description: description,
+          },
+        }}
+        className="absolute inset-0"
+      ></Link>
     </div>
   );
 };
