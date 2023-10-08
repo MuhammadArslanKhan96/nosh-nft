@@ -10,7 +10,7 @@ export interface CollectionCardProps {
   className?: string;
   imgs?: string[];
   name?: string;
-  id: string;
+  id?: string;
   description?: string;
 }
 

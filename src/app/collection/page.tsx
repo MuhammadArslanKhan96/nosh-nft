@@ -8,7 +8,6 @@ import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor/SectionBec
 import BackgroundSection from "@/components/BackgroundSection/BackgroundSection";
 import SectionSliderCollections from "@/components/SectionSliderCollections";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import Pagination from "@/shared/Pagination/Pagination";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CardNFT from "@/components/CardNFT";
@@ -220,7 +219,7 @@ const PageCollection = ({
           </div>
 
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
+            {/* <Pagination /> */}
             <ButtonPrimary>Show me more</ButtonPrimary>
           </div>
         </main>
