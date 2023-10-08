@@ -1,7 +1,9 @@
 "use client";
-import { createContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "@/app/loading";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 interface User {
@@ -42,6 +44,7 @@ export function UserProvider({ children }: UserProviderProps) {
     telegram: null,
     imageUrl: null,
   });
+
   const fetchUser = async () => {
     if (token) {
       await axios
@@ -71,39 +74,71 @@ export function UserProvider({ children }: UserProviderProps) {
     fetchUser();
   }, [token]);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const { isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
       if (token) {
-        await axios
-          .get(`${apiBaseUrl}/user/get-context`, {
-            headers: {
-              Authorization: token,
-            },
-          })
-          .then((response) => {
-            // console.log(response.data.id);
-            // console.log(response.data.name);
-            setUser({
-              id: response.data.id,
-              name: response.data.name,
-              email: response.data.email,
-              bio: response.data?.bio,
-              website: response.data?.website,
-              facebook: response.data?.facebook,
-              twitter: response.data?.twitter,
-              telegram: response.data?.telegram,
-              imageUrl: response.data?.image_url,
-            });
-            setLoading(false);
-          });
+        const { data } = await axios.get(`${apiBaseUrl}/user/get-context`, {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setUser({
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          bio: data?.bio,
+          website: data?.website,
+          facebook: data?.facebook,
+          twitter: data?.twitter,
+          telegram: data?.telegram,
+          imageUrl: data?.image_url,
+        });
+        setLoading(false);
+        return data;
       }
-    };
-    fetchData();
-  }, [token]);
+    },
+  });
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (token) {
+  //       await axios
+  //         .get(`${apiBaseUrl}/user/get-context`, {
+  //           headers: {
+  //             Authorization: token,
+  //           },
+  //         })
+  //         .then((response) => {
+  //           // console.log(response.data.id);
+  //           // console.log(response.data.name);
+  //           setUser({
+  //             id: response.data.id,
+  //             name: response.data.name,
+  //             email: response.data.email,
+  //             bio: response.data?.bio,
+  //             website: response.data?.website,
+  //             facebook: response.data?.facebook,
+  //             twitter: response.data?.twitter,
+  //             telegram: response.data?.telegram,
+  //             imageUrl: response.data?.image_url,
+  //           });
+  //           setLoading(false);
+  //         });
+  //     }
+  //   };
+  //   fetchData();
+  // }, [token]);
 
   return (
     <UserContext.Provider value={{ user, setUser, fetchUser }}>
-      {children}
+      {isLoading ? (
+        <>
+          <Loading />
+        </>
+      ) : (
+        children
+      )}
     </UserContext.Provider>
   );
 }
