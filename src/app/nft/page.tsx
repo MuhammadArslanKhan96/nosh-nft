@@ -54,42 +54,38 @@ const MyNftPage = ({}) => {
   return (
     <div className={`nc-MyNftPage`}>
       <div className="container">
-        <div className="my-12 sm:lg:my-16 lg:my-24 max-w-5xl mx-auto space-y-8 sm:space-y-10">
+        <div className="my-12 sm:lg:my-16 lg:my-24 mx-auto space-y-8 sm:space-y-10">
           {/* HEADING */}
-          <div className="max-w-2xl">
-            {row == 0 ? (
-              <>
-                <h2 className="text-3xl sm:text-4xl font-semibold">
-                  No NFTs found
-                </h2>
-                <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-                  You currently have no nfts. Start buying an nft or create one.
-                </span>
-              </>
-            ) : (
-              <>
-                <h2 className="text-3xl sm:text-4xl font-semibold">
-                  Your NFT's
-                </h2>
-                <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-                  You can view, update, disable and manage other nft settings.
-                </span>
-                {/* <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div> */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-x-8 gap-y-10  mt-8 lg:mt-10">
-                  {nft.map((nft, index) => (
-                    <CardNFT
-                      key={nft.id}
-                      imageUrl={nft.image_url}
-                      name={nft.name}
-                      // description={nft.description}
-                      price={nft.price}
-                      currentOwner={nft.current_owner}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+          {row == 0 ? (
+            <>
+              <h2 className="text-3xl sm:text-4xl font-semibold">
+                No NFTs found
+              </h2>
+              <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                You currently have no nfts. Start buying an nft or create one.
+              </span>
+            </>
+          ) : (
+            <>
+              <h2 className="text-3xl sm:text-4xl font-semibold">Your NFT's</h2>
+              <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                You can view, update, disable and manage other nft settings.
+              </span>
+              {/* <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div> */}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-10  mt-8 lg:mt-10">
+                {nft.map((nft, index) => (
+                  <CardNFT
+                    key={nft.id}
+                    imageUrl={nft.image_url}
+                    name={nft.name}
+                    // description={nft.description}
+                    price={nft.price}
+                    currentOwner={nft.current_owner}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
