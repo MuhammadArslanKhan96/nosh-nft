@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC } from "react";
+import { FC } from "react";
 import Avatar from "@/shared/Avatar/Avatar";
 import NcImage from "@/shared/NcImage/NcImage";
 import VerifyIcon from "./VerifyIcon";

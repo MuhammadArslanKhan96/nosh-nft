@@ -7,7 +7,7 @@ import { useUserContext } from "@/hooks/useUserContext";
 
 export interface CollectionCardProps {
   className?: string;
-  imgs: string;
+  imgs: string | string[];
   name?: string;
   id?: string;
   description?: string;
@@ -32,7 +32,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
       <NcImage
         fill
         containerClassName="absolute inset-0 z-0 overflow-hidden"
-        src={imgs}
+        src={imgs as string}
       />
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 group-hover:h-full to-transparent "></div>
 
