@@ -101,6 +101,7 @@ export function UserProvider({ children }: UserProviderProps) {
         setLoading(false);
         return data;
       }
+      return {};
     },
   });
 

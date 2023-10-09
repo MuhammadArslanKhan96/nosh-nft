@@ -1,11 +1,11 @@
 "use client";
 import CardNFT from "@/components/CardNFT";
-import { useUserContext } from "@/hooks/useUserContext";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Loading from "../loading";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 interface nft {
   id: number;
@@ -17,38 +17,48 @@ interface nft {
   on_sale: boolean;
 }
 const NftForSalePage = ({}) => {
-  const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const [nft, setNft] = useState<nft[]>([]);
-  if (userId) {
-    useEffect(() => {
-      axios
-        .get(`${apiBaseUrl}/nfts/getsale/${userId}`)
-        .then((response) => {
-          console.log(response.data);
-          const onSaleNfts = response.data.result.filter(
-            (nft: any) => nft.on_sale === true
-          );
-          setNft(onSaleNfts);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, []);
-  }
-  if (!userId) {
-    const {} = useQuery({
-      queryKey: ["nfts"],
-      queryFn: async () => {
-        const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
-        const onSaleNfts = data.result.filter(
-          (nft: any) => nft.on_sale === true
-        );
-        setNft(onSaleNfts);
-        return onSaleNfts;
-      },
-    });
-  }
+
+  const { isLoading } = useQuery({
+    queryKey: ["nfts"],
+    queryFn: async () => {
+      const { data } = await axios.get(`http://localhost:8080/nfts/getAll`);
+      const onSaleNfts = data.result.filter((nft: any) => nft.on_sale === true);
+      setNft(onSaleNfts);
+      return onSaleNfts;
+    },
+  });
+  if (isLoading) <Loading />;
+  // if (userId) {
+  //   useEffect(() => {
+  //     axios
+  //       .get(`${apiBaseUrl}/nfts/getsale/${userId}`)
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         const onSaleNfts = response.data.result.filter(
+  //           (nft: any) => nft.on_sale === true
+  //         );
+  //         setNft(onSaleNfts);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }, []);
+  // }
+  // if (!userId) {
+  //   const {} = useQuery({
+  //     queryKey: ["nfts"],
+  //     queryFn: async () => {
+  //       const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
+  //       const onSaleNfts = data.result.filter(
+  //         (nft: any) => nft.on_sale === true
+  //       );
+  //       setNft(onSaleNfts);
+  //       return onSaleNfts;
+  //     },
+  //   });
+  // }
 
   return (
     <div className={`nc-MyNftPage`}>
@@ -65,35 +75,18 @@ const NftForSalePage = ({}) => {
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-8 gap-y-10  mt-8 lg:mt-10">
-            {userId ? (
-              <>
-                {nft.map((nft, index) => (
-                  <CardNFT
-                    key={nft.id}
-                    id={nft.id}
-                    imageUrl={nft.image_url}
-                    name={nft.name}
-                    description={nft.description}
-                    price={nft.price}
-                    currentOwner={nft.current_owner}
-                  />
-                ))}
-              </>
-            ) : (
-              <>
-                {nft.map((nft, index) => (
-                  <CardNFT
-                    key={nft.id}
-                    id={nft.id}
-                    imageUrl={nft.image_url}
-                    name={nft.name}
-                    description={nft.description}
-                    price={nft.price}
-                    currentOwner={nft.current_owner}
-                  />
-                ))}
-              </>
-            )}
+            {nft.map((nft, index) => (
+              <CardNFT
+                key={nft.id}
+                id={nft.id}
+                imageUrl={nft.image_url}
+                name={nft.name}
+                description={nft.description}
+                price={nft.price}
+                currentOwner={nft.current_owner}
+                onSale={nft.on_sale}
+              />
+            ))}
           </div>
         </div>
       </div>

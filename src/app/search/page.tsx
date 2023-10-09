@@ -9,8 +9,35 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Pagination from "@/shared/Pagination/Pagination";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import Loading from "../loading";
+
+interface nft {
+  id: number;
+  image_url: string;
+  name: string;
+  description: string;
+  price: string;
+  current_owner: string;
+  on_sale: boolean;
+}
 
 const PageSearch = ({}) => {
+  const userId = Cookies.get("userId");
+  const [nft, setNft] = useState<nft[]>([]);
+
+  const { isLoading } = useQuery({
+    queryKey: ["nfts"],
+    queryFn: async () => {
+      const { data } = await axios.get(`http://localhost:8080/nfts/getAll`);
+      setNft(data.result);
+      return data.result;
+    },
+  });
+  if (isLoading) <Loading />;
   return (
     <div className={`nc-PageSearch `}>
       <div
@@ -76,8 +103,17 @@ const PageSearch = ({}) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-            {Array.from("11111111").map((_, index) => (
-              <CardNFT key={index} />
+            {nft.map((nft, index) => (
+              <CardNFT
+                key={nft.id}
+                id={nft.id}
+                imageUrl={nft.image_url}
+                name={nft.name}
+                description={nft.description}
+                price={nft.price}
+                currentOwner={nft.current_owner}
+                onSale={nft.on_sale}
+              />
             ))}
           </div>
 
