@@ -16,6 +16,7 @@ interface User {
   twitter?: string | null;
   telegram?: string | null;
   imageUrl?: string | null;
+  imageName?: string | null;
 }
 
 interface UserContextProps {
@@ -43,6 +44,7 @@ export function UserProvider({ children }: UserProviderProps) {
     twitter: null,
     telegram: null,
     imageUrl: null,
+    imageName: null,
   });
 
   const fetchUser = async () => {
@@ -64,6 +66,7 @@ export function UserProvider({ children }: UserProviderProps) {
             twitter: response.data?.twitter,
             telegram: response.data?.telegram,
             imageUrl: response.data?.image_url,
+            imageName: response.data?.image_name,
           });
           setLoading(false);
         });
@@ -93,6 +96,7 @@ export function UserProvider({ children }: UserProviderProps) {
           twitter: data?.twitter,
           telegram: data?.telegram,
           imageUrl: data?.image_url,
+          imageName: data?.image_name,
         });
         setLoading(false);
         return data;

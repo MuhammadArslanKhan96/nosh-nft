@@ -9,7 +9,6 @@ import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import ImageAvatar from "../../images/avatars/ImageAvatar.png";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/hooks/useUserContext";
 
@@ -42,24 +41,26 @@ const AccountPage = ({}) => {
   };
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    if (!file) {
-      return;
+    if (file) {
+      formData.append("file-upload", file);
+      await axios
+        .post(`${apiBaseUrl}/create/image`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          imageUrl = response.data.imageUrl;
+          imageName = response.data.imageName;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      imageUrl = user.imageUrl as string;
+      imageName = user.imageName as string;
     }
-    formData.append("file-upload", file);
-    await axios
-      .post(`${apiBaseUrl}/create/image`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        imageUrl = response.data.imageUrl;
-        imageName = response.data.imageName;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
     await axios
       .put(`${apiBaseUrl}/user/update-user/${user.id}`, {
         name: data.username,
@@ -83,6 +84,7 @@ const AccountPage = ({}) => {
         throw error;
       });
   };
+
   return (
     <div className={`nc-AccountPage`}>
       <div className="container">
@@ -103,7 +105,9 @@ const AccountPage = ({}) => {
               <div className="relative rounded-full overflow-hidden flex">
                 <Avatar
                   sizeClass="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28"
-                  imgUrl={selectedImage ? selectedImage : ImageAvatar}
+                  imgUrl={
+                    selectedImage ? selectedImage : (user.imageUrl as string)
+                  }
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-neutral-50 cursor-pointer">
                   <svg
