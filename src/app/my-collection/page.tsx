@@ -35,7 +35,7 @@ const MyCollectionPage = ({}) => {
     queryKey: ["collection"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:8080/collection/get/${userId}`
+        `${apiBaseUrl}/collection/get/${userId}`
       );
       console.log(data.result);
       setRows(data.result.length);

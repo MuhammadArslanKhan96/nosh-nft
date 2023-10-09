@@ -82,17 +82,6 @@ const PageCollection = ({
         <Loading />
       </>
     );
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:8080/nfts/get/${searchParams.id}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setNfts(response.data.result);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
   return (
     <div className={`nc-PageCollection`}>
       {/* HEADER */}

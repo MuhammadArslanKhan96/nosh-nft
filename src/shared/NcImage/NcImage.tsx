@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import Image, { ImageProps } from "next/image";
 
 export interface NcImageProps extends Omit<ImageProps, "alt"> {

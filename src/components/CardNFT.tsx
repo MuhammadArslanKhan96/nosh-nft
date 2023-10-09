@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Badge from "@/shared/Badge/Badge";
+import Link from "next/link";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export interface CardNFTProps {
@@ -94,7 +95,7 @@ const CardNFT: FC<CardNFTProps> = ({
   const handleOnSale = async () => {
     if (userId) {
       await axios
-        .put(`http://localhost:8080/nfts/update-nft/${id}`, {
+        .put(`${apiBaseUrl}/nfts/update-nft/${id}`, {
           status: true,
         })
         .then((response) => {
@@ -136,13 +137,22 @@ const CardNFT: FC<CardNFTProps> = ({
     <div className={`nc-CardNFT relative flex flex-col group ${className}`}>
       <div className="relative flex-shrink-0 ">
         <div className="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0">
-          <Image
-            className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            src={imageUrl as string}
-            alt="NFT Image"
-          />
+          <Link
+            href={{
+              pathname: "/nft-detail",
+              query: {
+                id: id,
+              },
+            }}
+          >
+            <Image
+              className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              src={imageUrl as string}
+              alt="NFT Image"
+            />
+          </Link>
         </div>
         {itemType === "video" && (
           <ItemTypeVideoIcon className="absolute top-3 left-3 !w-9 !h-9" />

@@ -36,9 +36,7 @@ const AllCollectionPage = ({}) => {
   const { isLoading } = useQuery({
     queryKey: ["collection"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `http://localhost:8080/collection/getAll`
-      );
+      const { data } = await axios.get(`${apiBaseUrl}/collection/getAll`);
       console.log(data);
       console.log(data.result);
       setRows(data.result.length);

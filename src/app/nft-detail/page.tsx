@@ -1,7 +1,6 @@
 "use client";
 import ItemTypeVideoIcon from "@/components/ItemTypeVideoIcon";
 import LikeButton from "@/components/LikeButton";
-import { nftsLargeImgs, personNames } from "@/contains/fakeData";
 import NcImage from "@/shared/NcImage/NcImage";
 import Badge from "@/shared/Badge/Badge";
 import LikeSaveBtns from "./LikeSaveBtns";
@@ -13,9 +12,24 @@ import Link from "next/link";
 import { Route } from "next";
 import AccordionInfo from "@/components/AccordionInfo";
 import { useUserContext } from "@/hooks/useUserContext";
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const NftDetailPage = ({}) => {
   const { user } = useUserContext();
+  const params = useSearchParams();
+  const { data } = useQuery({
+    queryKey: ["nft"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${apiBaseUrl}/nfts/get-nft/${params.get("id")}`
+      );
+      console.log(data.result[0]);
+      return data.result;
+    },
+  });
   const renderSection1 = () => {
     return (
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
@@ -29,18 +43,19 @@ const NftDetailPage = ({}) => {
             />
             <LikeSaveBtns />
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-            {user.name}
-          </h2>
 
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm">
             <Link href={"/author" as Route} className="flex items-center ">
-              <Avatar sizeClass="h-9 w-9" radius="rounded-full" />
+              <Avatar
+                imgUrl={user.imageUrl as string}
+                sizeClass="h-9 w-9"
+                radius="rounded-full"
+              />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
                 <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
-                  <span>{personNames[1]}</span>
+                  <span>{user.name}</span>
                   <VerifyIcon iconClass="w-4 h-4" />
                 </span>
               </span>
@@ -67,7 +82,9 @@ const NftDetailPage = ({}) => {
         {/* <div className="py-9">
           <TimeCountDown />
         </div> */}
-
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
+          {data && data[0] ? data[0].name : "Loading..."}
+        </h2>
         {/* ---------- 7 ----------  */}
         {/* PRICE */}
         <div className="pb-9 pt-14">
@@ -77,11 +94,12 @@ const NftDetailPage = ({}) => {
                 Price
               </span>
               <span className="text-3xl xl:text-4xl font-semibold text-green-500">
-                1.000 ETH
+                {data && data[0] ? data[0].price : "Loading..."}
               </span>
-              <span className="text-lg text-neutral-400 sm:ml-5">
+
+              {/* <span className="text-lg text-neutral-400 sm:ml-5">
                 ( ≈ $3,221.22)
-              </span>
+              </span> */}
             </div>
 
             {/* <span className="text-sm text-neutral-500 dark:text-neutral-400 ml-5 mt-2 sm:mt-0 sm:ml-10">
@@ -124,6 +142,7 @@ const NftDetailPage = ({}) => {
 
               <span className="ml-2.5">Upload Item</span>
             </ButtonPrimary>
+
             {/* <ButtonSecondary
               href={"/connect-wallet" as Route}
               className="flex-1"
@@ -162,6 +181,11 @@ const NftDetailPage = ({}) => {
               <span className="ml-2.5"> Make offer</span>
             </ButtonSecondary> */}
           </div>
+          <div className="pt-20"></div>
+          <AccordionInfo
+            description={data && data[0] ? data[0].description : ""}
+            imageSize={data && data[0] ? data[0].size : ""}
+          />
         </div>
 
         {/* ---------- 9 ----------  */}
@@ -182,7 +206,7 @@ const NftDetailPage = ({}) => {
             {/* HEADING */}
             <div className="relative">
               <NcImage
-                src={nftsLargeImgs[0]}
+                src={data && data[0] ? data[0].image_url : ""}
                 containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden z-0 relative"
                 fill
               />
@@ -192,7 +216,6 @@ const NftDetailPage = ({}) => {
               {/* META FAVORITES */}
               <LikeButton className="absolute right-3 top-3 " />
             </div>
-            <AccordionInfo />
           </div>
 
           {/* SIDEBAR */}

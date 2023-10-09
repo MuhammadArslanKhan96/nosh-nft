@@ -24,7 +24,7 @@ const NftForSalePage = ({}) => {
   const { isLoading } = useQuery({
     queryKey: ["nfts"],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:8080/nfts/getAll`);
+      const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
       const onSaleNfts = data.result.filter((nft: any) => nft.on_sale === true);
       setNft(onSaleNfts);
       setRows(data.result.length);

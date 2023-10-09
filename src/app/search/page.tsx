@@ -15,6 +15,8 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import Loading from "../loading";
 
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
+
 interface nft {
   id: number;
   image_url: string;
@@ -32,7 +34,7 @@ const PageSearch = ({}) => {
   const { isLoading } = useQuery({
     queryKey: ["nfts"],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:8080/nfts/getAll`);
+      const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
       setNft(data.result);
       return data.result;
     },
