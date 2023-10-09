@@ -9,6 +9,8 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import Image from "next/image";
 import { useUserContext } from "@/hooks/useUserContext";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export interface CardNFTProps {
@@ -32,6 +34,7 @@ const CardNFT: FC<CardNFTProps> = ({
   price,
   currentOwner,
 }) => {
+  const router = useRouter();
   const [username, setUserName] = useState<string | null>();
   useEffect(() => {
     axios
@@ -93,9 +96,12 @@ const CardNFT: FC<CardNFTProps> = ({
       })
       .then((response) => {
         console.log(response.data.status);
+        router.push("/nft");
+        toast.success("NFT bought successfully");
       })
       .catch((error) => {
         console.log(error);
+        toast.error("Error occured while buying NFT");
       });
   };
 

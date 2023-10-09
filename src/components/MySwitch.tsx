@@ -14,7 +14,7 @@ export interface MySwitchProps {
 const MySwitch: FC<MySwitchProps> = ({
   enabled = false,
   label = "Put on sale",
-  desc = "You’ll receive bids on this item",
+  desc = "Your NFT will be available for sale on the marketplace",
   className = "",
   onChange,
 }) => {

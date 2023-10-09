@@ -19,6 +19,7 @@ import Loading from "../loading";
 import { useUserContext } from "@/hooks/useUserContext";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
+import MySwitch from "@/components/MySwitch";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -44,6 +45,7 @@ const PageUploadItem = () => {
   const token = Cookies.get("loginToken");
   const userId = Cookies.get("userId");
   const formData = new FormData();
+  const [isOnSale, setIsOnSale] = useState(false);
   const [collections, setCollections] = useState<collection[]>([]);
   const [collectionRows, setCollectionRows] = useState<number | null>(null);
   const [file, setFile] = useState<File | null>(null);
@@ -144,7 +146,7 @@ const PageUploadItem = () => {
           size: data.size,
           properties: data.properties,
           price: data.price,
-          onSale: true,
+          onSale: isOnSale,
           primaryOwner: user.id,
           currentOwner: user.id,
           collectionId: selectedCollectionId,
@@ -470,7 +472,7 @@ const PageUploadItem = () => {
               </div>
 
               {/* ---- */}
-              {/* <MySwitch enabled /> */}
+              <MySwitch enabled={isOnSale} onChange={setIsOnSale} />
 
               {/* ---- */}
               {/* <MySwitch

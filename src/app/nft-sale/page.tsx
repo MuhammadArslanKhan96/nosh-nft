@@ -13,6 +13,7 @@ interface nft {
   description: string;
   price: string;
   current_owner: string;
+  on_sale: boolean;
 }
 const NftForSalePage = ({}) => {
   const { user } = useUserContext();
@@ -23,7 +24,10 @@ const NftForSalePage = ({}) => {
       .get(`${apiBaseUrl}/nfts/getsale/${userId}`)
       .then((response) => {
         console.log(response.data);
-        setNft(response.data.result);
+        const onSaleNfts = response.data.result.filter(
+          (nft: any) => nft.on_sale === true
+        );
+        setNft(onSaleNfts);
       })
       .catch((err) => {
         console.log(err);
