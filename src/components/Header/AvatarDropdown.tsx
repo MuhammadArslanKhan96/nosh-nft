@@ -23,6 +23,8 @@ export default function AvatarDropdown() {
         },
       })
       .then((res) => {
+        Cookies.remove("loginToken");
+        Cookies.remove("userId");
         console.log(res.data);
         loginRouter.push("/login" as Route);
       })

@@ -66,7 +66,7 @@ const PageCollection = ({
     queryKey: ["nft"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${apiBaseUrl}/nfts/get/${params.get("id")}`
+        `${apiBaseUrl}/nftcollection/get/${params.get("id")}`
       );
       console.log(data.result);
       setNfts(data.result);
