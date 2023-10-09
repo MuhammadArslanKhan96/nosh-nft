@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import Logo from "@/shared/Logo/Logo";
 import MenuBar from "@/shared/MenuBar/MenuBar";
 import SwitchDarkMode from "@/shared/SwitchDarkMode/SwitchDarkMode";
@@ -20,9 +20,9 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   const userContext = useUserContext();
   const router = usePathname();
 
-  useEffect(() => {
-    console.log(userContext.user);
-  }, [router, userContext, userContext.user, userContext.user.id]);
+  // useEffect(() => {
+  //   console.log(userContext.user);
+  // }, [router, userContext, userContext.user, userContext.user.id]);
 
   return (
     <div className={`nc-MainNav2Logged relative z-10`}>

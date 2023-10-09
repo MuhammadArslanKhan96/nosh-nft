@@ -8,12 +8,23 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
+interface NFT {
+  nft_name: string;
+  nft_image_url: string;
+}
 interface collection {
   id: string;
   name: string;
   description: string;
   price: string;
   current_owner: string;
+  collection_id: string;
+  nft_image_url: string;
+  collection_name: string;
+  collection_description: string;
+  user_name: string;
+  user_image_url: string;
+  nfts: NFT[];
 }
 const MyCollectionPage = ({}) => {
   const { user } = useUserContext();
@@ -24,7 +35,7 @@ const MyCollectionPage = ({}) => {
     queryKey: ["collection"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${apiBaseUrl}/collection/get/${userId}`
+        `http://localhost:8080/collection/get/${userId}`
       );
       console.log(data.result);
       setRows(data.result.length);
@@ -90,10 +101,13 @@ const MyCollectionPage = ({}) => {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-8 gap-y-10  mt-8 lg:mt-10">
                 {collections.map((collection, index) => (
                   <CollectionCard
-                    key={collection.id}
-                    id={collection.id}
-                    name={collection.name}
-                    description={collection.description}
+                    key={collection.collection_id}
+                    imgs={collection.nfts[0]?.nft_image_url}
+                    username={collection.user_name}
+                    id={collection.collection_id}
+                    name={collection.collection_name}
+                    description={collection.collection_description}
+                    userImageUrl={collection.user_image_url}
                   />
                 ))}
               </div>

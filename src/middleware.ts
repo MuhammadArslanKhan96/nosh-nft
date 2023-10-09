@@ -17,6 +17,5 @@ export const config = {
     "/nft",
     "/create-collection",
     "/my-collection",
-    "/collection",
   ],
 };

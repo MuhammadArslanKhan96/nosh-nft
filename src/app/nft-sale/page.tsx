@@ -19,6 +19,7 @@ interface nft {
 const NftForSalePage = ({}) => {
   const userId = Cookies.get("userId");
   const [nft, setNft] = useState<nft[]>([]);
+  const [row, setRows] = useState<number | null>(null);
 
   const { isLoading } = useQuery({
     queryKey: ["nfts"],
@@ -26,6 +27,7 @@ const NftForSalePage = ({}) => {
       const { data } = await axios.get(`http://localhost:8080/nfts/getAll`);
       const onSaleNfts = data.result.filter((nft: any) => nft.on_sale === true);
       setNft(onSaleNfts);
+      setRows(data.result.length);
       return onSaleNfts;
     },
   });
@@ -65,14 +67,30 @@ const NftForSalePage = ({}) => {
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
           {/* HEADING */}
-          <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl font-semibold">
-              NFTs for sale
-            </h2>
-            <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              You can buy NFTS here.
-            </span>
-          </div>
+          {row == 0 ? (
+            <>
+              <div className="max-w-2xl">
+                <h2 className="text-3xl sm:text-4xl font-semibold">
+                  No NFTs for sale
+                </h2>
+                <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                  No NFTs are on sale right now. Please check back later.
+                </span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="max-w-2xl">
+                <h2 className="text-3xl sm:text-4xl font-semibold">
+                  NFTs for sale
+                </h2>
+                <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+                  You can buy NFTS here.
+                </span>
+              </div>
+            </>
+          )}
+
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-8 gap-y-10  mt-8 lg:mt-10">
             {nft.map((nft, index) => (
@@ -81,7 +99,6 @@ const NftForSalePage = ({}) => {
                 id={nft.id}
                 imageUrl={nft.image_url}
                 name={nft.name}
-                description={nft.description}
                 price={nft.price}
                 currentOwner={nft.current_owner}
                 onSale={nft.on_sale}

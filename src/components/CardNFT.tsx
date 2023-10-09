@@ -71,6 +71,44 @@ const CardNFT: FC<CardNFTProps> = ({
     }
   }, []);
 
+  const handleSubmit = async () => {
+    if (userId) {
+      await axios
+        .put(`${apiBaseUrl}/nfts/update/${userId}`, {
+          id: id,
+        })
+        .then((response) => {
+          console.log(response.data);
+          router.push("/nft");
+          toast.success("NFT bought successfully");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Error occured while buying NFT");
+        });
+    }
+    if (!userId) {
+      toast.error("Please login to buy NFT");
+    }
+  };
+  const handleOnSale = async () => {
+    if (userId) {
+      await axios
+        .put(`http://localhost:8080/nfts/update-nft/${id}`, {
+          status: true,
+        })
+        .then((response) => {
+          console.log(response.data);
+          router.push("/nft-sale");
+          toast.success("NFT added for sale on marketplace");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Error occured while putting NFT on sale");
+        });
+    }
+  };
+
   const renderAvatars = () => {
     return (
       <div className="flex -space-x-1 ">
@@ -92,43 +130,6 @@ const CardNFT: FC<CardNFTProps> = ({
         />
       </div>
     );
-  };
-  const handleSubmit = async () => {
-    if (userId) {
-      await axios
-        .put(`${apiBaseUrl}/nfts/update/${userId}`, {
-          id: id,
-        })
-        .then((response) => {
-          console.log(response.data.status);
-          router.push("/nft");
-          toast.success("NFT bought successfully");
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Error occured while buying NFT");
-        });
-    }
-    if (!userId) {
-      toast.error("Please login to buy NFT");
-    }
-  };
-  const handleOnSale = async () => {
-    if (userId) {
-      await axios
-        .put(`http://localhost:8080/nfts/update/${userId}`, {
-          id: id,
-        })
-        .then((response) => {
-          console.log(response.data.status);
-          router.push("/nft-sale");
-          toast.success("NFT added for sale on marketplace");
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Error occured while buying NFT");
-        });
-    }
   };
 
   return (

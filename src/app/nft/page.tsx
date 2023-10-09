@@ -15,6 +15,7 @@ interface nft {
   description: string;
   price: string;
   current_owner: string;
+  on_sale: boolean;
 }
 const MyNftPage = ({}) => {
   const { user } = useUserContext();
@@ -76,11 +77,12 @@ const MyNftPage = ({}) => {
                 {nft.map((nft, index) => (
                   <CardNFT
                     key={nft.id}
+                    id={nft.id}
                     imageUrl={nft.image_url}
                     name={nft.name}
-                    // description={nft.description}
                     price={nft.price}
                     currentOwner={nft.current_owner}
+                    onSale={nft.on_sale}
                   />
                 ))}
               </div>

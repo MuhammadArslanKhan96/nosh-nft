@@ -23,6 +23,7 @@ interface nft {
   name: string;
   description: string;
   current_owner: string;
+  on_sale: boolean;
 }
 let AccountActions = [
   {
@@ -237,7 +238,7 @@ const PageCollection = ({
                 currentOwner={nft.current_owner}
                 imageUrl={nft.image_url}
                 price={nft.price}
-                description={nft.description}
+                onSale={nft.on_sale}
               />
             ))}
           </div>

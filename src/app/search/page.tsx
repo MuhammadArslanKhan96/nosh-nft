@@ -109,7 +109,6 @@ const PageSearch = ({}) => {
                 id={nft.id}
                 imageUrl={nft.image_url}
                 name={nft.name}
-                description={nft.description}
                 price={nft.price}
                 currentOwner={nft.current_owner}
                 onSale={nft.on_sale}

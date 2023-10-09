@@ -38,6 +38,11 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
+    href: "/all-collection" as Route,
+    name: "NFT Collections",
+  },
+  {
+    id: ncNanoId(),
     href: "/upload-item" as Route,
     name: "Upload Item",
     type: "dropdown",

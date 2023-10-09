@@ -59,7 +59,6 @@ const page = () => {
                 key={nft.id}
                 imageUrl={nft.image_url}
                 name={nft.name}
-                description={nft.description}
                 price={nft.price}
                 currentOwner={nft.current_owner}
               />

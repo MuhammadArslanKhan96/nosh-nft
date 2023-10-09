@@ -1,4 +1,3 @@
-import { nftsImgs } from "@/contains/fakeData";
 import { FC } from "react";
 import Avatar from "@/shared/Avatar/Avatar";
 import NcImage from "@/shared/NcImage/NcImage";
@@ -8,18 +7,22 @@ import { useUserContext } from "@/hooks/useUserContext";
 
 export interface CollectionCardProps {
   className?: string;
-  imgs?: string[];
+  imgs: string;
   name?: string;
   id?: string;
   description?: string;
+  username?: string;
+  userImageUrl?: string;
 }
 
 const CollectionCard: FC<CollectionCardProps> = ({
   className,
-  imgs = [nftsImgs[9], nftsImgs[10], nftsImgs[11], nftsImgs[8]],
+  imgs,
   name,
   id,
   description,
+  username,
+  userImageUrl,
 }) => {
   const { user } = useUserContext();
   return (
@@ -29,7 +32,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
       <NcImage
         fill
         containerClassName="absolute inset-0 z-0 overflow-hidden"
-        src={imgs[0]}
+        src={imgs}
       />
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 group-hover:h-full to-transparent "></div>
 
@@ -37,14 +40,14 @@ const CollectionCard: FC<CollectionCardProps> = ({
         {/* AUTHOR */}
         <div className="flex items-center">
           <Avatar
-            imgUrl={user.imageUrl ? user.imageUrl : ""}
+            imgUrl={user.imageUrl ? user.imageUrl : userImageUrl}
             sizeClass="h-6 w-6"
             containerClassName="ring-2 ring-white"
           />
           <div className="ml-2 text-xs text-white">
             <span className="font-normal">by</span>
             {` `}
-            <span className="font-medium">{user.name}</span>
+            <span className="font-medium">{username}</span>
           </div>
           <VerifyIcon iconClass="w-4 h-4" />
         </div>
@@ -52,7 +55,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
         <h2 className="font-semibold text-3xl mt-1.5 text-white">{name}</h2>
         {/* LISTS */}
         <div className="grid grid-cols-3 gap-4 mt-5">
-          <NcImage
+          {/* <NcImage
             containerClassName="relative z-0 w-full h-20 rounded-xl overflow-hidden"
             fill
             src={imgs[1]}
@@ -66,7 +69,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
             containerClassName="relative z-0 w-full h-20 rounded-xl overflow-hidden"
             fill
             src={imgs[3]}
-          />
+          /> */}
         </div>
       </div>
       <Link
