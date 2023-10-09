@@ -5,8 +5,6 @@ import NcImage from "@/shared/NcImage/NcImage";
 import { nftsImgs } from "@/contains/fakeData";
 import VerifyIcon from "@/components/VerifyIcon";
 import SocialsList from "@/shared/SocialsList/SocialsList";
-import NftMoreDropdown from "@/components/NftMoreDropdown";
-import ButtonDropDownShare from "@/components/ButtonDropDownShare";
 import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import ArchiveFilterListBox from "@/components/ArchiveFilterListBox";
 import { usePathname } from "next/navigation";
@@ -104,7 +102,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
             <div className="absolute md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5 flex flex-row-reverse justify-end">
-              <NftMoreDropdown
+              {/* <NftMoreDropdown
                 actions={[
                   {
                     id: "report",
@@ -116,11 +114,11 @@ const Layout = ({ children }: { children: ReactNode }) => {
                   },
                 ]}
                 containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
-              />
-              <ButtonDropDownShare
+              /> */}
+              {/* <ButtonDropDownShare
                 className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer mx-2"
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
-              />
+              /> */}
 
               {/* <FollowButton
                 isFollowing={false}

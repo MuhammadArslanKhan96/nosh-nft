@@ -1,7 +1,5 @@
 "use client";
 import CardNFT from "@/components/CardNFT";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import Pagination from "@/shared/Pagination/Pagination";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -68,8 +66,8 @@ const page = () => {
             ))}
           </div>
           <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
-            <ButtonPrimary>Show me more</ButtonPrimary>
+            {/* <Pagination />
+            <ButtonPrimary>Show me more</ButtonPrimary> */}
           </div>
         </>
       )}
