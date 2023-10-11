@@ -13,7 +13,6 @@ export const config = {
   matcher: [
     "/upload-item",
     "/account",
-    "/author",
     "/nft",
     "/create-collection",
     "/my-collection",

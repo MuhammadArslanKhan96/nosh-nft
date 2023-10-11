@@ -5,7 +5,6 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import FormItem from "@/components/FormItem";
-import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import dynamic from "next/dynamic";
 import { Route } from "next";
 import axios from "axios";
@@ -66,7 +65,7 @@ const PageUploadItem = () => {
     queryKey: ["collections"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${apiBaseUrl}/collection/get/${userId}`
+        `${apiBaseUrl}/collection/get-user/${userId}`
       );
       console.log(data.result);
       setCollectionRows(data.result.length);
@@ -161,7 +160,7 @@ const PageUploadItem = () => {
       .then((response) => {
         console.log(response.data);
         toast.success("NFT created successfully");
-        homeRouter.push("/nft" as Route);
+        homeRouter.push("/nft-detail" as Route);
       })
       .catch((error) => {
         console.log(error);
@@ -496,10 +495,10 @@ const PageUploadItem = () => {
                 >
                   Upload item
                 </ButtonPrimary>
-
+                {/* 
                 <ButtonSecondary href="/nft-detail" className="flex-1">
                   Preview item
-                </ButtonSecondary>
+                </ButtonSecondary> */}
               </div>
             </form>
           </div>

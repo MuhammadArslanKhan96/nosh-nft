@@ -1,13 +1,8 @@
 "use client";
-import BackgroundSection from "@/components/BackgroundSection/BackgroundSection";
 import CardNFT from "@/components/CardNFT";
 import HeaderFilterSearchPage from "@/components/HeaderFilterSearchPage";
-import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
-import SectionSliderCollections from "@/components/SectionSliderCollections";
 import ButtonCircle from "@/shared/Button/ButtonCircle";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
-import Pagination from "@/shared/Pagination/Pagination";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -119,20 +114,20 @@ const PageSearch = ({}) => {
           </div>
 
           {/* PAGINATION */}
-          <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+          {/* <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
             <ButtonPrimary loading>Show me more</ButtonPrimary>
-          </div>
+          </div> */}
         </main>
 
         {/* === SECTION 5 === */}
-        <div className="relative py-16 lg:py-28">
+        {/* <div className="relative py-16 lg:py-28">
           <BackgroundSection />
           <SectionSliderCollections />
-        </div>
+        </div> */}
 
         {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
+        {/* <SectionBecomeAnAuthor /> */}
       </div>
     </div>
   );

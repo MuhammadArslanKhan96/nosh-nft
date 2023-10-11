@@ -40,7 +40,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
         {/* AUTHOR */}
         <div className="flex items-center">
           <Avatar
-            imgUrl={user.imageUrl ? user.imageUrl : userImageUrl}
+            imgUrl={userImageUrl ? userImageUrl : userImageUrl}
             sizeClass="h-6 w-6"
             containerClassName="ring-2 ring-white"
           />

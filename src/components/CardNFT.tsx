@@ -8,7 +8,6 @@ import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import Image from "next/image";
-import { useUserContext } from "@/hooks/useUserContext";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -59,7 +58,6 @@ const CardNFT: FC<CardNFTProps> = ({
       });
   }, []);
 
-  const { user } = useUserContext();
   const [itemType, setItemType] = useState<"video" | "audio" | "default">(
     "default"
   );
@@ -77,6 +75,7 @@ const CardNFT: FC<CardNFTProps> = ({
       await axios
         .put(`${apiBaseUrl}/nfts/update/${userId}`, {
           id: id,
+          status: false,
         })
         .then((response) => {
           console.log(response.data);

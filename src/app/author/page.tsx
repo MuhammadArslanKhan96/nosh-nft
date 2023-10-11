@@ -13,6 +13,7 @@ interface nft {
   description: string;
   price: string;
   current_owner: string;
+  on_sale: boolean;
 }
 
 const page = () => {
@@ -30,25 +31,13 @@ const page = () => {
     },
     cacheTime: Infinity,
   });
-  // useLayoutEffect(() => {
-  //   axios
-  //     .get(`${apiBaseUrl}/nfts/get/${userId}`)
-  //     .then((response) => {
-  //       console.log(response.data.result);
-  //       console.log(response.data.result.length);
-  //       setRows(response.data.result.length);
-  //       setNft(response.data.result);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+
   return (
     <div>
       {row === 0 ? (
         <>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10  mt-8 lg:mt-10">
-            <h1>No NFTs Found</h1>
+          <div className="">
+            <h1 className="text-center pt-10">No NFTs Found</h1>
           </div>
         </>
       ) : (
@@ -61,6 +50,7 @@ const page = () => {
                 name={nft.name}
                 price={nft.price}
                 currentOwner={nft.current_owner}
+                onSale={nft.on_sale}
               />
             ))}
           </div>

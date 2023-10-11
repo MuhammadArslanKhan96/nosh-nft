@@ -3,10 +3,6 @@ import { ReactNode } from "react";
 import authorBanner from "@/images/nfts/authorBanner.png";
 import NcImage from "@/shared/NcImage/NcImage";
 import { nftsImgs } from "@/contains/fakeData";
-import VerifyIcon from "@/components/VerifyIcon";
-import SocialsList from "@/shared/SocialsList/SocialsList";
-import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
-import ArchiveFilterListBox from "@/components/ArchiveFilterListBox";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Route } from "next";
@@ -66,16 +62,16 @@ const Layout = ({ children }: { children: ReactNode }) => {
               <div className="max-w-screen-sm ">
                 <h2 className="inline-flex items-center text-2xl sm:text-3xl lg:text-4xl font-semibold">
                   <span>{user.name}</span>
-                  <VerifyIcon
+                  {/* <VerifyIcon
                     className="ml-2"
                     iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
-                  />
+                  /> */}
                 </h2>
                 <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
                   <span className="text-neutral-700 dark:text-neutral-300">
                     {user.email}
                   </span>
-                  <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
+                  {/* <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <path
                       d="M18.05 9.19992L17.2333 12.6833C16.5333 15.6916 15.15 16.9083 12.55 16.6583C12.1333 16.6249 11.6833 16.5499 11.2 16.4333L9.79999 16.0999C6.32499 15.2749 5.24999 13.5583 6.06665 10.0749L6.88332 6.58326C7.04999 5.87492 7.24999 5.25826 7.49999 4.74992C8.47499 2.73326 10.1333 2.19159 12.9167 2.84993L14.3083 3.17493C17.8 3.99159 18.8667 5.71659 18.05 9.19992Z"
                       stroke="currentColor"
@@ -90,7 +86,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                  </svg>
+                  </svg> */}
                 </div>
 
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
@@ -98,7 +94,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 </span>
               </div>
               <div className="mt-4 ">
-                <SocialsList itemClass="block w-7 h-7" />
+                {/* <SocialsList itemClass="block w-7 h-7" /> */}
               </div>
             </div>
             <div className="absolute md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5 flex flex-row-reverse justify-end">
@@ -152,9 +148,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 );
               })}
             </div>
-            <div className="mt-5 lg:mt-0 flex items-end justify-end">
+            {/* <div className="mt-5 lg:mt-0 flex items-end justify-end">
               <ArchiveFilterListBox />
-            </div>
+            </div> */}
           </div>
 
           {/*  */}
@@ -168,7 +164,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
         </div> */}
 
         {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
+        {/* <SectionBecomeAnAuthor /> */}
       </div>
     </div>
   );

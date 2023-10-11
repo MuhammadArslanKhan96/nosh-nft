@@ -2,11 +2,6 @@
 import NcImage from "@/shared/NcImage/NcImage";
 import collectionBanner from "@/images/nfts/collectionBanner.png";
 import { nftsImgs } from "@/contains/fakeData";
-import ButtonDropDownShare from "@/components/ButtonDropDownShare";
-import NftMoreDropdown from "@/components/NftMoreDropdown";
-import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
-import BackgroundSection from "@/components/BackgroundSection/BackgroundSection";
-import SectionSliderCollections from "@/components/SectionSliderCollections";
 import { useState } from "react";
 import axios from "axios";
 import CardNFT from "@/components/CardNFT";
@@ -76,12 +71,8 @@ const PageCollection = ({
     cacheTime: Infinity,
   });
 
-  if (isLoading)
-    return (
-      <>
-        <Loading />
-      </>
-    );
+  if (isLoading) <Loading />;
+
   return (
     <div className={`nc-PageCollection`}>
       {/* HEADER */}
@@ -105,7 +96,7 @@ const PageCollection = ({
                   sizes="300px"
                 />
               </div>
-              <div className="mt-4 flex items-center sm:justify-center space-x-3">
+              {/* <div className="mt-4 flex items-center sm:justify-center space-x-3">
                 <div className="flex space-x-1.5 text-neutral-700 dark:text-neutral-300">
                   <a
                     href="##"
@@ -143,9 +134,9 @@ const PageCollection = ({
                       </g>
                     </svg>
                   </a>
-                </div>
+                </div> 
                 <div className="h-5 border-l border-neutral-200 dark:border-neutral-700"></div>
-                <div className="flex space-x-1.5">
+                div className="flex space-x-1.5">
                   <ButtonDropDownShare
                     className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer "
                     panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
@@ -154,8 +145,8 @@ const PageCollection = ({
                     actions={AccountActions}
                     containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
                   />
-                </div>
-              </div>
+                </div> 
+              </div> */}
             </div>
             <div className="mt-5 md:mt-0 md:ml-8 xl:ml-14 flex-grow">
               <div className="max-w-screen-sm ">
@@ -238,13 +229,13 @@ const PageCollection = ({
             {/* <ButtonPrimary>Show me more</ButtonPrimary> */}
           </div>
         </main>
-
+        {/* 
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
           <SectionSliderCollections />
         </div>
 
-        <SectionBecomeAnAuthor />
+        <SectionBecomeAnAuthor /> */}
       </div>
     </div>
   );

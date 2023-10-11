@@ -1,11 +1,7 @@
 "use client";
-
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import Nav from "@/shared/Nav/Nav";
 import NavItem from "@/shared/NavItem/NavItem";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import TabFilters from "@/components/TabFilters";
 import { Transition } from "@/app/headlessui";
 
 export interface HeaderFilterSearchPageProps {
@@ -25,7 +21,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
           className="sm:space-x-2"
           containerClassName="relative flex w-full overflow-x-auto text-sm md:text-base hiddenScrollbar"
         >
-          {["All NFTs", "Arts", "Music", "Sports", "Jewels"].map(
+          {["All NFTs" /*, "Arts", "Music", "Sports", "Jewels"*/].map(
             (item, index) => (
               <NavItem
                 key={index}
@@ -38,7 +34,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
           )}
         </Nav>
         <span className="block flex-shrink-0 text-right">
-          <ButtonPrimary
+          {/* <ButtonPrimary
             className="w-auto !pr-16"
             sizeClass="pl-4 py-2.5 sm:pl-6"
             onClick={() => {
@@ -83,7 +79,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
                 aria-hidden="true"
               />
             </span>
-          </ButtonPrimary>
+          </ButtonPrimary> */}
         </span>
       </div>
 
@@ -97,7 +93,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
         leaveTo="opacity-0"
       >
         <div className="w-full border-b border-neutral-200/70 dark:border-neutral-700 my-8"></div>
-        <TabFilters />
+        {/* <TabFilters /> */}
       </Transition>
     </div>
   );

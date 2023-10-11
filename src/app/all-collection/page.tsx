@@ -80,7 +80,7 @@ const AllCollectionPage = ({}) => {
                 {collections.map((collection, index) => (
                   <CollectionCard
                     key={collection.collection_id}
-                    imgs={collection.nfts[0]?.nft_image_url}
+                    imgs={collection.nfts[index]?.nft_image_url}
                     username={collection.user_name}
                     id={collection.collection_id}
                     name={collection.collection_name}

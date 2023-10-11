@@ -2,11 +2,8 @@
 import ItemTypeVideoIcon from "@/components/ItemTypeVideoIcon";
 import LikeButton from "@/components/LikeButton";
 import NcImage from "@/shared/NcImage/NcImage";
-import Badge from "@/shared/Badge/Badge";
-import LikeSaveBtns from "./LikeSaveBtns";
 import Avatar from "@/shared/Avatar/Avatar";
 import collectionPng from "@/images/nfts/collection.png";
-import VerifyIcon from "@/components/VerifyIcon";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Link from "next/link";
 import { Route } from "next";
@@ -36,27 +33,35 @@ const NftDetailPage = ({}) => {
         {/* ---------- 1 ----------  */}
         <div className="pb-9 space-y-5">
           <div className="flex justify-between items-center">
-            <Badge
+            {/* <Badge
               href={"/collection" as Route}
               name="Virtual Worlds"
               color="green"
-            />
-            <LikeSaveBtns />
+            /> */}
+            {/* <LikeSaveBtns /> */}
           </div>
 
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm">
             <Link href={"/author" as Route} className="flex items-center ">
               <Avatar
-                imgUrl={user.imageUrl as string}
+                imgUrl={
+                  user.imageUrl
+                    ? (user.imageUrl as string)
+                    : data && data[0]
+                    ? data[0].user_image
+                    : ""
+                }
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
               />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
                 <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
-                  <span>{user.name}</span>
-                  <VerifyIcon iconClass="w-4 h-4" />
+                  <span>
+                    {data && data[0] ? data[0].creator_name : "Loading..."}
+                  </span>
+                  {/* <VerifyIcon iconClass="w-4 h-4" /> */}
                 </span>
               </span>
             </Link>
@@ -70,8 +75,8 @@ const NftDetailPage = ({}) => {
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Collection</span>
                 <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
-                  <span>{"The Moon Ape"}</span>
-                  <VerifyIcon iconClass="w-4 h-4" />
+                  <span> {data && data[0] ? data[0].name : "Loading..."}</span>
+                  {/* <VerifyIcon iconClass="w-4 h-4" /> */}
                 </span>
               </span>
             </Link>
@@ -83,7 +88,7 @@ const NftDetailPage = ({}) => {
           <TimeCountDown />
         </div> */}
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-          {data && data[0] ? data[0].name : "Loading..."}
+          {data && data[0] ? data[0].nft_name : "Loading..."}
         </h2>
         {/* ---------- 7 ----------  */}
         {/* PRICE */}
@@ -95,6 +100,9 @@ const NftDetailPage = ({}) => {
               </span>
               <span className="text-3xl xl:text-4xl font-semibold text-green-500">
                 {data && data[0] ? data[0].price : "Loading..."}
+              </span>
+              <span className="text-2xl xl:text-1xl ps-5 font-semibold text-green-500">
+                ETH
               </span>
 
               {/* <span className="text-lg text-neutral-400 sm:ml-5">
@@ -140,7 +148,7 @@ const NftDetailPage = ({}) => {
                 />
               </svg>
 
-              <span className="ml-2.5">Upload Item</span>
+              <span className="ml-2.5">Buy</span>
             </ButtonPrimary>
 
             {/* <ButtonSecondary
@@ -183,7 +191,7 @@ const NftDetailPage = ({}) => {
           </div>
           <div className="pt-20"></div>
           <AccordionInfo
-            description={data && data[0] ? data[0].description : ""}
+            description={data && data[0] ? data[0].nft_description : ""}
             imageSize={data && data[0] ? data[0].size : ""}
           />
         </div>
