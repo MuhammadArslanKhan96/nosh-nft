@@ -160,7 +160,7 @@ const PageUploadItem = () => {
       .then((response) => {
         console.log(response.data);
         toast.success("NFT created successfully");
-        homeRouter.push("/nft-detail" as Route);
+        homeRouter.push("/nft" as Route);
       })
       .catch((error) => {
         console.log(error);
