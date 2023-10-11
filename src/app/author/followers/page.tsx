@@ -29,7 +29,7 @@ const page = () => {
 
   return (
     <div className="pt-10 py-10">
-      {follower && (
+      {follower ? (
         <Listbox as="div" className="space-y-2">
           {/* <Listbox.Label className="block text-sm font-medium text-gray-700">
             Follower
@@ -48,6 +48,8 @@ const page = () => {
             </Listbox.Button>
           </div>
         </Listbox>
+      ) : (
+        <h1 className="pt-10 text-center">No one is following you right now</h1>
       )}
 
       {/* <h1 className="text-center pt-10">No NFTs Found</h1> */}

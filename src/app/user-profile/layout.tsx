@@ -140,17 +140,24 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer mx-2"
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               /> */}
-              {userId === params.get("id") ? (
-                <></>
-              ) : (
+
+              {userId ? (
                 <>
-                  <FollowButton
-                    followerId={userId}
-                    followingId={params.get("id") as string}
-                    fontSize="text-sm md:text-base font-medium"
-                    sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
-                  />
+                  {userId == params.get("id") ? (
+                    <></>
+                  ) : (
+                    <>
+                      <FollowButton
+                        followerId={userId}
+                        followingId={params.get("id") as string}
+                        fontSize="text-sm md:text-base font-medium"
+                        sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
+                      />
+                    </>
+                  )}
                 </>
+              ) : (
+                <></>
               )}
             </div>
           </div>
