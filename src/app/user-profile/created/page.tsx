@@ -22,7 +22,9 @@ const page = () => {
   const {} = useQuery({
     queryKey: ["nft"],
     queryFn: async () => {
-      const { data } = await axios.get(`${apiBaseUrl}/nfts/get/${userId}`);
+      const { data } = await axios.get(
+        `${apiBaseUrl}/nfts/get-nft-primary/${userId}`
+      );
       console.log(data.result);
       setRows(data.result.length);
       setNft(data.result);

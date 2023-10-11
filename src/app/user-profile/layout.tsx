@@ -46,10 +46,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
       name: "Created",
       href: "/user-profile/created",
     },
-    {
-      name: "Liked",
-      href: "/user-profile/liked",
-    },
+    // {
+    //   name: "Liked",
+    //   href: "/user-profile/liked",
+    // },
     {
       name: "Following",
       href: "/user-profile/following",
@@ -144,9 +144,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 <></>
               ) : (
                 <>
-                  {" "}
                   <FollowButton
-                    isFollowing={false}
+                    followerId={userId}
+                    followingId={params.get("id") as string}
                     fontSize="text-sm md:text-base font-medium"
                     sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
                   />

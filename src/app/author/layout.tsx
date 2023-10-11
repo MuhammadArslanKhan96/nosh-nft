@@ -19,10 +19,10 @@ const Layout = ({ children }: { children: ReactNode }) => {
       name: "Created",
       href: "/author/created",
     },
-    {
-      name: "Liked",
-      href: "/author/liked",
-    },
+    // {
+    //   name: "Liked",
+    //   href: "/author/liked",
+    // },
     {
       name: "Following",
       href: "/author/following",
