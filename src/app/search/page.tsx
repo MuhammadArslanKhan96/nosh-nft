@@ -24,6 +24,7 @@ interface nft {
 
 const PageSearch = ({}) => {
   const userId = Cookies.get("userId");
+  const [search, setSearch] = useState("");
   const [nft, setNft] = useState<nft[]>([]);
 
   const { isLoading } = useQuery({
@@ -35,6 +36,14 @@ const PageSearch = ({}) => {
     },
   });
   if (isLoading) <Loading />;
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+  };
+
+  const filteredNfts = nft.filter((nft: nft) =>
+    nft.name.toLowerCase().includes(search.toLowerCase())
+  );
   return (
     <div className={`nc-PageSearch `}>
       <div
@@ -55,6 +64,8 @@ const PageSearch = ({}) => {
                 placeholder="Type your keywords"
                 sizeClass="pl-14 py-5 pr-5 md:pl-16"
                 rounded="rounded-full"
+                value={search}
+                onChange={handleSearch}
               />
 
               <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-2xl md:left-6">
@@ -100,7 +111,7 @@ const PageSearch = ({}) => {
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-            {nft.map((nft, index) => (
+            {filteredNfts.map((nft, index) => (
               <CardNFT
                 key={nft.id}
                 id={nft.id}

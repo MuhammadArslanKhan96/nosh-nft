@@ -174,7 +174,18 @@ const CardNFT: FC<CardNFTProps> = ({
         <h2 className={`text-lg font-medium`}>{description}</h2>
 
         <div>
-          <h5>By {username}</h5>
+          <h5>
+            <Link
+              href={{
+                pathname: "/user-profile",
+                query: {
+                  id: currentOwner,
+                },
+              }}
+            >
+              By {!username ? "Loading..." : username}
+            </Link>
+          </h5>
         </div>
 
         <div className="w-full border-b border-neutral-200/70 dark:border-neutral-700"></div>

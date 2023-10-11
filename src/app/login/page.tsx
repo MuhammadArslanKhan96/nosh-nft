@@ -1,7 +1,5 @@
 "use client";
-import googleSvg from "@/images/Google.svg";
 import Input from "@/shared/Input/Input";
-import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -66,7 +64,7 @@ const PageLogin = () => {
           Login
         </h2>
         <div className="max-w-md mx-auto space-y-6">
-          <div className="grid gap-3">
+          {/* <div className="grid gap-3">
             <a
               onClick={() => toast("Continue with google")}
               key={"Google"}
@@ -83,7 +81,7 @@ const PageLogin = () => {
                 Continue With Google
               </h3>
             </a>
-          </div>
+          </div> */}
           <div className="relative text-center">
             <span className="relative z-10 inline-block px-4 font-medium text-sm bg-white dark:text-neutral-400 dark:bg-neutral-900">
               OR
