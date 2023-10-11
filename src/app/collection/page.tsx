@@ -17,7 +17,7 @@ import { useSearchParams } from "next/navigation";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 interface nft {
-  id: string;
+  id: number;
   image_url: string;
   price: string;
   name: string;
@@ -223,6 +223,7 @@ const PageCollection = ({
             {nfts.map((nft) => (
               <CardNFT
                 key={nft.id}
+                id={nft.id}
                 name={nft.name}
                 currentOwner={nft.current_owner}
                 imageUrl={nft.image_url}
