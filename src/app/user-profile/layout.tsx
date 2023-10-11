@@ -27,7 +27,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     axios
-      .get(`${apiBaseUrl}/get/${params.get("id")}`)
+      .get(`${apiBaseUrl}/user/get/${params.get("id")}`)
       .then((response) => {
         console.log(response.data.result);
         setUser(response.data.result[0]);
