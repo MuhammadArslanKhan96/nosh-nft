@@ -44,6 +44,7 @@ const page = () => {
             {nft.map((nft, index) => (
               <CardNFT
                 key={nft.id}
+                id={nft.id}
                 imageUrl={nft.image_url}
                 name={nft.name}
                 price={nft.price}
