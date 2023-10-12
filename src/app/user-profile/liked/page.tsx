@@ -16,7 +16,7 @@ interface nft {
 }
 
 const page = () => {
-  const userId = useSearchParams().get("userId");
+  const userId = useSearchParams().get("id");
   const [nft, setNft] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
   const {} = useQuery({
