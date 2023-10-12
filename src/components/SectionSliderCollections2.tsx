@@ -1,15 +1,30 @@
 "use client";
-
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import Heading from "@/components/Heading/Heading";
 import CollectionCard from "./CollectionCard";
 import CollectionCard2 from "./CollectionCard2";
-import Nav from "@/shared/Nav/Nav";
-import NavItem2 from "./NavItem2";
-import MySlider from "./MySlider";
-import Link from "next/link";
-import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
+import Loading from "@/app/loading";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
+interface NFT {
+  nft_name: string;
+  nft_image_url: string;
+}
+interface collection {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  current_owner: string;
+  collection_id: string;
+  nft_image_url: string;
+  collection_name: string;
+  collection_description: string;
+  user_name: string;
+  user_image_url: string;
+  nfts: NFT[];
+}
 export interface SectionSliderCollections2Props {
   className?: string;
   itemClassName?: string;
@@ -21,6 +36,24 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
   cardStyle = "style1",
 }) => {
   const [tabActive, setTabActive] = useState("Last 24 hours");
+  const [collections, setCollections] = useState<collection[]>([]);
+  const [row, setRows] = useState<number | null>(null);
+  const { isLoading } = useQuery({
+    queryKey: ["collection"],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `http://localhost:8080/collection/getAll`
+      );
+      console.log(data);
+      console.log(data.result);
+      setRows(data.result.length);
+      setCollections(data.result);
+      return data;
+    },
+    cacheTime: Infinity,
+  });
+
+  if (isLoading) <Loading />;
 
   const MyCollectionCard =
     cardStyle === "style1" ? CollectionCard : CollectionCard2;
@@ -103,7 +136,7 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
         Top List Collections.
       </Heading>
 
-      <Nav
+      {/* <Nav
         className="p-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg"
         containerClassName="mb-12 lg:mb-14 relative flex justify-center w-full text-sm md:text-base"
       >
@@ -122,11 +155,26 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
             </div>
           </NavItem2>
         ))}
-      </Nav>
-
-      <MySlider
+      </Nav> */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-8 gap-y-10  mt-8 lg:mt-10">
+        {collections.map((collection) => {
+          const shuffledNfts = collection.nfts.sort(() => Math.random() - 0.5);
+          return (
+            <CollectionCard
+              key={collection.collection_id}
+              imgs={shuffledNfts[0]?.nft_image_url}
+              username={collection.user_name}
+              id={collection.collection_id}
+              name={collection.collection_name}
+              description={collection.collection_description}
+              userImageUrl={collection.user_image_url}
+            />
+          );
+        })}
+      </div>
+      {/* <MySlider
         itemPerRow={3}
-        data={demoData}
+        data={collections}
         renderItem={(item, index) => {
           if (!item) {
             return (
@@ -157,9 +205,14 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
               </Link>
             );
           }
-          return <MyCollectionCard key={index} imgs={item} />;
+          return (
+            <MyCollectionCard
+              key={index}
+              imgs={item.nfts.map((nft) => nft.nft_image_url)}
+            />
+          );
         }}
-      />
+      /> */}
     </div>
   );
 };

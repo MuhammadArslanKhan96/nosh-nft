@@ -3,10 +3,8 @@ import BgGlassmorphism from "@/components/BgGlassmorphism/BgGlassmorphism";
 import SectionHowItWork from "@/components/SectionHowItWork/SectionHowItWork";
 import SectionLargeSlider from "./SectionLargeSlider";
 import BackgroundSection from "@/components/BackgroundSection/BackgroundSection";
-import SectionGridAuthorBox from "@/components/SectionGridAuthorBox/SectionGridAuthorBox";
 import SectionHero2 from "@/components/SectionHero/SectionHero2";
 import SectionSliderCollections2 from "@/components/SectionSliderCollections2";
-import SectionVideos from "./SectionVideos";
 
 function PageHome() {
   return (
@@ -28,20 +26,20 @@ function PageHome() {
       <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
         {/* <SectionMagazine8 /> */}
 
-        <div className="relative py-20 lg:py-28">
+        {/* <div className="relative py-20 lg:py-28">
           <BackgroundSection />
           <SectionGridAuthorBox
             sectionStyle="style2"
             data={Array.from("11111111")}
             boxCard="box4"
           />
-        </div>
+        </div> */}
 
         {/* <SectionSliderCardNftVideo /> */}
 
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
-          <SectionSliderCollections2 cardStyle="style2" />
+          <SectionSliderCollections2 cardStyle="style1" />
         </div>
 
         {/* <SectionBecomeAnAuthor /> */}
@@ -58,7 +56,7 @@ function PageHome() {
           <SectionSubscribe2 />
         </div> */}
 
-        <SectionVideos />
+        {/* <SectionVideos /> */}
       </div>
     </div>
   );

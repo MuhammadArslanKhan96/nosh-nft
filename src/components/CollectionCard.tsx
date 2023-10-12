@@ -7,7 +7,7 @@ import { useUserContext } from "@/hooks/useUserContext";
 
 export interface CollectionCardProps {
   className?: string;
-  imgs: string | string[];
+  imgs?: string | string[];
   name?: string;
   id?: string;
   description?: string;

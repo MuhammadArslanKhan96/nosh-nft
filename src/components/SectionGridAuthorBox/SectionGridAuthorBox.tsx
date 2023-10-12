@@ -1,15 +1,11 @@
 "use client";
-
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import CardAuthorBox from "@/components/CardAuthorBox/CardAuthorBox";
 import CardAuthorBox2 from "@/components/CardAuthorBox2/CardAuthorBox2";
 import CardAuthorBox3 from "@/components/CardAuthorBox3/CardAuthorBox3";
 import CardAuthorBox4 from "@/components/CardAuthorBox4/CardAuthorBox4";
 import Heading from "@/components/Heading/Heading";
-import NavItem2 from "@/components/NavItem2";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import ButtonSecondary from "@/shared/Button/ButtonSecondary";
-import Nav from "@/shared/Nav/Nav";
 import SortOrderFilter from "./SortOrderFilter";
 
 export interface SectionGridAuthorBoxProps {
@@ -92,7 +88,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
         >
           Top List Creators.
         </Heading>
-        <Nav
+        {/* <Nav
           className="p-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg"
           containerClassName="mb-12 lg:mb-14 relative flex justify-center w-full text-sm md:text-base"
         >
@@ -141,7 +137,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
               </div>
             </NavItem2>
           ))}
-        </Nav>
+        </Nav> */}
       </div>
     );
   };
@@ -153,8 +149,8 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
         {data.map((_, index) => renderCard(index))}
       </div>
       <div className="mt-16 flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-5">
-        <ButtonSecondary>Show me more </ButtonSecondary>
-        <ButtonPrimary>Become a author</ButtonPrimary>
+        {/* <ButtonSecondary>Show me more </ButtonSecondary> */}
+        <ButtonPrimary href="/login">Become a creator</ButtonPrimary>
       </div>
     </div>
   );

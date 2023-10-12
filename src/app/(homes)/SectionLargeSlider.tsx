@@ -1,9 +1,16 @@
 "use client";
-
-import React, { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import CardLarge1 from "@/components/CardLarge1/CardLarge1";
-import { nftsLargeImgs } from "@/contains/fakeData";
+import axios from "axios";
 
+interface nfts {
+  id: string;
+  name: string;
+  image_url: string;
+  creator_name: string;
+  collection_name: string;
+  price: string;
+}
 export interface SectionLargeSliderProps {
   className?: string;
 }
@@ -11,7 +18,23 @@ export interface SectionLargeSliderProps {
 const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
   className = "",
 }) => {
+  const [nfts, setNfts] = useState<nfts[]>([]);
   const [indexActive, setIndexActive] = useState(0);
+
+  useEffect(() => {
+    const fetchNfts = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/nfts/get-all-details`
+        );
+        setNfts(response.data.result);
+      } catch (error) {
+        console.error("Failed to fetch NFTs", error);
+      }
+    };
+
+    fetchNfts();
+  }, []);
 
   const handleClickNext = () => {
     setIndexActive((state) => {
@@ -33,17 +56,19 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
 
   return (
     <div className={`nc-SectionLargeSlider relative ${className}`}>
-      {[1, 1, 1].map((_, index) =>
-        indexActive === index ? (
-          <CardLarge1
-            key={index}
-            isShowing
-            featuredImgUrl={nftsLargeImgs[index]}
-            onClickNext={handleClickNext}
-            onClickPrev={handleClickPrev}
-          />
-        ) : null
-      )}
+      {nfts?.map((nft) => (
+        <CardLarge1
+          key={nft.id}
+          featuredImgUrl={nft.image_url}
+          nftName={nft.name}
+          creatorName={nft.creator_name}
+          collectionName={nft.collection_name}
+          nftPrice={nft.price}
+          onClickNext={handleClickNext}
+          onClickPrev={handleClickPrev}
+          isShowing={true}
+        />
+      ))}
     </div>
   );
 };
