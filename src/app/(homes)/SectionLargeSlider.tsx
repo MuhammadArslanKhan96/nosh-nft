@@ -2,6 +2,7 @@
 import { FC, useEffect, useState } from "react";
 import CardLarge1 from "@/components/CardLarge1/CardLarge1";
 import axios from "axios";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 interface nfts {
   id: string;
@@ -24,9 +25,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
   useEffect(() => {
     const fetchNfts = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/nfts/get-all-details`
-        );
+        const response = await axios.get(`${apiBaseUrl}/nfts/get-all-details`);
         setNfts(response.data.result);
       } catch (error) {
         console.error("Failed to fetch NFTs", error);

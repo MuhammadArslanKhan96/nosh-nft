@@ -7,6 +7,8 @@ import Loading from "@/app/loading";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
+
 interface NFT {
   nft_name: string;
   nft_image_url: string;
@@ -41,9 +43,7 @@ const SectionSliderCollections2: FC<SectionSliderCollections2Props> = ({
   const { isLoading } = useQuery({
     queryKey: ["collection"],
     queryFn: async () => {
-      const { data } = await axios.get(
-        `http://localhost:8080/collection/getAll`
-      );
+      const { data } = await axios.get(`${apiBaseUrl}/collection/getAll`);
       console.log(data);
       console.log(data.result);
       setRows(data.result.length);
