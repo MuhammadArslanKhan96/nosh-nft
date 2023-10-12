@@ -4,7 +4,6 @@ import Logo from "@/shared/Logo/Logo";
 import MenuBar from "@/shared/MenuBar/MenuBar";
 import SwitchDarkMode from "@/shared/SwitchDarkMode/SwitchDarkMode";
 import AvatarDropdown from "./AvatarDropdown";
-import Input from "@/shared/Input/Input";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Navigation from "@/shared/Navigation/Navigation";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
@@ -30,7 +29,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
         <div className="h-20 flex justify-between space-x-4 xl:space-x-8">
           <div className="self-center flex justify-start flex-grow space-x-3 sm:space-x-8 lg:space-x-10">
             <Logo />
-            <div className="hidden sm:block flex-grow max-w-xs">
+            {/* <div className="hidden sm:block flex-grow max-w-xs">
               <form action="" method="POST" className="relative">
                 <Input
                   type="search"
@@ -63,7 +62,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
                 </span>
                 <input type="submit" hidden value="" />
               </form>
-            </div>
+            </div> */}
           </div>
           <div className="flex-shrink-0 flex justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
             <div className="hidden xl:flex space-x-2">

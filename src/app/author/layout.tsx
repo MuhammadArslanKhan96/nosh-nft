@@ -10,6 +10,7 @@ import { useUserContext } from "@/hooks/useUserContext";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const { user } = useUserContext();
+  const pathname = usePathname();
   let navs: { name: string; href: Route }[] = [
     {
       name: "Collectibles",
@@ -32,8 +33,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
       href: "/author/followers",
     },
   ];
-
-  const pathname = usePathname();
 
   return (
     <div className={`nc-AuthorPage `}>

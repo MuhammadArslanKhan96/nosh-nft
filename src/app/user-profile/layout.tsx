@@ -35,7 +35,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [params.get("id")]);
   if (!user) return null;
   let navs: { name: string; href: Route; id?: string }[] = [
     {

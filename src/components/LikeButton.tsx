@@ -1,27 +1,62 @@
 "use client";
-
+import axios from "axios";
 import React, { useEffect, useState } from "react";
-
-export interface LikeButtonProps {
+interface LikeButtonProps {
   className?: string;
   liked?: boolean;
+  nftId: number | undefined;
+  userId: string;
 }
-
 const LikeButton: React.FC<LikeButtonProps> = ({
   className = "",
   liked = false,
+  nftId,
+  userId,
 }) => {
   const [isLiked, setIsLiked] = useState(liked);
-
-  // make random for demo
+  const data = {
+    nftId: nftId,
+    userId: userId,
+  };
   useEffect(() => {
-    setIsLiked(Math.random() > 0.5);
-  }, []);
+    const checkFollowStatus = async () => {
+      try {
+        const response = await axios.post(
+          `http://localhost:8080/nfts/check`,
+          data
+        );
+        console.log(response.data);
+        setIsLiked(response.data.result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    checkFollowStatus();
+  }, [nftId, userId]);
+  const handleClick = async () => {
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+
+    const apiLike = `http://localhost:8080/nfts/like`;
+    const apiUnlike = `http://localhost:8080/nfts/unlike`;
+    try {
+      if (newIsLiked) {
+        const response = await axios.post(apiLike, data);
+        console.log(response.data);
+      } else {
+        await axios.delete(apiUnlike, { data }).then((response) => {
+          console.log(response.data);
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <button
       className={`w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-slate-900 text-neutral-700 dark:text-slate-200 nc-shadow-lg ${className}`}
-      onClick={() => setIsLiked(!isLiked)}
+      onClick={handleClick}
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
         <path
@@ -36,5 +71,4 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     </button>
   );
 };
-
 export default LikeButton;

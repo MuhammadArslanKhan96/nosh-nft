@@ -1,10 +1,8 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 import Avatar from "@/shared/Avatar/Avatar";
-import ItemTypeImageIcon from "./ItemTypeImageIcon";
 import LikeButton from "./LikeButton";
 import Prices from "./Prices";
-import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import Image from "next/image";
@@ -153,18 +151,27 @@ const CardNFT: FC<CardNFTProps> = ({
             />
           </Link>
         </div>
-        {itemType === "video" && (
+        {/* {itemType === "video" && (
           <ItemTypeVideoIcon className="absolute top-3 left-3 !w-9 !h-9" />
         )}
 
         {itemType === "audio" && (
           <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
+        )} */}
+        {userId ? (
+          <>
+            {" "}
+            <LikeButton
+              nftId={id}
+              userId={userId}
+              liked={isLiked}
+              className="absolute top-3 right-3 z-10 !h-9"
+            />
+          </>
+        ) : (
+          <></>
         )}
 
-        <LikeButton
-          liked={isLiked}
-          className="absolute top-3 right-3 z-10 !h-9"
-        />
         <div className="absolute top-3 inset-x-3 flex"></div>
       </div>
 
