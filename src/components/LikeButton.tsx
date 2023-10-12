@@ -5,8 +5,8 @@ import React, { useEffect, useState } from "react";
 interface LikeButtonProps {
   className?: string;
   liked?: boolean;
-  nftId: number | undefined;
-  userId: string;
+  nftId?: number | undefined;
+  userId?: string;
 }
 const LikeButton: React.FC<LikeButtonProps> = ({
   className = "",
