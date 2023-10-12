@@ -1,6 +1,20 @@
+"use client";
+import { useLayoutEffect, useState } from "react";
+
 export const Loading = () => {
+  const [theme, setTheme] = useState<string>("");
+
+  useLayoutEffect(() => {
+    const themeFromStorage = localStorage.getItem("theme");
+    setTheme(themeFromStorage ? themeFromStorage : "");
+  }, [theme]);
+
   return (
-    <div className="w-screen h-screen bg-[#111827] flex text-white justify-center items-center">
+    <div
+      className={`w-screen h-screen flex text-white justify-center items-center ${
+        theme === "dark" ? "bg-[#111827]" : "bg-white"
+      }`}
+    >
       <div className="text-center">
         <div role="status">
           <svg

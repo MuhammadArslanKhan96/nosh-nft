@@ -1,26 +1,24 @@
 "use client";
 import Avatar from "@/shared/Avatar/Avatar";
-import { Listbox } from "@headlessui/react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
-interface follower {
+interface Follower {
   name: string;
   image_url: string;
 }
 
-const page = () => {
+const Page = () => {
   const userId = Cookies.get("userId");
-  const [follower, setFollower] = useState<follower | null>(null);
+  const [followers, setFollowers] = useState<Follower[]>([]);
 
   useEffect(() => {
-    const userId = Cookies.get("userId");
     axios
       .get(`${apiBaseUrl}/follow/get-follower/${userId}`)
       .then((response) => {
-        setFollower(response.data.result[0]);
+        setFollowers(response.data.result);
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -29,42 +27,28 @@ const page = () => {
 
   return (
     <div className="pt-10 py-10">
-      {follower ? (
-        <Listbox as="div" className="space-y-2">
-          {/* <Listbox.Label className="block text-sm font-medium text-gray-700">
-            Follower
-          </Listbox.Label> */}
-          <div className="mt-1 relative">
-            <Listbox.Button className="flex justify-between w-full relative py-2 pl-3 pr-3 text-left rounded-lg border border-gray-300 cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              <span className="block truncate">{follower.name}</span>
-              <Avatar imgUrl={follower.image_url} />
-              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                {/* <img
-                  src={}
-                  alt={follower.name}
-                  className="h-10 w-10 rounded-full"
-                /> */}
-              </span>
-            </Listbox.Button>
+      {followers.length > 0 ? (
+        followers.map((follower, index) => (
+          <div className="flex mt-5 flex-col border border-gray-800 shadow-md rounded-lg p-6">
+            <div key={index}>
+              <div className="flex items-center space-x-4">
+                <Avatar
+                  imgUrl={follower.image_url}
+                  sizeClass="w-8 h-8 sm:w-9 sm:h-9"
+                />
+                <div>
+                  <h2 className="text-lg font-semibold">{follower.name}</h2>
+                  <p className="text-sm text-gray-500">Follower</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </Listbox>
+        ))
       ) : (
-        <h1 className="pt-10 text-center">No one is following you right now</h1>
+        <h1 className="text-center">You don't have any followers</h1>
       )}
-
-      {/* <h1 className="text-center pt-10">No NFTs Found</h1> */}
-
-      {/* <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-      {Array.from("11111111").map((_, index) => (
-        <CardNFT key={index} />
-      ))}
-    </div>
-    <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-      <Pagination />
-      <ButtonPrimary loading>Show me more</ButtonPrimary>
-    </div> */}
     </div>
   );
 };
 
-export default page;
+export default Page;
