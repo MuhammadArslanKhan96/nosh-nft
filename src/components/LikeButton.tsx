@@ -2,6 +2,8 @@
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
+
 interface LikeButtonProps {
   className?: string;
   liked?: boolean;
@@ -22,10 +24,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   useEffect(() => {
     const checkLikeStatus = async () => {
       try {
-        const response = await axios.post(
-          `http://localhost:8080/nfts/check`,
-          data
-        );
+        const response = await axios.post(`${apiBaseUrl}/nfts/check`, data);
         // console.log(response.data);
         setIsLiked(response.data.result);
       } catch (error) {
@@ -39,8 +38,8 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     const newIsLiked = !isLiked;
     setIsLiked(newIsLiked);
 
-    const apiLike = `http://localhost:8080/nfts/like`;
-    const apiUnlike = `http://localhost:8080/nfts/unlike`;
+    const apiLike = `${apiBaseUrl}/nfts/like`;
+    const apiUnlike = `${apiBaseUrl}/nfts/unlike`;
     try {
       if (newIsLiked) {
         const response = await axios.post(apiLike, data);

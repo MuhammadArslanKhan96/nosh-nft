@@ -237,7 +237,13 @@ const NftDetailPage = ({}) => {
               <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" />
 
               {/* META FAVORITES */}
-              <LikeButton className="absolute right-3 top-3" />
+              {userId ? (
+                <>
+                  <LikeButton className="absolute right-3 top-3" />
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 

@@ -23,7 +23,7 @@ const page = () => {
     queryKey: ["nft"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:8080/nfts/get-liked/${userId}`
+        `${apiBaseUrl}/nfts/get-liked/${userId}`
       );
       console.log(data.result);
       setRows(data.result.length);
