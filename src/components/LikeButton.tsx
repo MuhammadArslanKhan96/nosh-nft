@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 interface LikeButtonProps {
   className?: string;
@@ -19,21 +20,21 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     userId: userId,
   };
   useEffect(() => {
-    const checkFollowStatus = async () => {
+    const checkLikeStatus = async () => {
       try {
         const response = await axios.post(
           `http://localhost:8080/nfts/check`,
           data
         );
-        console.log(response.data);
+        // console.log(response.data);
         setIsLiked(response.data.result);
       } catch (error) {
         console.error(error);
       }
     };
 
-    checkFollowStatus();
-  }, [nftId, userId]);
+    checkLikeStatus();
+  }, [nftId, userId, useSearchParams().get("id")]);
   const handleClick = async () => {
     const newIsLiked = !isLiked;
     setIsLiked(newIsLiked);
