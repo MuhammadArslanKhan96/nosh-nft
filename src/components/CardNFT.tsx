@@ -39,6 +39,7 @@ const CardNFT: FC<CardNFTProps> = ({
   const router = useRouter();
   const userId = Cookies.get("userId");
   const [username, setUserName] = useState<string | null>();
+  const token = Cookies.get("loginToken");
   useEffect(() => {
     axios
       .get(`${apiBaseUrl}/user/get/${currentOwner}`)
@@ -63,10 +64,16 @@ const CardNFT: FC<CardNFTProps> = ({
   const handleSubmit = async () => {
     if (userId) {
       await axios
-        .put(`${apiBaseUrl}/nfts/update/${userId}`, {
-          id: id,
-          status: false,
-        })
+        .put(
+          `${apiBaseUrl}/nfts/update/${userId}`,
+          {
+            id: id,
+            status: false,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
         .then((response) => {
           console.log(response.data);
           router.push("/nft");
@@ -84,9 +91,15 @@ const CardNFT: FC<CardNFTProps> = ({
   const handleOnSale = async () => {
     if (userId) {
       await axios
-        .put(`${apiBaseUrl}/nfts/update-nft/${id}`, {
-          status: true,
-        })
+        .put(
+          `${apiBaseUrl}/nfts/update-nft/${id}`,
+          {
+            status: true,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
         .then((response) => {
           console.log(response.data);
           router.push("/nft-sale");

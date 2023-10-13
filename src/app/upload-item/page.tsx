@@ -65,7 +65,12 @@ const PageUploadItem = () => {
     queryKey: ["collections"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${apiBaseUrl}/collection/get-user/${userId}`
+        `${apiBaseUrl}/collection/get-user/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log(data.result);
       setCollectionRows(data.result.length);

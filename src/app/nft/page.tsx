@@ -20,13 +20,16 @@ interface nft {
 const MyNftPage = ({}) => {
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
+  const token = Cookies.get("loginToken");
   const [nft, setNft] = useState<nft[]>([]);
   const [row, setRows] = useState<number | null>(null);
 
   const { isLoading } = useQuery({
     queryKey: ["nft"],
     queryFn: async () => {
-      const { data } = await axios.get(`${apiBaseUrl}/nfts/get/${userId}`);
+      const { data } = await axios.get(`${apiBaseUrl}/nfts/get/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       console.log(data.result);
       setRows(data.result.length);
       setNft(data.result);

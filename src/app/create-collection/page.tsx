@@ -5,6 +5,7 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { Route } from "next";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -15,16 +16,23 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 const CreateCollectionPage = ({}) => {
   const homeRouter = useRouter();
   const { user } = useUserContext();
+  const token = Cookies.get("loginToken");
   const [title, setTitle] = useState<string | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .post(`${apiBaseUrl}/collection/create/${user.id}`, {
-        name: title,
-        description: description,
-        primaryOwner: user.id,
-      })
+      .post(
+        `${apiBaseUrl}/collection/create/${user.id}`,
+        {
+          name: title,
+          description: description,
+          primaryOwner: user.id,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         toast.success("Collection created");

@@ -29,13 +29,17 @@ interface collection {
 const MyCollectionPage = ({}) => {
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
+  const token = Cookies.get("loginToken");
   const [collections, setCollections] = useState<collection[]>([]);
   const [row, setRows] = useState<number | null>(null);
   const { isLoading } = useQuery({
     queryKey: ["collection"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${apiBaseUrl}/collection/get/${userId}`
+        `${apiBaseUrl}/collection/get/${userId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       console.log(data.result);
       setRows(data.result.length);

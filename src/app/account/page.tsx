@@ -11,6 +11,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/hooks/useUserContext";
+import Cookies from "js-cookie";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
@@ -19,6 +20,8 @@ const AccountPage = ({}) => {
   const { user, fetchUser } = useUserContext();
   const [file, setFile] = useState<File | null>();
   const formData = new FormData();
+  const token = Cookies.get("loginToken");
+
   let imageName: string;
   let imageUrl: string;
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -47,6 +50,7 @@ const AccountPage = ({}) => {
         .post(`${apiBaseUrl}/create/image`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
@@ -62,17 +66,25 @@ const AccountPage = ({}) => {
       imageName = user.imageName as string;
     }
     await axios
-      .put(`${apiBaseUrl}/user/update-user/${user.id}`, {
-        name: data.username,
-        email: data.email,
-        bio: data.bio,
-        website: data.website,
-        facebook: data.facebook,
-        twitter: data.twitter,
-        telegram: data.telegram,
-        imageName: imageName,
-        imageUrl: imageUrl,
-      })
+      .put(
+        `${apiBaseUrl}/user/update-user/${user.id}`,
+        {
+          name: data.username,
+          email: data.email,
+          bio: data.bio,
+          website: data.website,
+          facebook: data.facebook,
+          twitter: data.twitter,
+          telegram: data.telegram,
+          imageName: imageName,
+          imageUrl: imageUrl,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         toast.success("Update profile successfully!");

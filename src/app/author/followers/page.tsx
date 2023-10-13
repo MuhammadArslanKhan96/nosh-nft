@@ -15,10 +15,13 @@ interface Follower {
 const Page = () => {
   const userId = Cookies.get("userId");
   const [followers, setFollowers] = useState<Follower[]>([]);
+  const token = Cookies.get("loginToken");
 
   useEffect(() => {
     axios
-      .get(`${apiBaseUrl}/follow/get-follower/${userId}`)
+      .get(`${apiBaseUrl}/follow/get-follower/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         setFollowers(response.data.result);
       })

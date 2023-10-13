@@ -2,6 +2,7 @@
 import { FC, useEffect, useState } from "react";
 import CardLarge1 from "@/components/CardLarge1/CardLarge1";
 import axios from "axios";
+import Cookies from "js-cookie";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 interface nfts {
@@ -23,11 +24,14 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
 }) => {
   const [nfts, setNfts] = useState<nfts[]>([]);
   const [indexActive, setIndexActive] = useState(0);
+  const token = Cookies.get("loginToken");
 
   useEffect(() => {
     const fetchNfts = async () => {
       try {
-        const response = await axios.get(`${apiBaseUrl}/nfts/get-all-details`);
+        const response = await axios.get(`${apiBaseUrl}/nfts/get-all-details`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         console.log(response.data.result);
         setNfts(response.data.result);
       } catch (error) {
