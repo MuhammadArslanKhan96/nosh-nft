@@ -2,27 +2,29 @@
 import { FC } from "react";
 import NcImage from "@/shared/NcImage/NcImage";
 import Avatar from "@/shared/Avatar/Avatar";
-import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import collectionPng from "@/images/nfts/collection.png";
 import Link from "next/link";
 import { StaticImageData } from "next/image";
+import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 
 export interface CardLarge1Props {
   className?: string;
   onClickNext?: () => void;
   onClickPrev?: () => void;
   isShowing?: boolean;
+  id?: string;
   featuredImgUrl?: string | StaticImageData;
   nftName?: string;
   creatorName?: string;
   collectionName?: string;
   nftPrice?: string;
+  userImageUrl?: string;
 }
 
 const CardLarge1: FC<CardLarge1Props> = ({
   className = "",
   isShowing = true,
+  id,
   onClickNext = () => {},
   onClickPrev = () => {},
   featuredImgUrl,
@@ -30,6 +32,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
   creatorName,
   collectionName,
   nftPrice,
+  userImageUrl,
 }) => {
   const randomTitle = [
     "Walking On Air ",
@@ -55,7 +58,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-12">
             <div className="flex items-center">
               <div className="flex-shrink-0 h-10 w-10">
-                <Avatar sizeClass="w-10 h-10" />
+                <Avatar imgUrl={userImageUrl} sizeClass="w-10 h-10" />
               </div>
               <div className="ml-3">
                 <div className="text-xs dark:text-neutral-400">Creator</div>
@@ -94,12 +97,19 @@ const CardLarge1: FC<CardLarge1Props> = ({
 
           {/* DESCRIPTION */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-            <ButtonPrimary href={"/login"} className="flex-1">
-              Buy Item
-            </ButtonPrimary>
-            <ButtonSecondary href={"/nft-detail"} className="flex-1">
-              View item
-            </ButtonSecondary>
+            {/* <Link href={"/"}>
+              <ButtonPrimary>Buy Item</ButtonPrimary>
+            </Link> */}
+            <Link
+              href={{
+                pathname: "/nft-detail",
+                query: {
+                  id: id,
+                },
+              }}
+            >
+              <ButtonPrimary>View item</ButtonPrimary>
+            </Link>
           </div>
         </div>
         {/* <div className="p-4 sm:pt-8 sm:px-10 ">
@@ -113,7 +123,14 @@ const CardLarge1: FC<CardLarge1Props> = ({
 
       <div className="w-full lg:w-[64%] relative ">
         <div className="nc-CardLarge1__right ">
-          <Link href={"/nft-detail"}>
+          <Link
+            href={{
+              pathname: "/nft-detail",
+              query: {
+                id: id,
+              },
+            }}
+          >
             <NcImage
               containerClassName="aspect-w-1 aspect-h-1 relative"
               className="absolute inset-0 object-cover rounded-3xl sm:rounded-[40px] border-4 sm:border-[14px] border-white dark:border-neutral-800"

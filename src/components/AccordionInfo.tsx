@@ -22,17 +22,7 @@ const AccordionInfo: FC<Props> = ({
     },
     {
       name: "Details",
-      content: `<p>Image Size: (${imageSize})</p>
-      <br />
-      <p>Contract Address</p>
-      <p class="text-base text-neutral-900 dark:text-neutral-100 line-clamp-1">
-        0x50f5474724e0ee42d9a4e711ccfb275809fd6d4a
-      </p>
-      <br />
-      <p>Token ID</p>
-      <p class="text-base text-neutral-900 dark:text-neutral-100">
-        100300372864
-      </p>`,
+      content: `<p>Image Size: (${imageSize})</p>`,
     },
 
     {

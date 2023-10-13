@@ -139,6 +139,7 @@ const CardNFT: FC<CardNFTProps> = ({
               pathname: "/nft-detail",
               query: {
                 id: id,
+                onSale: onSale,
               },
             }}
           >
@@ -229,12 +230,24 @@ const CardNFT: FC<CardNFTProps> = ({
             </>
           ) : (
             <>
-              <button
-                onClick={handleSubmit}
-                className="border border-green-300 hover:text-white hover:bg-green-600 text-green-500 font-bold py-2 px-4 rounded"
-              >
-                Buy
-              </button>
+              {onSale ? (
+                <>
+                  {" "}
+                  <button
+                    onClick={handleSubmit}
+                    className="border border-green-300 hover:text-white hover:bg-green-600 text-green-500 font-bold py-2 px-4 rounded"
+                  >
+                    Buy
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Badge
+                    name="Not On Sale"
+                    className="bg-opacity-0 border border-green-500 text-green-500"
+                  />
+                </>
+              )}
             </>
           )}
 

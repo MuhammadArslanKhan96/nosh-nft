@@ -39,6 +39,10 @@ const AllCollectionPage = ({}) => {
       const { data } = await axios.get(`${apiBaseUrl}/collection/getAll`);
       console.log(data);
       console.log(data.result);
+      console.log(
+        collections.map((collection) => collection.nfts[0].nft_image_url)
+      );
+
       setRows(data.result.length);
       setCollections(data.result);
       return data;
@@ -78,13 +82,10 @@ const AllCollectionPage = ({}) => {
               <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-x-8 gap-y-10  mt-8 lg:mt-10">
                 {collections.map((collection) => {
-                  const shuffledNfts = collection.nfts.sort(
-                    () => Math.random() - 0.5
-                  );
                   return (
                     <CollectionCard
                       key={collection.collection_id}
-                      imgs={shuffledNfts[0]?.nft_image_url}
+                      imgs={collection.nfts[0]?.nft_image_url}
                       username={collection.user_name}
                       id={collection.collection_id}
                       name={collection.collection_name}

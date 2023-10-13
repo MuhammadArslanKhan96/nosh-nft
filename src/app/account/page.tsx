@@ -273,7 +273,7 @@ const AccountPage = ({}) => {
                 </div>
 
                 {/* ---- */}
-                <div>
+                {/* <div>
                   <Label>Wallet Address</Label>
                   <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300">
                     <Input
@@ -306,7 +306,7 @@ const AccountPage = ({}) => {
                       </svg>
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 {/* ---- */}
                 <div className="pt-2">

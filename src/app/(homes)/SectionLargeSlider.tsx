@@ -11,6 +11,7 @@ interface nfts {
   creator_name: string;
   collection_name: string;
   price: string;
+  creator_image_url: string;
 }
 export interface SectionLargeSliderProps {
   className?: string;
@@ -26,6 +27,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
     const fetchNfts = async () => {
       try {
         const response = await axios.get(`${apiBaseUrl}/nfts/get-all-details`);
+        console.log(response.data.result);
         setNfts(response.data.result);
       } catch (error) {
         console.error("Failed to fetch NFTs", error);
@@ -58,9 +60,11 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
       {nfts?.map((nft) => (
         <CardLarge1
           key={nft.id}
+          id={nft.id}
           featuredImgUrl={nft.image_url}
           nftName={nft.name}
           creatorName={nft.creator_name}
+          userImageUrl={nft.creator_image_url}
           collectionName={nft.collection_name}
           nftPrice={nft.price}
           onClickNext={handleClickNext}
