@@ -15,7 +15,7 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Nosh NFT Marketplace",
+  title: "Nosh - NFT Marketplace",
   description: "Nosh NFT Marketplace",
 };
 
