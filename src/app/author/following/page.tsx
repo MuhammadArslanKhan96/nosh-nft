@@ -32,13 +32,14 @@ const Page = () => {
       {followers.length > 0 ? (
         followers.map((follower, index) => (
           <Link
+            key={follower.id}
             href={{
               pathname: "/user-profile",
               query: { id: follower.id },
             }}
           >
             <div className="flex mt-5 flex-col border border-gray-800 shadow-md rounded-lg p-6">
-              <div key={index}>
+              <div>
                 <div className="flex items-center space-x-4">
                   <Avatar
                     imgUrl={follower.image_url}

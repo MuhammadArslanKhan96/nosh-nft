@@ -4,20 +4,21 @@ import NcImage from "@/shared/NcImage/NcImage";
 import Avatar from "@/shared/Avatar/Avatar";
 import collectionPng from "@/images/nfts/collection.png";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import { Route } from "next";
 import AccordionInfo from "@/components/AccordionInfo";
 import { useUserContext } from "@/hooks/useUserContext";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Badge from "@/shared/Badge/Badge";
+import { toast } from "sonner";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const NftDetailPage = ({}) => {
   const userId = Cookies.get("userId");
   const { user } = useUserContext();
   const params = useSearchParams();
+  const router = useRouter();
   const { data } = useQuery({
     queryKey: ["nft"],
     queryFn: async () => {
@@ -28,6 +29,27 @@ const NftDetailPage = ({}) => {
       return data.result;
     },
   });
+  const handleSubmit = async () => {
+    if (userId) {
+      await axios
+        .put(`${apiBaseUrl}/nfts/update/${userId}`, {
+          id: params.get("id"),
+          status: false,
+        })
+        .then((response) => {
+          console.log(response.data);
+          router.push("/nft");
+          toast.success("NFT bought successfully");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Error occured while buying NFT");
+        });
+    }
+    if (!userId) {
+      toast.error("Please login to buy NFT");
+    }
+  };
   const renderSection1 = () => {
     return (
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
@@ -122,10 +144,7 @@ const NftDetailPage = ({}) => {
                 <>
                   {params.get("onSale") == "true" ? (
                     <>
-                      <ButtonPrimary
-                        href={"/connect-wallet" as Route}
-                        className="flex-1"
-                      >
+                      <ButtonPrimary onClick={handleSubmit} className="flex-1">
                         <svg
                           width="24"
                           height="24"
