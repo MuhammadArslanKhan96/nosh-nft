@@ -12,6 +12,7 @@ interface nfts {
   collection_name: string;
   price: string;
   creator_image_url: string;
+  on_sale: boolean;
 }
 export interface SectionLargeSliderProps {
   className?: string;
@@ -67,6 +68,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
           userImageUrl={nft.creator_image_url}
           collectionName={nft.collection_name}
           nftPrice={nft.price}
+          onSale={nft.on_sale}
           onClickNext={handleClickNext}
           onClickPrev={handleClickPrev}
           isShowing={true}

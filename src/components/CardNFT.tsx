@@ -60,14 +60,6 @@ const CardNFT: FC<CardNFTProps> = ({
     "default"
   );
 
-  useEffect(() => {
-    if (Math.random() > 0.5) {
-      setItemType("video");
-    } else {
-      setItemType("audio");
-    }
-  }, []);
-
   const handleSubmit = async () => {
     if (userId) {
       await axios
@@ -221,7 +213,7 @@ const CardNFT: FC<CardNFTProps> = ({
                 <>
                   <button
                     onClick={handleOnSale}
-                    className="border border-green-300 hover:text-white hover:bg-green-600 text-green-500 font-bold py-2 px-4 rounded"
+                    className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
                   >
                     Put on sale
                   </button>
@@ -235,7 +227,7 @@ const CardNFT: FC<CardNFTProps> = ({
                   {" "}
                   <button
                     onClick={handleSubmit}
-                    className="border border-green-300 hover:text-white hover:bg-green-600 text-green-500 font-bold py-2 px-4 rounded"
+                    className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
                   >
                     Buy
                   </button>

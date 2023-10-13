@@ -19,6 +19,7 @@ export interface CardLarge1Props {
   collectionName?: string;
   nftPrice?: string;
   userImageUrl?: string;
+  onSale?: boolean;
 }
 
 const CardLarge1: FC<CardLarge1Props> = ({
@@ -33,6 +34,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
   collectionName,
   nftPrice,
   userImageUrl,
+  onSale,
 }) => {
   const randomTitle = [
     "Walking On Air ",
@@ -105,6 +107,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 pathname: "/nft-detail",
                 query: {
                   id: id,
+                  onSale: onSale,
                 },
               }}
             >
@@ -128,6 +131,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
               pathname: "/nft-detail",
               query: {
                 id: id,
+                onSale: onSale,
               },
             }}
           >

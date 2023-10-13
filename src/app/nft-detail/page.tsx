@@ -1,6 +1,5 @@
 "use client";
 import ItemTypeVideoIcon from "@/components/ItemTypeVideoIcon";
-import LikeButton from "@/components/LikeButton";
 import NcImage from "@/shared/NcImage/NcImage";
 import Avatar from "@/shared/Avatar/Avatar";
 import collectionPng from "@/images/nfts/collection.png";
@@ -48,13 +47,7 @@ const NftDetailPage = ({}) => {
             {/* <Link href={"/author" as Route} className="flex items-center "> */}
             <div className="flex items-center">
               <Avatar
-                imgUrl={
-                  user.imageUrl
-                    ? (user.imageUrl as string)
-                    : data && data[0]
-                    ? data[0].user_image
-                    : ""
-                }
+                imgUrl={data && data[0] ? data[0].user_image : ""}
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
               />
@@ -124,10 +117,10 @@ const NftDetailPage = ({}) => {
           <div className="mt-8 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
             {data && data[0] ? (
               userId == data[0].current_owner ? (
-                <></>
+                " "
               ) : (
                 <>
-                  {params.get("onSale") ? (
+                  {params.get("onSale") == "true" ? (
                     <>
                       <ButtonPrimary
                         href={"/connect-wallet" as Route}
@@ -257,13 +250,13 @@ const NftDetailPage = ({}) => {
               <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" />
 
               {/* META FAVORITES */}
-              {userId ? (
+              {/* {userId ? (
                 <>
                   <LikeButton className="absolute right-3 top-3" />
                 </>
               ) : (
                 <></>
-              )}
+              )} */}
             </div>
           </div>
 

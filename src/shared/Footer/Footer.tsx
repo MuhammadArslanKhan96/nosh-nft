@@ -1,5 +1,4 @@
 import Logo from "@/shared/Logo/Logo";
-import SocialsList1 from "@/shared/SocialsList1/SocialsList1";
 import { CustomLink } from "@/data/types";
 import React from "react";
 
@@ -14,42 +13,42 @@ const widgetMenus: WidgetFooterMenu[] = [
     id: "5",
     title: "Getting started",
     menus: [
-      { href: "/", label: "Release Notes" },
-      { href: "/", label: "Upgrade Guide" },
-      { href: "/", label: "Browser Support" },
-      { href: "/", label: "Dark Mode" },
+      { href: "/upload-item", label: "Create NFT" },
+      { href: "/signup", label: "Create new account" },
+      // { href: "/login", label: "Login to existing account" },
+      // { href: "/", label: "Dark Mode" },
     ],
   },
   {
     id: "1",
     title: "Explore",
     menus: [
-      { href: "/", label: "Prototyping" },
-      { href: "/", label: "Design systems" },
-      { href: "/", label: "Pricing" },
-      { href: "/", label: "Security" },
+      { href: "/nft-sale", label: "NFTs on sale" },
+      { href: "/all-collection", label: "All collections" },
+      // { href: "/", label: "" },
+      // { href: "/", label: "Security" },
     ],
   },
   {
     id: "2",
     title: "Resources",
     menus: [
-      { href: "/", label: "Best practices" },
-      { href: "/", label: "Support" },
-      { href: "/", label: "Developers" },
-      { href: "/", label: "Learn design" },
+      { href: "/", label: "What are nfts" },
+      { href: "/", label: "What is marketplace" },
+      // { href: "/", label: "Developers" },
+      // { href: "/", label: "Learn design" },
     ],
   },
-  {
-    id: "4",
-    title: "Community",
-    menus: [
-      { href: "/", label: "Discussion Forums" },
-      { href: "/", label: "Code of Conduct" },
-      { href: "/", label: "Contributing" },
-      { href: "/", label: "API Reference" },
-    ],
-  },
+  // {
+  //   id: "4",
+  //   title: "Community",
+  //   menus: [
+  //     { href: "/", label: "" },
+  //     { href: "/", label: "Code of Conduct" },
+  //     { href: "/", label: "Contributing" },
+  //     { href: "/", label: "API Reference" },
+  //   ],
+  // },
 ];
 
 const Footer: React.FC = () => {
@@ -79,14 +78,14 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <div className="nc-Footer relative py-20 lg:pt-28 lg:pb-24 border-t border-neutral-200 dark:border-neutral-700">
-      <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-10 ">
+    <div className="nc-Footer relative py-20 lg:pt-20 lg:pb-20 border-t border-neutral-200 dark:border-neutral-700">
+      <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:gap-x-10 ">
         <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
           <div className="col-span-2 md:col-span-1">
             <Logo />
           </div>
           <div className="col-span-2 flex items-center md:col-span-3">
-            <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" />
+            {/* <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" /> */}
           </div>
         </div>
         {widgetMenus.map(renderWidgetMenuItem)}

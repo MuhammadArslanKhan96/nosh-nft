@@ -13,6 +13,7 @@ interface nft {
   description: string;
   price: string;
   current_owner: string;
+  on_sale: boolean;
 }
 
 const page = () => {
@@ -51,6 +52,7 @@ const page = () => {
                 name={nft.name}
                 price={nft.price}
                 currentOwner={nft.current_owner}
+                onSale={nft.on_sale}
               />
             ))}
           </div>
