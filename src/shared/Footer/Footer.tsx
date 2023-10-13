@@ -33,8 +33,14 @@ const widgetMenus: WidgetFooterMenu[] = [
     id: "2",
     title: "Resources",
     menus: [
-      { href: "/", label: "What are nfts" },
-      { href: "/", label: "What is marketplace" },
+      {
+        href: "https://www.theverge.com/22310188/nft-explainer-what-is-blockchain-crypto-art-faq",
+        label: "What are nfts",
+      },
+      {
+        href: "https://www.coindesk.com/tech/2021/07/12/nft-marketplaces-a-beginners-guide/",
+        label: "What is marketplace",
+      },
       // { href: "/", label: "Developers" },
       // { href: "/", label: "Learn design" },
     ],
