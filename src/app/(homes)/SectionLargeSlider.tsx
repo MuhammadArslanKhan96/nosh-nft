@@ -29,9 +29,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
   useEffect(() => {
     const fetchNfts = async () => {
       try {
-        const response = await axios.get(`${apiBaseUrl}/nfts/get-all-details`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(`${apiBaseUrl}/nfts/get-all-details`);
         console.log(response.data.result);
         setNfts(response.data.result);
       } catch (error) {

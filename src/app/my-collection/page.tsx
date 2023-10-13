@@ -55,23 +55,6 @@ const MyCollectionPage = ({}) => {
         <Loading />
       </>
     );
-  // useEffect(() => {
-  //   axios
-  //     .get(`${apiBaseUrl}/collection/get/${userId}`, {
-  //       headers: {
-  //         Accept: "application/json",
-  //         // Authorization: `Bearer ${loginToken}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setCollections(res.data.result);
-  //       setRows(res.data.result.length);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
 
   return (
     <div className={`nc-MyCollectionPage`}>

@@ -47,12 +47,7 @@ const AccountPage = ({}) => {
     if (file) {
       formData.append("file-upload", file);
       await axios
-        .post(`${apiBaseUrl}/create/image`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .post(`${apiBaseUrl}/create/image`, formData)
         .then((response) => {
           console.log(response.data);
           imageUrl = response.data.imageUrl;
