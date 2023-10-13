@@ -115,6 +115,11 @@ const PageUploadItem = () => {
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
     if (!file) {
+      toast.error("NFT image is required");
+      return;
+    }
+    if (!selectedCollectionId) {
+      toast.error("Please select a collection");
       return;
     }
     formData.append("file-upload", file);
