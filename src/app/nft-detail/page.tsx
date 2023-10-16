@@ -18,6 +18,7 @@ const NftDetailPage = ({}) => {
   const userId = Cookies.get("userId");
   const { user } = useUserContext();
   const params = useSearchParams();
+  const token = Cookies.get("loginToken");
   const router = useRouter();
   const { data } = useQuery({
     queryKey: ["nft"],
@@ -32,10 +33,18 @@ const NftDetailPage = ({}) => {
   const handleSubmit = async () => {
     if (userId) {
       await axios
-        .put(`${apiBaseUrl}/nfts/update/${userId}`, {
-          id: params.get("id"),
-          status: false,
-        })
+        .put(
+          `${apiBaseUrl}/nfts/update/${userId}`,
+          {
+            id: params.get("id"),
+            status: false,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         .then((response) => {
           console.log(response.data);
           router.push("/nft");
