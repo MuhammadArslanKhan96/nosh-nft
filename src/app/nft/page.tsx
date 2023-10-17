@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
+import { useAuth } from "@/hooks/useAuth";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 interface nft {
   id: number;
@@ -18,6 +19,7 @@ interface nft {
   on_sale: boolean;
 }
 const MyNftPage = ({}) => {
+  useAuth();
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
@@ -42,18 +44,6 @@ const MyNftPage = ({}) => {
         <Loading />
       </>
     );
-  // useEffect(() => {
-  //   axios
-  //     .get(`${apiBaseUrl}/nfts/get/${userId}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setRows(response.data.result.length);
-  //       setNft(response.data.result);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
 
   return (
     <div className={`nc-MyNftPage`}>

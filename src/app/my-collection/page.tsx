@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
+import { useAuth } from "@/hooks/useAuth";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 interface NFT {
   nft_name: string;
@@ -27,6 +28,7 @@ interface collection {
   nfts: NFT[];
 }
 const MyCollectionPage = ({}) => {
+  useAuth();
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");

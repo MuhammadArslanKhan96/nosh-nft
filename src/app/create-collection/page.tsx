@@ -1,5 +1,6 @@
 "use client";
 import Label from "@/components/Label/Label";
+import { useAuth } from "@/hooks/useAuth";
 import { useUserContext } from "@/hooks/useUserContext";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
@@ -14,6 +15,7 @@ import { toast } from "sonner";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 const CreateCollectionPage = ({}) => {
+  useAuth();
   const homeRouter = useRouter();
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");

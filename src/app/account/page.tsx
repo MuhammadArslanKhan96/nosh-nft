@@ -12,10 +12,12 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useUserContext } from "@/hooks/useUserContext";
 import Cookies from "js-cookie";
+import { useAuth } from "@/hooks/useAuth";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const AccountPage = ({}) => {
+  useAuth();
   const homeRouter = useRouter();
   const { user, fetchUser } = useUserContext();
   const [file, setFile] = useState<File | null>();

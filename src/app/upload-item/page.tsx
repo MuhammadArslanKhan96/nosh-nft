@@ -19,6 +19,7 @@ import { useUserContext } from "@/hooks/useUserContext";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
 import MySwitch from "@/components/MySwitch";
+import { useAuth } from "@/hooks/useAuth";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -39,6 +40,7 @@ interface collection {
 }
 
 const PageUploadItem = () => {
+  useAuth();
   const homeRouter = useRouter();
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");
@@ -79,25 +81,6 @@ const PageUploadItem = () => {
     },
     cacheTime: Infinity,
   });
-  // useEffect(() => {
-  //   setIsLoadingCustom(true);
-  //   axios
-  //     .get(`${apiBaseUrl}/collection/get/${userId}`, {
-  //       headers: {
-  //         Accept: "application/json",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data.result);
-  //       setCollectionRows(res.data.result.length);
-  //       setCollections(res.data.result);
-  //       setIsLoadingCustom(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setIsLoadingCustom(false);
-  //     });
-  // }, []);
 
   if (isLoading) {
     return <Loading />;

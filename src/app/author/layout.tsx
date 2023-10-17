@@ -7,8 +7,10 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Route } from "next";
 import { useUserContext } from "@/hooks/useUserContext";
+import { useAuth } from "@/hooks/useAuth";
 
 const Layout = ({ children }: { children: ReactNode }) => {
+  useAuth();
   const { user } = useUserContext();
   const pathname = usePathname();
   let navs: { name: string; href: Route }[] = [
