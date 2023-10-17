@@ -60,7 +60,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
 
   return (
     <div className={`nc-SectionLargeSlider relative ${className}`}>
-      {nfts?.map((nft) => (
+      {nfts?.slice(0, 4).map((nft) => (
         <CardLarge1
           key={nft.id}
           id={nft.id}
