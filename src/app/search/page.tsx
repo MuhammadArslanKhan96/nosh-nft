@@ -42,8 +42,11 @@ const PageSearch = ({}) => {
   };
 
   const filteredNfts = nft.filter((nft: nft) =>
-    nft.name.toLowerCase().includes(search.toLowerCase())
+    [nft.name, nft.description, nft.current_owner].some((val) =>
+      val.toString().toLowerCase().includes(search.toLowerCase())
+    )
   );
+
   return (
     <div className={`nc-PageSearch `}>
       <div
@@ -51,7 +54,11 @@ const PageSearch = ({}) => {
       />
       <div className="container">
         <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
-          <form className="relative w-full" method="post">
+          <form
+            className="relative w-full"
+            method="post"
+            onSubmit={(e) => e.preventDefault()}
+          >
             <label
               htmlFor="search-input"
               className="text-neutral-500 dark:text-neutral-300"
