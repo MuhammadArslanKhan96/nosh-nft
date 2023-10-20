@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import NcImage from "@/shared/NcImage/NcImage";
 import HIW1img from "@/images/HIW1img.png";
 import HIW2img from "@/images/HIW2img.png";
@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export interface SectionHowItWorkProps {
   className?: string;
-  data?: typeof DEMO_DATA[0][];
+  data?: (typeof DEMO_DATA)[0][];
 }
 
 const DEMO_DATA = [
@@ -18,29 +18,29 @@ const DEMO_DATA = [
     id: 1,
     img: HIW1img,
     imgDark: HIW1img,
-    title: "Filter & Discover",
-    desc: "Smart filtering and suggestions make it easy to find",
+    title: "Discover & Redeem",
+    desc: "Explore a range of delicious burgers and uncover your favorites to enjoy.",
   },
   {
     id: 2,
     img: HIW2img,
     imgDark: HIW2img,
-    title: "Add to bag",
-    desc: "Easily select the correct items and add them to the cart",
+    title: "Unlock Rewards",
+    desc: "Make 10 burger purchases to claim a free burger and an exclusive NFT burger token.",
   },
   {
     id: 3,
     img: HIW3img,
     imgDark: HIW3img,
-    title: "Fast shipping",
-    desc: "The carrier will confirm and ship quickly to you",
+    title: "Speedy Delivery",
+    desc: "Count on our reliable couriers to swiftly deliver your orders to you.",
   },
   {
     id: 4,
     img: HIW4img,
     imgDark: HIW4img,
-    title: "Enjoy the product",
-    desc: "Have fun and enjoy your 5-star quality products",
+    title: "Savor the Rewards",
+    desc: "Delight in the delectable flavors of our premium burger selections and enjoy the exclusive benefits of our NFT rewards program.",
   },
 ];
 
@@ -56,7 +56,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
           src={VectorImg}
           alt="vector"
         />
-        {data.map((item: typeof DEMO_DATA[number], index: number) => (
+        {data.map((item: (typeof DEMO_DATA)[number], index: number) => (
           <div
             key={item.id}
             className="relative flex flex-col items-center max-w-xs mx-auto"

@@ -59,30 +59,7 @@ const CreateCollectionPage = ({}) => {
         toast.error("An error occured while creating collection");
       });
   };
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   await axios
-  //     .post(
-  //       `${apiBaseUrl}/collection/create/${user.id}`,
-  //       {
-  //         name: title,
-  //         description: description,
-  //         primaryOwner: user.id,
-  //       },
-  //       {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       }
-  //     )
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       toast.success("Collection created");
-  //       homeRouter.push("/upload-item" as Route);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       toast.error("An error occured while creating collection");
-  //     });
-  // };
+
   return (
     <div className={`nc-CreateCollectionPage`}>
       <div className="container">
