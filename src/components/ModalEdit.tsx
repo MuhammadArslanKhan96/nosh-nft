@@ -1,9 +1,10 @@
 "use client";
-import React, { FC, useEffect, useRef } from "react";
+import { FC, useRef } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Input from "@/shared/Input/Input";
 import NcModal from "@/shared/NcModal/NcModal";
+import { FieldValues, useForm } from "react-hook-form";
 
 export interface ModalEditProps {
   show: boolean;
@@ -13,30 +14,36 @@ export interface ModalEditProps {
 const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
   const textareaRef = useRef(null);
 
-  useEffect(() => {
-    if (show) {
-      setTimeout(() => {
-        const element: HTMLTextAreaElement | null = textareaRef.current;
-        if (element) {
-          (element as HTMLTextAreaElement).focus();
-          (element as HTMLTextAreaElement).setSelectionRange(
-            (element as HTMLTextAreaElement).value.length,
-            (element as HTMLTextAreaElement).value.length
-          );
-        }
-      }, 400);
-    }
-  }, [show]);
+  // useEffect(() => {
+  //   if (show) {
+  //     setTimeout(() => {
+  //       const element: HTMLTextAreaElement | null = textareaRef.current;
+  //       if (element) {
+  //         (element as HTMLTextAreaElement).focus();
+  //         (element as HTMLTextAreaElement).setSelectionRange(
+  //           (element as HTMLTextAreaElement).value.length,
+  //           (element as HTMLTextAreaElement).value.length
+  //         );
+  //       }
+  //     }, 400);
+  //   }
+  // }, [show]);
+
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = async (data: FieldValues) => {
+    console.log(data);
+  };
 
   const renderContent = () => {
     return (
-      <form action="#">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
           Change price
         </h3>
         <span className="text-sm">Are you sure you want to change price?</span>
         <div className="mt-8 relative rounded-md shadow-sm">
-          <Input ref={textareaRef} defaultValue={"1.000"} type={"text"} />
+          <Input {...register("price")} type={"text"} />
 
           <div className="absolute inset-y-0 right-0 flex items-center">
             <label htmlFor="currency" className="sr-only">
@@ -48,8 +55,8 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
               className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300 sm:text-sm rounded-md"
             >
               <option>ETH</option>
-              <option>BC</option>
-              <option>BTH</option>
+              {/* <option>BC</option>
+              <option>BTH</option> */}
             </select>
           </div>
         </div>

@@ -49,7 +49,7 @@ const actionsDefault: NftMoreDropdownProps["actions"] = [
 ];
 
 const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
-  containerClassName = "py-1.5 px-3 flex rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer",
+  containerClassName = "flex rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer",
   dropdownPositon = "down",
   actions = actionsDefault,
 }) => {
@@ -93,11 +93,11 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   const renderMenu = () => {
     return (
       <NcDropDown
-        className={` ${containerClassName} `}
+        className={`${containerClassName} `}
         data={actions}
         panelMenusClass={
           dropdownPositon === "up"
-            ? "origin-bottom-right bottom-0 "
+            ? "origin-bottom-right bottom-0"
             : "origin-top-right !w-44 sm:!w-52"
         }
         onClick={hanldeClickDropDown}
