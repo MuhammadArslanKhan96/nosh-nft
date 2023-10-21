@@ -1,6 +1,6 @@
 "use client";
 import CardNFT from "@/components/CardNFT";
-import { NftUserProfile } from "@/types/Nft";
+import { NftType } from "@/types/Nft";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -9,7 +9,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const page = () => {
   const userId = useSearchParams().get("id");
-  const [nft, setNft] = useState<NftUserProfile[]>([]);
+  const [nft, setNft] = useState<NftType[]>([]);
   const [row, setRows] = useState<number | null>(null);
   const {} = useQuery({
     queryKey: ["nft"],

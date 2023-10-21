@@ -8,14 +8,15 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
 import { useAuth } from "@/hooks/useAuth";
-import { NftMyNft } from "@/types/Nft";
+import { NftType } from "@/types/Nft";
+
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 const MyNftPage = ({}) => {
   useAuth();
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
-  const [nft, setNft] = useState<NftMyNft[]>([]);
+  const [nft, setNft] = useState<NftType[]>([]);
   const [row, setRows] = useState<number | null>(null);
 
   const { isLoading } = useQuery({
