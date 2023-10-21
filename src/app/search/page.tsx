@@ -6,7 +6,6 @@ import Input from "@/shared/Input/Input";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useState } from "react";
 import Loading from "../loading";
 import { NftType } from "@/types/Nft";
@@ -14,7 +13,6 @@ import { NftType } from "@/types/Nft";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const PageSearch = ({}) => {
-  const userId = Cookies.get("userId");
   const [search, setSearch] = useState("");
   const [nft, setNft] = useState<NftType[]>([]);
 

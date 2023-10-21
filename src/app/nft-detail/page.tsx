@@ -5,7 +5,6 @@ import Avatar from "@/shared/Avatar/Avatar";
 import collectionPng from "@/images/nfts/collection.png";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import AccordionInfo from "@/components/AccordionInfo";
-import { useUserContext } from "@/hooks/useUserContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -16,7 +15,6 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const NftDetailPage = ({}) => {
   const userId = Cookies.get("userId");
-  const { user } = useUserContext();
   const params = useSearchParams();
   const token = Cookies.get("loginToken");
   const router = useRouter();

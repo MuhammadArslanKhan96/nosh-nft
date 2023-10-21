@@ -30,7 +30,7 @@ const CreateCollectionPage = ({}) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(collectionSchema),
   });
@@ -106,7 +106,11 @@ const CreateCollectionPage = ({}) => {
                 </div>
 
                 <div className="pt-2">
-                  <ButtonPrimary className="w-full" type="submit">
+                  <ButtonPrimary
+                    disabled={isSubmitting}
+                    className="w-full"
+                    type="submit"
+                  >
                     Create
                   </ButtonPrimary>
                 </div>

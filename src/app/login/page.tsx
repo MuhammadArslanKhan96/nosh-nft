@@ -21,7 +21,7 @@ const loginSchema = z.object({
 
 const PageLogin = () => {
   const homeRouter = useRouter();
-  const { user, setUser } = useUserContext();
+  const { setUser } = useUserContext();
 
   const {
     register,

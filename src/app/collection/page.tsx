@@ -39,15 +39,7 @@ let AccountActions = [
   },
 ];
 
-const PageCollection = ({
-  searchParams,
-}: {
-  searchParams: {
-    id: string;
-    name: string;
-    description: string;
-  };
-}) => {
+const PageCollection = ({}) => {
   const params = useSearchParams();
   const [nfts, setNfts] = useState<NftType[]>([]);
   const { isLoading } = useQuery({

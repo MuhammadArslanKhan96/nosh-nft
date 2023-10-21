@@ -9,7 +9,6 @@ import { config } from "dotenv";
 import { FieldValues, useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "sonner";
-
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 config({ path: ".env.local" });

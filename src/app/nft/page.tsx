@@ -1,6 +1,5 @@
 "use client";
 import CardNFT from "@/components/CardNFT";
-import { useUserContext } from "@/hooks/useUserContext";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -13,7 +12,6 @@ import { NftType } from "@/types/Nft";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 const MyNftPage = ({}) => {
   useAuth();
-  const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
   const [nft, setNft] = useState<NftType[]>([]);

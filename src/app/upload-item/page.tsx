@@ -58,7 +58,7 @@ const PageUploadItem = () => {
   } = useForm({
     resolver: zodResolver(nftSchema),
   });
-  const { isLoading, data, isError } = useQuery({
+  const { isLoading, isError } = useQuery({
     queryKey: ["collections"],
     queryFn: async () => {
       const { data } = await axios.get(

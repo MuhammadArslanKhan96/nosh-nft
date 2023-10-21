@@ -2,7 +2,6 @@
 import CardNFT from "@/components/CardNFT";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
@@ -10,7 +9,6 @@ import { NftSale } from "@/types/Nft";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const NftForSalePage = ({}) => {
-  const userId = Cookies.get("userId");
   const [nft, setNft] = useState<NftSale[]>([]);
   const [row, setRows] = useState<number | null>(null);
 
@@ -25,35 +23,6 @@ const NftForSalePage = ({}) => {
     },
   });
   if (isLoading) <Loading />;
-  // if (userId) {
-  //   useEffect(() => {
-  //     axios
-  //       .get(`${apiBaseUrl}/nfts/getsale/${userId}`)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         const onSaleNfts = response.data.result.filter(
-  //           (nft: any) => nft.on_sale === true
-  //         );
-  //         setNft(onSaleNfts);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
-  // }
-  // if (!userId) {
-  //   const {} = useQuery({
-  //     queryKey: ["nfts"],
-  //     queryFn: async () => {
-  //       const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
-  //       const onSaleNfts = data.result.filter(
-  //         (nft: any) => nft.on_sale === true
-  //       );
-  //       setNft(onSaleNfts);
-  //       return onSaleNfts;
-  //     },
-  //   });
-  // }
 
   return (
     <div className={`nc-MyNftPage`}>

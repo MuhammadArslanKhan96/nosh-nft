@@ -1,9 +1,7 @@
 "use client";
 import CollectionCard from "@/components/CollectionCard";
-import { useUserContext } from "@/hooks/useUserContext";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
@@ -11,9 +9,6 @@ import { Collection } from "@/types/Collection";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const AllCollectionPage = ({}) => {
-  const { user } = useUserContext();
-  const userId = Cookies.get("userId");
-  const [image, setImage] = useState<string | null>(null);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [row, setRows] = useState<number | null>(null);
   const { isLoading } = useQuery({

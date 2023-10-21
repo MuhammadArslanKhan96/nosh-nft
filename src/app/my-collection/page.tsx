@@ -1,6 +1,5 @@
 "use client";
 import CollectionCard from "@/components/CollectionCard";
-import { useUserContext } from "@/hooks/useUserContext";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -13,7 +12,6 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const MyCollectionPage = ({}) => {
   useAuth();
-  const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
   const [collections, setCollections] = useState<Collection[]>([]);
