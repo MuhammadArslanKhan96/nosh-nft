@@ -9,18 +9,12 @@ import { Route } from "next";
 import axios from "axios";
 import FollowButton from "@/components/FollowButton";
 import Cookies from "js-cookie";
+import { User } from "@/types/User";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
-interface user {
-  name: string;
-  email: string;
-  bio: string;
-  image_url: string;
-}
-
 const Layout = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<user | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const params = useSearchParams();
   const pathname = usePathname();
   const userId = Cookies.get("userId");

@@ -3,7 +3,6 @@ import "./globals.css";
 import "@/styles/index.scss";
 import "rc-slider/assets/index.css";
 import Footer from "@/shared/Footer/Footer";
-import MusicPlayer from "@/components/MusicPlayer/MusicPlayer";
 import SiteHeader from "@/app/SiteHeader";
 import { UserProvider } from "@/context/userContext";
 import { Toaster } from "sonner";
@@ -32,7 +31,6 @@ export default function RootLayout({
             <SiteHeader />
             {children}
             <Footer />
-            <MusicPlayer />
             <Toaster
               position="bottom-left"
               invert

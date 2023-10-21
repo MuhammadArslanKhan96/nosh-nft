@@ -1,21 +1,15 @@
 "use client";
 import Avatar from "@/shared/Avatar/Avatar";
+import { Follow } from "@/types/Follow";
 import axios from "axios";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-
-interface Follower {
-  id: string;
-  name: string;
-  image_url: string;
-}
-
 const Page = () => {
   const userId = useSearchParams().get("id");
-  const [followers, setFollowers] = useState<Follower[]>([]);
+  const [followers, setFollowers] = useState<Follow[]>([]);
 
   useEffect(() => {
     axios

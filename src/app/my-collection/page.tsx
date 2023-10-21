@@ -8,31 +8,15 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
 import { useAuth } from "@/hooks/useAuth";
+import { Collection } from "@/types/Collection";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-interface NFT {
-  nft_name: string;
-  nft_image_url: string;
-}
-interface collection {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  current_owner: string;
-  collection_id: string;
-  nft_image_url: string;
-  collection_name: string;
-  collection_description: string;
-  user_name: string;
-  user_image_url: string;
-  nfts: NFT[];
-}
+
 const MyCollectionPage = ({}) => {
   useAuth();
   const { user } = useUserContext();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
-  const [collections, setCollections] = useState<collection[]>([]);
+  const [collections, setCollections] = useState<Collection[]>([]);
   const [row, setRows] = useState<number | null>(null);
   const { isLoading } = useQuery({
     queryKey: ["collection"],

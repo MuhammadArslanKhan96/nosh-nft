@@ -9,23 +9,14 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import Loading from "../loading";
+import { NftSearch } from "@/types/Nft";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-
-interface nft {
-  id: number;
-  image_url: string;
-  name: string;
-  description: string;
-  price: string;
-  current_owner: string;
-  on_sale: boolean;
-}
 
 const PageSearch = ({}) => {
   const userId = Cookies.get("userId");
   const [search, setSearch] = useState("");
-  const [nft, setNft] = useState<nft[]>([]);
+  const [nft, setNft] = useState<NftSearch[]>([]);
 
   const { isLoading } = useQuery({
     queryKey: ["nfts"],
@@ -41,7 +32,7 @@ const PageSearch = ({}) => {
     setSearch(event.target.value);
   };
 
-  const filteredNfts = nft.filter((nft: nft) =>
+  const filteredNfts = nft.filter((nft: NftSearch) =>
     [nft.name, nft.description, nft.current_owner].some((val) =>
       val.toString().toLowerCase().includes(search.toLowerCase())
     )

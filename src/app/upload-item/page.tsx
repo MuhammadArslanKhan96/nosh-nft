@@ -20,6 +20,7 @@ import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
 import MySwitch from "@/components/MySwitch";
 import { useAuth } from "@/hooks/useAuth";
+import { CollectionUploadItem } from "@/types/Collection";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -33,12 +34,6 @@ const nftSchema = z.object({
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
-interface collection {
-  id: number;
-  name: string;
-  description: string;
-}
-
 const PageUploadItem = () => {
   useAuth();
   const homeRouter = useRouter();
@@ -47,7 +42,7 @@ const PageUploadItem = () => {
   const userId = Cookies.get("userId");
   const formData = new FormData();
   const [isOnSale, setIsOnSale] = useState(false);
-  const [collections, setCollections] = useState<collection[]>([]);
+  const [collections, setCollections] = useState<CollectionUploadItem[]>([]);
   const [collectionRows, setCollectionRows] = useState<number | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);

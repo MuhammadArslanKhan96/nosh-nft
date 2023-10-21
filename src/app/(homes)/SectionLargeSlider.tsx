@@ -3,18 +3,9 @@ import { FC, useEffect, useState } from "react";
 import CardLarge1 from "@/components/CardLarge1/CardLarge1";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { NftHome } from "@/types/Nft";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
-interface nfts {
-  id: string;
-  name: string;
-  image_url: string;
-  creator_name: string;
-  collection_name: string;
-  price: string;
-  creator_image_url: string;
-  on_sale: boolean;
-}
 export interface SectionLargeSliderProps {
   className?: string;
 }
@@ -22,7 +13,7 @@ export interface SectionLargeSliderProps {
 const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
   className = "",
 }) => {
-  const [nfts, setNfts] = useState<nfts[]>([]);
+  const [nfts, setNfts] = useState<NftHome[]>([]);
   const [indexActive, setIndexActive] = useState(0);
   const token = Cookies.get("loginToken");
 

@@ -6,19 +6,12 @@ import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
+import { NftSale } from "@/types/Nft";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-interface nft {
-  id: number;
-  image_url: string;
-  name: string;
-  description: string;
-  price: string;
-  current_owner: string;
-  on_sale: boolean;
-}
+
 const NftForSalePage = ({}) => {
   const userId = Cookies.get("userId");
-  const [nft, setNft] = useState<nft[]>([]);
+  const [nft, setNft] = useState<NftSale[]>([]);
   const [row, setRows] = useState<number | null>(null);
 
   const { isLoading } = useQuery({

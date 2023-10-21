@@ -8,18 +8,10 @@ import CardNFT from "@/components/CardNFT";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../loading";
 import { useSearchParams } from "next/navigation";
+import { NftCollectionPage } from "@/types/Nft";
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
-interface nft {
-  id: number;
-  image_url: string;
-  price: string;
-  name: string;
-  description: string;
-  current_owner: string;
-  on_sale: boolean;
-}
 let AccountActions = [
   {
     id: "copylink",
@@ -57,7 +49,7 @@ const PageCollection = ({
   };
 }) => {
   const params = useSearchParams();
-  const [nfts, setNfts] = useState<nft[]>([]);
+  const [nfts, setNfts] = useState<NftCollectionPage[]>([]);
   const { isLoading } = useQuery({
     queryKey: ["nft"],
     queryFn: async () => {

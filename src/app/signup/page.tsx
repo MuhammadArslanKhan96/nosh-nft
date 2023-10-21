@@ -1,8 +1,6 @@
 "use client";
-import googleSvg from "@/images/Google.svg";
 import Input from "@/shared/Input/Input";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
@@ -58,7 +56,7 @@ const PageSignUp = () => {
           Signup
         </h2>
         <div className="max-w-md mx-auto space-y-6 ">
-          <div className="grid gap-3">
+          {/* <div className="grid gap-3">
             <a
               key="Google"
               href="#"
@@ -74,14 +72,14 @@ const PageSignUp = () => {
                 Continue With Google
               </h3>
             </a>
-          </div>
+          </div> */}
           {/* OR */}
-          <div className="relative text-center">
+          {/* <div className="relative text-center">
             <span className="relative z-10 inline-block px-4 font-medium text-sm bg-white dark:text-neutral-400 dark:bg-neutral-900">
               OR
             </span>
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
-          </div>
+          </div> */}
           {/* FORM */}
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -123,6 +121,7 @@ const PageSignUp = () => {
                 {...register("password")}
                 type="password"
                 className="mt-1"
+                placeholder="**********"
               />
             </label>
             {errors.password && (

@@ -36,13 +36,13 @@ const CardLarge1: FC<CardLarge1Props> = ({
   userImageUrl,
   onSale,
 }) => {
-  const randomTitle = [
-    "Walking On Air ",
-    "Amazing Nature",
-    "Beautiful NFT",
-    "Lovely NFT",
-    "Wolf Face #1",
-  ];
+  // const randomTitle = [
+  //   "Walking On Air ",
+  //   "Amazing Nature",
+  //   "Beautiful NFT",
+  //   "Lovely NFT",
+  //   "Wolf Face #1",
+  // ];
   return (
     <div
       className={`nc-CardLarge1 nc-CardLarge1--hasAnimation relative lg:pt-20 flex flex-col-reverse lg:flex-row justify-end ${className}`}

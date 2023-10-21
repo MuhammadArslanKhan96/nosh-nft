@@ -22,6 +22,7 @@ export interface CardNFTProps {
   className?: string;
   isLiked?: boolean;
   currentOwner?: string;
+  primaryOwner?: string;
   onSale?: boolean;
 }
 
@@ -34,6 +35,7 @@ const CardNFT: FC<CardNFTProps> = ({
   description,
   price,
   currentOwner,
+  primaryOwner,
   onSale,
 }) => {
   const router = useRouter();
@@ -46,6 +48,7 @@ const CardNFT: FC<CardNFTProps> = ({
       .then((response) => {
         response.data.result.forEach((item: any) => {
           if (item.name) {
+            console.log(item.name);
             setUserName(item.name);
           } else {
             console.log("Name property does not exist");
@@ -196,10 +199,44 @@ const CardNFT: FC<CardNFTProps> = ({
                 },
               }}
             >
-              By {!username ? "Loading..." : username}
+              <div className="flex items-center">
+                <Avatar
+                  imgUrl={imageUrl ? imageUrl : "/"}
+                  sizeClass="h-6 w-6"
+                  containerClassName="ring-2 ring-white"
+                />
+                <div className="ml-2 text-sm">
+                  <span className="font-normal">Owner:</span>{" "}
+                  <span className="font-medium">{username}</span>
+                </div>
+              </div>
             </Link>
           </h5>
         </div>
+        {/* <div>
+          <h5>
+            <Link
+              href={{
+                pathname: "/user-profile",
+                query: {
+                  id: currentOwner,
+                },
+              }}
+            >
+              <div className="flex items-center">
+                <Avatar
+                  imgUrl={imageUrl ? imageUrl : "/"}
+                  sizeClass="h-6 w-6"
+                  containerClassName="ring-2 ring-white"
+                />
+                <div className="ml-2 text-sm">
+                  <span className="font-normal">Creator:</span>{" "}
+                  <span className="font-medium">{username}</span>
+                </div>
+              </div>
+            </Link>
+          </h5>
+        </div> */}
 
         <div className="w-full border-b border-neutral-200/70 dark:border-neutral-700"></div>
 
@@ -208,50 +245,36 @@ const CardNFT: FC<CardNFTProps> = ({
             price={price}
             labelTextClassName="bg-white dark:bg-neutral-900"
           />
-          {/* <Link
-            href={"/nft-detail" as Route}
-            className="absolute inset-0"
-          ></Link> */}
-
           {userId == currentOwner ? (
             <>
               {onSale ? (
-                <>
-                  <Badge
-                    name="On Sale"
-                    className="bg-opacity-0 border border-green-500 text-green-500"
-                  />
-                </>
+                <Badge
+                  name="On Sale"
+                  className="bg-opacity-0 border border-green-500 text-green-500"
+                />
               ) : (
-                <>
-                  <button
-                    onClick={handleOnSale}
-                    className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
-                  >
-                    Put on sale
-                  </button>
-                </>
+                <button
+                  onClick={handleOnSale}
+                  className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
+                >
+                  Put on sale
+                </button>
               )}
             </>
           ) : (
             <>
               {onSale ? (
-                <>
-                  {" "}
-                  <button
-                    onClick={handleSubmit}
-                    className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
-                  >
-                    Buy
-                  </button>
-                </>
+                <button
+                  onClick={handleSubmit}
+                  className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
+                >
+                  Buy
+                </button>
               ) : (
-                <>
-                  <Badge
-                    name="Not On Sale"
-                    className="bg-opacity-0 border border-green-500 text-green-500"
-                  />
-                </>
+                <Badge
+                  name="Not On Sale"
+                  className="bg-opacity-0 border border-green-500 text-green-500"
+                />
               )}
             </>
           )}
