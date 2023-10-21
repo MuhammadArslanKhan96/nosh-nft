@@ -64,6 +64,7 @@ const NftForSalePage = ({}) => {
                 price={nft.price}
                 currentOwner={nft.current_owner}
                 onSale={nft.on_sale}
+                primaryOwner={nft.primary_owner}
               />
             ))}
           </div>

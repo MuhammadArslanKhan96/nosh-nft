@@ -260,8 +260,8 @@ const NftDetailPage = ({}) => {
 
   return (
     <div className={`nc-NftDetailPage`}>
-      {/* MAIn */}
-      <main className="container mt-11 mb-20 flex ">
+      {/* MAIN */}
+      <main className="container mt-11 mb-20 flex">
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14">
           {/* CONTENT */}
           <div className="space-y-8 lg:space-y-10">

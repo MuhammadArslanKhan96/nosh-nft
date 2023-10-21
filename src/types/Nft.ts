@@ -21,6 +21,7 @@ export type NftType = {
   name: string;
   description: string;
   current_owner: string;
+  primary_owner: string;
   on_sale: boolean;
 };
 

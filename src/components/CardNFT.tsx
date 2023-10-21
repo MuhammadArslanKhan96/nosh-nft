@@ -115,6 +115,30 @@ const CardNFT: FC<CardNFTProps> = ({
     }
   };
 
+  const handleRemoveFromSale = async () => {
+    if (userId) {
+      await axios
+        .put(
+          `${apiBaseUrl}/nfts/update-nft/${id}`,
+          {
+            status: false,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          router.push("/nft-sale");
+          toast.success("NFT removed from sale on marketplace");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error("Error occured while putting NFT on sale");
+        });
+    }
+  };
+
   const renderAvatars = () => {
     return (
       <div className="flex -space-x-1 ">
@@ -213,13 +237,14 @@ const CardNFT: FC<CardNFTProps> = ({
             </Link>
           </h5>
         </div>
+
         {/* <div>
           <h5>
             <Link
               href={{
                 pathname: "/user-profile",
                 query: {
-                  id: currentOwner,
+                  id: primaryOwner,
                 },
               }}
             >
@@ -248,14 +273,20 @@ const CardNFT: FC<CardNFTProps> = ({
           {userId == currentOwner ? (
             <>
               {onSale ? (
-                <Badge
-                  name="On Sale"
-                  className="bg-opacity-0 border border-green-500 text-green-500"
-                />
+                <button
+                  onClick={handleRemoveFromSale}
+                  className="border-2 border-green-500 text-xs hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
+                >
+                  Remove from sale
+                </button>
               ) : (
+                // <Badge
+                //   name="On Sale"
+                //   className="bg-opacity-0 border border-green-500 text-green-500"
+                // />
                 <button
                   onClick={handleOnSale}
-                  className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
+                  className="border-2 border-green-500 text-xs hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
                 >
                   Put on sale
                 </button>
@@ -266,7 +297,7 @@ const CardNFT: FC<CardNFTProps> = ({
               {onSale ? (
                 <button
                   onClick={handleSubmit}
-                  className="border-2 border-green-500 hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
+                  className="border-2 border-green-500 text-xs hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
                 >
                   Buy
                 </button>

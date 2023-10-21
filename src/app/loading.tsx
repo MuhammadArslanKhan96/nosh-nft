@@ -11,7 +11,7 @@ export const Loading = () => {
 
   return (
     <div
-      className={`w-screen h-screen flex text-white justify-center items-center ${
+      className={`w-full h-screen flex text-white justify-center items-center ${
         theme === "dark" ? "bg-[#111827]" : "bg-white"
       }`}
     >

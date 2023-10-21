@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import CardNFT from "@/components/CardNFT";
 import { NftType } from "@/types/Nft";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +14,7 @@ const page = () => {
   const [row, setRows] = useState<number | null>(null);
   const token = Cookies.get("loginToken");
 
-  const {} = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["nft"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -29,6 +30,8 @@ const page = () => {
     },
     cacheTime: Infinity,
   });
+
+  if (isLoading) return <Loading />;
   return (
     <div>
       {row === 0 ? (

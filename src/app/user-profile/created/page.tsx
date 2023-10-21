@@ -28,7 +28,7 @@ const page = () => {
     <div>
       {row === 0 ? (
         <>
-          <div className="">
+          <div>
             <h1 className="text-center pt-10">No NFTs Found</h1>
           </div>
         </>
@@ -44,6 +44,7 @@ const page = () => {
                 price={nft.price}
                 currentOwner={nft.current_owner}
                 onSale={nft.on_sale}
+                primaryOwner={nft.primary_owner}
               />
             ))}
           </div>
