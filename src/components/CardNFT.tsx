@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import Badge from "@/shared/Badge/Badge";
 import Link from "next/link";
+import NftMoreDropdown from "./NftMoreDropdown";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export interface CardNFTProps {
@@ -223,16 +224,21 @@ const CardNFT: FC<CardNFTProps> = ({
                 },
               }}
             >
-              <div className="flex items-center">
-                <Avatar
-                  imgUrl={imageUrl ? imageUrl : "/"}
-                  sizeClass="h-6 w-6"
-                  containerClassName="ring-2 ring-white"
-                />
-                <div className="ml-2 text-sm">
-                  <span className="font-normal">Owner:</span>{" "}
-                  <span className="font-medium">{username}</span>
+              <div className="flex justify-between">
+                <div className="flex items-center">
+                  <Avatar
+                    imgUrl={imageUrl ? imageUrl : "/"}
+                    sizeClass="h-6 w-6"
+                    containerClassName="ring-2 ring-white"
+                  />
+                  <div className="ml-2 text-sm">
+                    <span className="font-normal">Owner:</span>{" "}
+                    <span className="font-medium">
+                      {username ? username : "Loading..."}
+                    </span>
+                  </div>
                 </div>
+                {userId == currentOwner ? <NftMoreDropdown /> : ""}
               </div>
             </Link>
           </h5>
@@ -280,10 +286,6 @@ const CardNFT: FC<CardNFTProps> = ({
                   Remove from sale
                 </button>
               ) : (
-                // <Badge
-                //   name="On Sale"
-                //   className="bg-opacity-0 border border-green-500 text-green-500"
-                // />
                 <button
                   onClick={handleOnSale}
                   className="border-2 border-green-500 text-xs hover:text-white hover:bg-green-600 text-green-500 py-2 px-4 rounded"
