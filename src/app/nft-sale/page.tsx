@@ -13,7 +13,7 @@ const NftForSalePage = ({}) => {
   const [row, setRows] = useState<number | null>(null);
 
   const { isLoading } = useQuery({
-    queryKey: ["nfts"],
+    queryKey: ["nft"],
     queryFn: async () => {
       const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
       const onSaleNfts = data.result.filter((nft: any) => nft.on_sale === true);

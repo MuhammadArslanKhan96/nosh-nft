@@ -17,7 +17,7 @@ const PageSearch = ({}) => {
   const [nft, setNft] = useState<NftType[]>([]);
 
   const { isLoading } = useQuery({
-    queryKey: ["nfts"],
+    queryKey: ["nft"],
     queryFn: async () => {
       const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
       setNft(data.result);

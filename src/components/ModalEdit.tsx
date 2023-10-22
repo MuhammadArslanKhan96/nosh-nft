@@ -1,11 +1,13 @@
 "use client";
-import { FC, useRef, useState } from "react";
+import { FC } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Input from "@/shared/Input/Input";
 import NcModal from "@/shared/NcModal/NcModal";
+import { FieldValues, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export interface ModalEditProps {
   show: boolean;
@@ -14,9 +16,20 @@ export interface ModalEditProps {
 }
 
 const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
-  const textareaRef = useRef(null);
-  const [inputValue, setInputValue] = useState("");
-  const router = useRouter();
+  // const textareaRef = useRef(null);
+  // const router = useRouter();
+  const queryClient = useQueryClient();
+  const { register, handleSubmit } = useForm();
+  const mutation = useMutation(
+    (data: { id: number; price: string }) =>
+      axios.put(`http://localhost:8080/nfts/update-price`, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["nft"]);
+        toast.success("Price updated");
+      },
+    }
+  );
 
   // useEffect(() => {
   //   if (show) {
@@ -33,35 +46,35 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
   //   }
   // }, [show]);
 
-  const handleSubmit = async () => {
-    console.log(inputValue);
-    await axios
-      .put(`http://localhost:8080/nfts/update-price`, {
-        id,
-        price: inputValue,
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  // const onSubmit = async (data: FieldValues) => {
+  //   console.log(data);
+  //   await axios
+  //     .put(`http://localhost:8080/nfts/update-price`, {
+  //       id,
+  //       price: data.price,
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   onCloseModalEdit();
+  // };
+
+  const onSubmit = (data: FieldValues) => {
+    mutation.mutate({ id: id!, price: data.price });
     onCloseModalEdit();
-    window.location.reload();
   };
   const renderContent = () => {
     return (
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
           Change price
         </h3>
         <span className="text-sm">Are you sure you want to change price?</span>
         <div className="mt-8 relative rounded-md shadow-sm">
-          <Input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            type={"text"}
-          />
+          <Input {...register("price")} type={"text"} />
 
           <div className="absolute inset-y-0 right-0 flex items-center">
             <label htmlFor="currency" className="sr-only">
@@ -79,13 +92,7 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
           </div>
         </div>
         <div className="mt-4 space-x-3">
-          <ButtonPrimary
-            onClick={() => {
-              handleSubmit();
-            }}
-          >
-            Submit
-          </ButtonPrimary>
+          <ButtonPrimary type="submit">Submit</ButtonPrimary>
           <ButtonSecondary type="button" onClick={onCloseModalEdit}>
             Cancel
           </ButtonSecondary>
