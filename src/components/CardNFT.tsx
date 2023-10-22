@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import Badge from "@/shared/Badge/Badge";
 import Link from "next/link";
 import NftMoreDropdown from "./NftMoreDropdown";
+import { nftsImgs } from "@/contains/fakeData";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 export interface CardNFTProps {
@@ -226,7 +227,7 @@ const CardNFT: FC<CardNFTProps> = ({
               >
                 <div className="flex items-center">
                   <Avatar
-                    imgUrl={imageUrl ? imageUrl : "/"}
+                    imgUrl={imageUrl ? nftsImgs[0] : "/"}
                     sizeClass="h-6 w-6"
                     containerClassName="ring-2 ring-white"
                   />

@@ -9,6 +9,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
 
+const APIBASEURL = process.env.NEXT_PUBLIC_API_BASEURL;
+
 export interface ModalEditProps {
   show: boolean;
   id?: number;
@@ -22,7 +24,7 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
   const { register, handleSubmit } = useForm();
   const mutation = useMutation(
     (data: { id: number; price: string }) =>
-      axios.put(`http://localhost:8080/nfts/update-price`, data),
+      axios.put(`${APIBASEURL}/nfts/update-price`, data),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["nft"]);
@@ -45,22 +47,6 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
   //     }, 400);
   //   }
   // }, [show]);
-
-  // const onSubmit = async (data: FieldValues) => {
-  //   console.log(data);
-  //   await axios
-  //     .put(`http://localhost:8080/nfts/update-price`, {
-  //       id,
-  //       price: data.price,
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  //   onCloseModalEdit();
-  // };
 
   const onSubmit = (data: FieldValues) => {
     mutation.mutate({ id: id!, price: data.price });
