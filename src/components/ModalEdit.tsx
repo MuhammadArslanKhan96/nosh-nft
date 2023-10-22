@@ -1,18 +1,22 @@
 "use client";
-import { FC, useRef } from "react";
+import { FC, useRef, useState } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import Input from "@/shared/Input/Input";
 import NcModal from "@/shared/NcModal/NcModal";
-import { FieldValues, useForm } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export interface ModalEditProps {
   show: boolean;
+  id?: number;
   onCloseModalEdit: () => void;
 }
 
-const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
+const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
   const textareaRef = useRef(null);
+  const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
 
   // useEffect(() => {
   //   if (show) {
@@ -29,21 +33,35 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
   //   }
   // }, [show]);
 
-  const { register, handleSubmit } = useForm();
-
-  const onSubmit = async (data: FieldValues) => {
-    console.log(data);
+  const handleSubmit = async () => {
+    console.log(inputValue);
+    await axios
+      .put(`http://localhost:8080/nfts/update-price`, {
+        id,
+        price: inputValue,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    onCloseModalEdit();
+    window.location.reload();
   };
-
   const renderContent = () => {
     return (
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
           Change price
         </h3>
         <span className="text-sm">Are you sure you want to change price?</span>
         <div className="mt-8 relative rounded-md shadow-sm">
-          <Input {...register("price")} type={"text"} />
+          <Input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            type={"text"}
+          />
 
           <div className="absolute inset-y-0 right-0 flex items-center">
             <label htmlFor="currency" className="sr-only">
@@ -61,7 +79,13 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
           </div>
         </div>
         <div className="mt-4 space-x-3">
-          <ButtonPrimary type="submit">Submit</ButtonPrimary>
+          <ButtonPrimary
+            onClick={() => {
+              handleSubmit();
+            }}
+          >
+            Submit
+          </ButtonPrimary>
           <ButtonSecondary type="button" onClick={onCloseModalEdit}>
             Cancel
           </ButtonSecondary>

@@ -215,15 +215,15 @@ const CardNFT: FC<CardNFTProps> = ({
 
         <div>
           <h5>
-            <Link
-              href={{
-                pathname: "/user-profile",
-                query: {
-                  id: currentOwner,
-                },
-              }}
-            >
-              <div className="flex justify-between">
+            <div className="flex justify-between">
+              <Link
+                href={{
+                  pathname: "/user-profile",
+                  query: {
+                    id: currentOwner,
+                  },
+                }}
+              >
                 <div className="flex items-center">
                   <Avatar
                     imgUrl={imageUrl ? imageUrl : "/"}
@@ -237,15 +237,15 @@ const CardNFT: FC<CardNFTProps> = ({
                     </span>
                   </div>
                 </div>
-                {userId == currentOwner && onSale ? (
-                  <div className="h-0">
-                    <NftMoreDropdown />
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            </Link>
+              </Link>
+              {userId == currentOwner && onSale ? (
+                <div className="h-0">
+                  <NftMoreDropdown id={id} />
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </h5>
         </div>
 

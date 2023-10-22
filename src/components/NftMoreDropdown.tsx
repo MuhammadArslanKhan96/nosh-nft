@@ -9,6 +9,7 @@ import ModalTransferToken from "./ModalTransferToken";
 
 export interface NftMoreDropdownProps {
   containerClassName?: string;
+  id?: number;
   dropdownPositon?: "up" | "down";
   actions?: NcDropDownItem[];
 }
@@ -52,6 +53,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   containerClassName = "flex rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer",
   dropdownPositon = "down",
   actions = actionsDefault,
+  id,
 }) => {
   const [isEditting, setIsEditting] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
@@ -71,12 +73,8 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   const closeModalTransferToken = () => setIsTransfering(false);
 
   const hanldeClickDropDown = (item: NcDropDownItem) => {
-    if (item.href) {
-      return;
-    }
-
     if (item.id === "edit") {
-      return openModalEdit();
+      openModalEdit();
     }
     if (item.id === "report") {
       return openModalReport();
@@ -87,13 +85,12 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
     if (item.id === "transferToken") {
       return openModalTransferToken();
     }
-    return;
   };
 
   const renderMenu = () => {
     return (
       <NcDropDown
-        className={`${containerClassName} `}
+        className={`relative ${containerClassName} `}
         data={actions}
         panelMenusClass={
           dropdownPositon === "up"
@@ -112,7 +109,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
         show={isReporting}
         onCloseModalReportItem={closeModalReport}
       />
-      <ModalEdit show={isEditting} onCloseModalEdit={closeModalEdit} />
+      <ModalEdit id={id} show={isEditting} onCloseModalEdit={closeModalEdit} />
       <ModalDelete show={isDeleting} onCloseModalDelete={closeModalDelete} />
       <ModalTransferToken
         show={isTransfering}
