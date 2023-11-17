@@ -22,6 +22,9 @@ import MySwitch from "@/components/MySwitch";
 import { useAuth } from "@/hooks/useAuth";
 import { CollectionUploadItem } from "@/types/Collection";
 import { useWallet } from "@/hooks/useWallet";
+import { ethers } from "ethers";
+import ABI from "@/../contracts/ABI.json";
+declare let window: any;
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -34,6 +37,7 @@ const nftSchema = z.object({
 });
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
+const contractAddress = "0xB1B4B4b5845787083f254b94B42A0425A95C7a6b";
 
 const PageUploadItem = () => {
   useAuth();
@@ -98,6 +102,25 @@ const PageUploadItem = () => {
     }
   };
   const onSubmit = async (data: FieldValues) => {
+    if (typeof window.ethereum !== "undefined") {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+    }
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, ABI, signer);
+
+    try {
+      const tx = await contract.safeMint(await signer.getAddress());
+      console.log("Transaction sent: " + tx.hash);
+
+      // Wait for the transaction to be mined
+      await tx.wait();
+      console.log("Minted successfully");
+    } catch (err) {
+      console.error("Error minting NFT: ", err);
+    }
+
     console.log(data);
     if (!file) {
       toast.error("NFT image is required");
