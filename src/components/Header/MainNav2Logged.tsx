@@ -8,20 +8,50 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Navigation from "@/shared/Navigation/Navigation";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import { Route } from "next";
-import { usePathname } from "next/navigation";
 import Avatar from "@/shared/Avatar/Avatar";
 import ImageAvatar from "../../images/avatars/ImageAvatar.png";
 import { useUserContext } from "@/hooks/useUserContext";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import Cookies from "js-cookie";
+declare let window: any;
 
 export interface MainNav2LoggedProps {}
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   const userContext = useUserContext();
-  const router = usePathname();
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   console.log(userContext.user);
-  // }, [router, userContext, userContext.user, userContext.user.id]);
+  const getWalletFunction = () => {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then((res: string[]) => {
+          const wallet = res.length > 0 ? String(res[0]) : null;
+          if (wallet) {
+            Cookies.set("wallet", wallet, {
+              expires: 1 / 24,
+            });
+            userContext.setUser({
+              ...userContext.user,
+              wallet: wallet,
+            });
+            router.push("/");
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("Please install metamask extension");
+    }
+  };
+
+  const removeWalletFunction = async () => {
+    Cookies.remove("wallet");
+    await window.location.reload();
+    toast.success("Wallet disconnected");
+  };
 
   return (
     <div className={`nc-MainNav2Logged relative z-10`}>
@@ -81,7 +111,28 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
                 Create
               </ButtonPrimary>
               {userContext.user.id ? (
-                <></>
+                Cookies.get("wallet") ? (
+                  <>
+                    <ButtonSecondary
+                      className="self-center"
+                      onClick={removeWalletFunction}
+                      sizeClass="px-4 py-2 sm:px-5"
+                    >
+                      Connected
+                    </ButtonSecondary>
+                  </>
+                ) : (
+                  <>
+                    <ButtonSecondary
+                      className="self-center"
+                      // onClick={getWalletFunction}
+                      href="/connect-wallet"
+                      sizeClass="px-4 py-2 sm:px-5"
+                    >
+                      Connect Wallet
+                    </ButtonSecondary>
+                  </>
+                )
               ) : (
                 <>
                   <ButtonSecondary

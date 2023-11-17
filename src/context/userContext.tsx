@@ -17,6 +17,7 @@ interface User {
   telegram?: string | null;
   imageUrl?: string | null;
   imageName?: string | null;
+  wallet?: string | null;
 }
 
 interface UserContextProps {

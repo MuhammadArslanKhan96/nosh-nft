@@ -1,36 +1,63 @@
 "use client";
-
-import React, { useState } from "react";
+import { useState } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import NcModal from "@/shared/NcModal/NcModal";
 import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import NcImage from "@/shared/NcImage/NcImage";
 import QrCodeImg from "@/images/qr-code.png";
 import metamaskImg from "@/images/metamask.webp";
-import walletconnectImg from "@/images/walletconnect.webp";
-import walletlinkImg from "@/images/walletlink.webp";
-import fortmaticImg from "@/images/fortmatic.webp";
+import Cookies from "js-cookie";
+import { toast } from "sonner";
+import { useUserContext } from "@/hooks/useUserContext";
+import { useRouter } from "next/navigation";
+declare let window: any;
 
 const plans = [
   {
     name: "Metamask",
     img: metamaskImg,
   },
-  {
-    name: "Walletconnect",
-    img: walletconnectImg,
-  },
-  {
-    name: "Walletlink",
-    img: walletlinkImg,
-  },
-  {
-    name: "Fortmatic",
-    img: fortmaticImg,
-  },
+  // {
+  //   name: "Walletconnect",
+  //   img: walletconnectImg,
+  // },
+  // {
+  //   name: "Walletlink",
+  //   img: walletlinkImg,
+  // },
+  // {
+  //   name: "Fortmatic",
+  //   img: fortmaticImg,
+  // },
 ];
 const PageConnectWallet = ({}) => {
   const [showModal, setShowModal] = useState(false);
+  const { user, setUser } = useUserContext();
+  const router = useRouter();
+
+  const getWalletFunction = () => {
+    if (window.ethereum) {
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then((res: string[]) => {
+          const wallet = res.length > 0 ? String(res[0]) : null;
+          if (wallet) {
+            Cookies.set("wallet", wallet, {
+              expires: 1 / 24,
+            });
+            setUser({
+              ...user,
+              wallet: wallet,
+            });
+            router.push("/");
+          }
+        })
+        .catch((err: Error) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("Please install metamask extension");
+    }
+  };
 
   const renderContent = () => {
     return (
@@ -76,7 +103,7 @@ const PageConnectWallet = ({}) => {
               {plans.map((plan) => (
                 <div
                   key={plan.name}
-                  onClick={() => setShowModal(true)}
+                  onClick={getWalletFunction}
                   typeof="button"
                   tabIndex={0}
                   className="relative rounded-xl hover:shadow-lg border 
@@ -128,14 +155,14 @@ const PageConnectWallet = ({}) => {
         </div>
       </div>
 
-      <NcModal
+      {/* <NcModal
         renderTrigger={() => null}
         isOpenProp={showModal}
         renderContent={renderContent}
         contentExtraClass="max-w-md"
         onCloseModal={() => setShowModal(false)}
         modalTitle="Connect Wallet"
-      />
+      /> */}
     </div>
   );
 };
