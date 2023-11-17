@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import MySwitch from "@/components/MySwitch";
 import { useAuth } from "@/hooks/useAuth";
 import { CollectionUploadItem } from "@/types/Collection";
+import { useWallet } from "@/hooks/useWallet";
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -36,6 +37,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const PageUploadItem = () => {
   useAuth();
+  useWallet();
   const homeRouter = useRouter();
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");

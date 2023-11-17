@@ -33,6 +33,8 @@ export default function AvatarDropdown() {
   const pushLogin = async () => {
     Cookies.remove("loginToken");
     Cookies.remove("userId");
+    Cookies.remove("wallet");
+
     setUser({
       id: null,
       name: null,

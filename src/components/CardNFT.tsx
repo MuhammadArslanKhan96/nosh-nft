@@ -40,10 +40,12 @@ const CardNFT: FC<CardNFTProps> = ({
   primaryOwner,
   onSale,
 }) => {
+  const [username, setUserName] = useState<string | null>();
   const router = useRouter();
   const userId = Cookies.get("userId");
-  const [username, setUserName] = useState<string | null>();
   const token = Cookies.get("loginToken");
+  const wallet = Cookies.get("wallet");
+
   useEffect(() => {
     axios
       .get(`${apiBaseUrl}/user/get/${currentOwner}`)
@@ -66,6 +68,10 @@ const CardNFT: FC<CardNFTProps> = ({
   );
 
   const handleSubmit = async () => {
+    if (!wallet) {
+      toast.error("Please connect wallet to buy NFT");
+      return;
+    }
     if (userId) {
       await axios
         .put(

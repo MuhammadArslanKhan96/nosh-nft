@@ -15,8 +15,9 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const NftDetailPage = ({}) => {
   const userId = Cookies.get("userId");
-  const params = useSearchParams();
   const token = Cookies.get("loginToken");
+  const wallet = Cookies.get("wallet");
+  const params = useSearchParams();
   const router = useRouter();
   const { data } = useQuery({
     queryKey: ["nft"],
@@ -29,6 +30,10 @@ const NftDetailPage = ({}) => {
     },
   });
   const handleSubmit = async () => {
+    if (!wallet) {
+      toast.error("Please connect wallet to buy NFT");
+      return;
+    }
     if (userId) {
       await axios
         .put(
