@@ -37,7 +37,7 @@ const nftSchema = z.object({
 });
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-const contractAddress = "0xB1B4B4b5845787083f254b94B42A0425A95C7a6b";
+const contractAddress = "0x3ab6790DFC1d036f9694532a7B5C5e05c21F85B0";
 
 const PageUploadItem = () => {
   useAuth();
