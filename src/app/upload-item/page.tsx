@@ -137,6 +137,7 @@ const PageUploadItem = () => {
       console.log("Minted successfully");
     } catch (err) {
       console.error("Error minting NFT: ", err);
+      return;
     }
 
     console.log(data);
