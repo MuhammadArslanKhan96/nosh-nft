@@ -53,6 +53,7 @@ const NftDetailPage = ({}) => {
       await transaction.wait();
       console.log(`NFT with tokenId ${data.token_id} has been bought`);
     } catch (error) {
+      toast.error("Error occured while buying NFT");
       console.error("An error occurred", error);
       return;
     }

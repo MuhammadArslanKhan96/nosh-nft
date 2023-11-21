@@ -96,6 +96,7 @@ const CardNFT: FC<CardNFTProps> = ({
       await transaction.wait();
       console.log(`NFT with tokenId ${token_id} has been bought`);
     } catch (error) {
+      toast.error("Error occured while buying NFT");
       console.error("An error occurred", error);
       return;
     }
@@ -143,6 +144,7 @@ const CardNFT: FC<CardNFTProps> = ({
         `NFT with tokenId ${token_id} is now for sale at price ${price} ETH`
       );
     } catch (error) {
+      toast.error("Error occured while putting NFT on sale");
       console.error("An error occurred", error);
       return;
     }
