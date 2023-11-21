@@ -69,6 +69,8 @@ const MyNftPage = ({}) => {
                     price={nft.price}
                     currentOwner={nft.current_owner}
                     onSale={nft.on_sale}
+                    owner_wallet={nft.owner_wallet}
+                    token_id={nft.token_id}
                   />
                 ))}
               </div>

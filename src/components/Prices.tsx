@@ -36,6 +36,7 @@ const Prices: FC<PricesProps> = ({
           {labelTextState}
         </span>
         <span className=" text-green-500 !leading-none">{price}</span>
+        <span className=" text-green-500 !leading-none ps-1 text-xs">ETH</span>
       </div>
     </div>
   );

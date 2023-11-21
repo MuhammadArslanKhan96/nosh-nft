@@ -5,7 +5,6 @@ import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import FormItem from "@/components/FormItem";
-import dynamic from "next/dynamic";
 import { Route } from "next";
 import axios from "axios";
 import Link from "next/link";
@@ -18,13 +17,14 @@ import Loading from "../loading";
 import { useUserContext } from "@/hooks/useUserContext";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
-import MySwitch from "@/components/MySwitch";
 import { useAuth } from "@/hooks/useAuth";
 import { CollectionUploadItem } from "@/types/Collection";
 import { useWallet } from "@/hooks/useWallet";
-import { ethers } from "ethers";
 import ABI from "@/../contracts/ABI.json";
+import dynamic from "next/dynamic";
+import Web3 from "web3";
 declare let window: any;
+let ethers = require("../../../node_modules/ethers");
 
 const nftSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters are allowed"),
@@ -37,15 +37,17 @@ const nftSchema = z.object({
 });
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-const contractAddress = "0x3ab6790DFC1d036f9694532a7B5C5e05c21F85B0";
+const contractAddress = "0xdd89638c5ec6B5A8a0Dbbad41074480e4DCBDd98";
 
 const PageUploadItem = () => {
   useAuth();
   useWallet();
   const homeRouter = useRouter();
+  let tokenId: number | bigint;
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");
   const userId = Cookies.get("userId");
+  const wallet = Cookies.get("wallet");
   const formData = new FormData();
   const [isOnSale, setIsOnSale] = useState(false);
   const [collections, setCollections] = useState<CollectionUploadItem[]>([]);
@@ -102,6 +104,19 @@ const PageUploadItem = () => {
     }
   };
   const onSubmit = async (data: FieldValues) => {
+    if (!file) {
+      toast.error("NFT image is required");
+      return;
+    }
+    if (!selectedCollectionId) {
+      toast.error("Please select a collection");
+      return;
+    }
+    let valueInWei = ethers.parseEther(data.price);
+    console.log(valueInWei);
+    const valueInWeiBigInt = BigInt(valueInWei);
+    // let valueinwei = ethers.formatEther(valueInWei);
+    // console.log(valueinwei);
     if (typeof window.ethereum !== "undefined") {
       await window.ethereum.request({ method: "eth_requestAccounts" });
     }
@@ -111,25 +126,21 @@ const PageUploadItem = () => {
     const contract = new ethers.Contract(contractAddress, ABI, signer);
 
     try {
-      const tx = await contract.safeMint(await signer.getAddress());
-      console.log("Transaction sent: " + tx.hash);
+      const data = await contract.mintNFT(valueInWeiBigInt);
+      await provider.waitForTransaction(data.hash);
+      const receipt = await provider.getTransactionReceipt(data.hash);
+      tokenId = Web3.utils.hexToNumber(receipt?.logs[0].topics[3] ?? "");
+      console.log(Web3.utils.hexToNumber(receipt?.logs[0].topics[3] ?? ""));
+      console.log("Transaction sent: " + data.hash);
 
-      // Wait for the transaction to be mined
-      await tx.wait();
+      await data.wait();
       console.log("Minted successfully");
     } catch (err) {
       console.error("Error minting NFT: ", err);
     }
 
     console.log(data);
-    if (!file) {
-      toast.error("NFT image is required");
-      return;
-    }
-    if (!selectedCollectionId) {
-      toast.error("Please select a collection");
-      return;
-    }
+
     formData.append("file-upload", file);
     await axios
       .post(`${apiBaseUrl}/create/image`, formData, {
@@ -161,7 +172,9 @@ const PageUploadItem = () => {
           onSale: isOnSale,
           primaryOwner: user.id,
           currentOwner: user.id,
+          ownerWallet: wallet,
           collectionId: selectedCollectionId,
+          tokenId: tokenId,
         },
         {
           headers: {
@@ -476,7 +489,10 @@ const PageUploadItem = () => {
                   )}
                 </FormItem>
                 <FormItem label="Price">
-                  <Input {...register("price")} placeholder="Price" />
+                  <Input
+                    {...register("price")}
+                    placeholder="Price (In ethers)"
+                  />
                   {errors.price && (
                     <p className="text-sm text-red-500 pt-3">{`${errors.price.message}`}</p>
                   )}
@@ -484,7 +500,7 @@ const PageUploadItem = () => {
               </div>
 
               {/* ---- */}
-              <MySwitch enabled={isOnSale} onChange={setIsOnSale} />
+              {/* <MySwitch enabled={isOnSale} onChange={setIsOnSale} /> */}
 
               {/* ---- */}
               {/* <MySwitch
@@ -502,6 +518,7 @@ const PageUploadItem = () => {
               {/* ---- */}
               <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
                 <ButtonPrimary
+                  loading={isSubmitting}
                   disabled={isSubmitting}
                   type="submit"
                   className="flex-1"

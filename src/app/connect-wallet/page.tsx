@@ -49,6 +49,7 @@ const PageConnectWallet = ({}) => {
               wallet: wallet,
             });
             router.push("/");
+            toast.success("Wallet connected");
           }
         })
         .catch((err: Error) => {

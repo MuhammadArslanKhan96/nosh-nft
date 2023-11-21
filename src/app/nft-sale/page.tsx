@@ -18,6 +18,7 @@ const NftForSalePage = ({}) => {
       const { data } = await axios.get(`${apiBaseUrl}/nfts/getAll`);
       const onSaleNfts = data.result.filter((nft: any) => nft.on_sale === true);
       setNft(onSaleNfts);
+      console.log(onSaleNfts);
       setRows(data.result.length);
       return onSaleNfts;
     },
@@ -65,6 +66,8 @@ const NftForSalePage = ({}) => {
                 currentOwner={nft.current_owner}
                 onSale={nft.on_sale}
                 primaryOwner={nft.primary_owner}
+                owner_wallet={nft.owner_wallet}
+                token_id={nft.token_id}
               />
             ))}
           </div>

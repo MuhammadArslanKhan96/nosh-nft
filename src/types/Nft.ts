@@ -23,6 +23,8 @@ export type NftType = {
   current_owner: string;
   primary_owner: string;
   on_sale: boolean;
+  owner_wallet: string;
+  token_id: string;
 };
 
 export type NftSale = {
@@ -34,4 +36,6 @@ export type NftSale = {
   current_owner: string;
   primary_owner: string;
   on_sale: boolean;
+  owner_wallet: string;
+  token_id: string;
 };

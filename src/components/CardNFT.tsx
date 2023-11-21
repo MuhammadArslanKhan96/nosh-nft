@@ -13,7 +13,10 @@ import Badge from "@/shared/Badge/Badge";
 import Link from "next/link";
 import NftMoreDropdown from "./NftMoreDropdown";
 import { nftsImgs } from "@/contains/fakeData";
+import { ethers } from "ethers";
+import ABI from "@/../contracts/ABI.json";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
+declare let window: any;
 
 export interface CardNFTProps {
   id?: number;
@@ -26,6 +29,8 @@ export interface CardNFTProps {
   currentOwner?: string;
   primaryOwner?: string;
   onSale?: boolean;
+  owner_wallet?: string;
+  token_id?: string;
 }
 
 const CardNFT: FC<CardNFTProps> = ({
@@ -38,13 +43,19 @@ const CardNFT: FC<CardNFTProps> = ({
   price,
   currentOwner,
   primaryOwner,
+  owner_wallet,
+  token_id,
   onSale,
 }) => {
+  const contractAddress = "0xdd89638c5ec6B5A8a0Dbbad41074480e4DCBDd98";
+
   const [username, setUserName] = useState<string | null>();
+  const [isLoadingSale, setIsLoadingSale] = useState<boolean>(false);
   const router = useRouter();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
   const wallet = Cookies.get("wallet");
+  const token_id_int = parseInt(token_id as string);
 
   useEffect(() => {
     axios
@@ -72,6 +83,23 @@ const CardNFT: FC<CardNFTProps> = ({
       toast.error("Please connect wallet to buy NFT");
       return;
     }
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+
+    const contract = new ethers.Contract(contractAddress, ABI, signer);
+    const priceInt = ethers.parseEther(price ? price : "0.0");
+    // const nft = await contract.nfts(token_id);
+    // const price = nft.price;
+
+    try {
+      const transaction = await contract.buyNFT(token_id, { value: priceInt });
+      await transaction.wait();
+      console.log(`NFT with tokenId ${token_id} has been bought`);
+    } catch (error) {
+      console.error("An error occurred", error);
+      return;
+    }
+
     if (userId) {
       await axios
         .put(
@@ -98,7 +126,26 @@ const CardNFT: FC<CardNFTProps> = ({
       toast.error("Please login to buy NFT");
     }
   };
+
   const handleOnSale = async () => {
+    // setIsLoadingSale(true);
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const valueInWei = ethers.parseEther(price ? price : "0.0");
+
+    const contract = new ethers.Contract(contractAddress, ABI, signer);
+
+    try {
+      console.log(token_id, valueInWei);
+      const transaction = await contract.sellNFT(token_id, valueInWei);
+      await transaction.wait();
+      console.log(
+        `NFT with tokenId ${token_id} is now for sale at price ${price} ETH`
+      );
+    } catch (error) {
+      console.error("An error occurred", error);
+      return;
+    }
     if (userId) {
       await axios
         .put(
@@ -120,7 +167,15 @@ const CardNFT: FC<CardNFTProps> = ({
           toast.error("Error occured while putting NFT on sale");
         });
     }
+    // setIsLoadingSale(false);
   };
+
+  // if (isLoadingSale)
+  //   return (
+  //     <div className="w-full h-full">
+  //       <Loading />
+  //     </div>
+  //   );
 
   const handleRemoveFromSale = async () => {
     if (userId) {
@@ -214,7 +269,6 @@ const CardNFT: FC<CardNFTProps> = ({
 
         <div className="absolute top-3 inset-x-3 flex"></div>
       </div>
-
       <div className="px-2 py-5 space-y-3">
         {/* <div className="flex justify-between">{renderAvatars()}</div> */}
         <h2 className={`text-lg font-medium`}>{name}</h2>
