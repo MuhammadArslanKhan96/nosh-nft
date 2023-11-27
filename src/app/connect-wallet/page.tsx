@@ -1,9 +1,7 @@
 "use client";
 import { useState } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
-import ButtonSecondary from "@/shared/Button/ButtonSecondary";
 import NcImage from "@/shared/NcImage/NcImage";
-import QrCodeImg from "@/images/qr-code.png";
 import metamaskImg from "@/images/metamask.webp";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
@@ -16,18 +14,6 @@ const plans = [
     name: "Metamask",
     img: metamaskImg,
   },
-  // {
-  //   name: "Walletconnect",
-  //   img: walletconnectImg,
-  // },
-  // {
-  //   name: "Walletlink",
-  //   img: walletlinkImg,
-  // },
-  // {
-  //   name: "Fortmatic",
-  //   img: fortmaticImg,
-  // },
 ];
 const PageConnectWallet = ({}) => {
   const [showModal, setShowModal] = useState(false);
@@ -60,33 +46,10 @@ const PageConnectWallet = ({}) => {
     }
   };
 
-  const renderContent = () => {
-    return (
-      <form action="#">
-        <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-          Scan to connect
-        </h3>
-        <span className="text-sm">
-          Open Coinbase Wallet on your mobile phone and scan
-        </span>
-
-        <div className="p-5 border bg-white dark:bg-neutral-300 border-neutral-200 dark:border-neutral-700 rounded-xl flex items-center justify-center mt-4">
-          <NcImage className="w-40" src={QrCodeImg} />
-        </div>
-
-        <div className="mt-5 space-x-3">
-          <ButtonPrimary type="submit">Install app</ButtonPrimary>
-          <ButtonSecondary type="button">Cancel</ButtonSecondary>
-        </div>
-      </form>
-    );
-  };
-
   return (
     <div className={`nc-PageConnectWallet`}>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-3xl mx-auto space-y-8 sm:space-y-10">
-          {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-semibold">
               Connect your wallet.
@@ -127,7 +90,6 @@ const PageConnectWallet = ({}) => {
               ))}
             </div>
 
-            {/* ---- */}
             <div className="pt-2 ">
               <ButtonPrimary href={"/"} className="flex-1">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -155,15 +117,6 @@ const PageConnectWallet = ({}) => {
           </div>
         </div>
       </div>
-
-      {/* <NcModal
-        renderTrigger={() => null}
-        isOpenProp={showModal}
-        renderContent={renderContent}
-        contentExtraClass="max-w-md"
-        onCloseModal={() => setShowModal(false)}
-        modalTitle="Connect Wallet"
-      /> */}
     </div>
   );
 };

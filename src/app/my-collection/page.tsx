@@ -44,7 +44,6 @@ const MyCollectionPage = ({}) => {
     <div className={`nc-MyCollectionPage`}>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
-          {/* HEADING */}
           {row == 0 ? (
             <>
               <div className="max-w-2xl">

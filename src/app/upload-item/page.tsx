@@ -399,95 +399,21 @@ const PageUploadItem = () => {
                     </div>
                   </>
                 )}
-
-                {/* <RadioGroup value={selected} onChange={setSelected}>
-                  <RadioGroup.Label className="sr-only">
-                    Server size
-                  </RadioGroup.Label>
-                  <div className="flex overflow-auto py-2 space-x-4 customScrollBar">
-                    {collections.map((collections, index) => (
-                      <RadioGroup.Option
-                        key={collections.id}
-                        value={plan}
-                        className={({ active, checked }) =>
-                          `${
-                            active
-                              ? "ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60"
-                              : ""
-                          }
-                  ${
-                    checked
-                      ? "bg-teal-600 text-white"
-                      : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                  }
-                    relative flex-shrink-0 w-44 rounded-xl border border-neutral-200 dark:border-neutral-700 px-6 py-5 cursor-pointer flex focus:outline-none `
-                        }
-                      >
-                        {({ active, checked }) => (
-                          <>
-                            <div className="flex items-center justify-between w-full">
-                              <div className="flex items-center">
-                                <div className="text-sm">
-                                  <div className="flex items-center justify-between">
-                                    <RadioGroup.Description
-                                      as="div"
-                                      className={"rounded-full w-16"}
-                                    >
-                                      <NcImage
-                                        containerClassName="aspect-w-1 aspect-h-1 rounded-full overflow-hidden"
-                                        src={plan.featuredImage}
-                                      />
-                                    </RadioGroup.Description>
-                                    {checked && (
-                                      <div className="flex-shrink-0 text-white">
-                                        <CheckIcon className="w-6 h-6" />
-                                      </div>
-                                    )}
-                                  </div>
-                                  <RadioGroup.Label
-                                    as="p"
-                                    className={`font-semibold mt-3  ${
-                                      checked ? "text-white" : ""
-                                    }`}
-                                  >
-                                    {plan.name}
-                                  </RadioGroup.Label>
-                                  <RadioGroup.Label
-                                    as="p"
-                                    className={`font-semibold mt-3  ${
-                                      checked ? "text-white" : ""
-                                    }`}
-                                  >
-                                    {plan.description}
-                                  </RadioGroup.Label>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        )}
-                      </RadioGroup.Option>
-                    ))}
-                  </div>
-                </RadioGroup> */}
               </div>
 
-              {/* ---- */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-2.5">
-                {/* ---- */}
                 <FormItem label="Royalties">
                   <Input {...register("royalties")} placeholder="20%" />
                   {errors.royalties && (
                     <p className="text-sm text-red-500 pt-3">{`${errors.royalties.message}`}</p>
                   )}
                 </FormItem>
-                {/* ---- */}
                 <FormItem label="Size">
                   <Input {...register("size")} placeholder="165Mb" />
                   {errors.size && (
                     <p className="text-sm text-red-500 pt-3">{`${errors.size.message}`}</p>
                   )}
                 </FormItem>
-                {/* ---- */}
                 <FormItem label="Properties">
                   <Input {...register("properties")} placeholder="Properties" />
                   {errors.properties && (
@@ -505,23 +431,8 @@ const PageUploadItem = () => {
                 </FormItem>
               </div>
 
-              {/* ---- */}
               {/* <MySwitch enabled={isOnSale} onChange={setIsOnSale} /> */}
 
-              {/* ---- */}
-              {/* <MySwitch
-              label="Instant sale price"
-              desc="Enter the price for which the item will be instantly sold"
-            /> */}
-
-              {/* ---- */}
-              {/* <MySwitch
-              enabled
-              label="Unlock once purchased"
-              desc="Content will be unlocked after successful transaction"
-            /> */}
-
-              {/* ---- */}
               <div className="pt-2 flex flex-col sm:flex-row space-y-3 sm:space-y-0 space-x-0 sm:space-x-3 ">
                 <ButtonPrimary
                   loading={isSubmitting}
@@ -531,10 +442,6 @@ const PageUploadItem = () => {
                 >
                   Upload item
                 </ButtonPrimary>
-                {/* 
-                <ButtonSecondary href="/nft-detail" className="flex-1">
-                  Preview item
-                </ButtonSecondary> */}
               </div>
             </form>
           </div>
@@ -544,18 +451,4 @@ const PageUploadItem = () => {
   );
 };
 
-function CheckIcon(props: any) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />
-      <path
-        d="M7 13l3 3 7-7"
-        stroke="#fff"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 export default dynamic(() => Promise.resolve(PageUploadItem), { ssr: false });

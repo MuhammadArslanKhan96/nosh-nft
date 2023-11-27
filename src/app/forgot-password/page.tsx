@@ -36,7 +36,6 @@ const ForgotPasswordPage = () => {
           Forgot Password
         </h2>
         <div className="max-w-md mx-auto space-y-6">
-          {/* FORM */}
           <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit}>
             <label className="block">
               <span className="text-neutral-800 dark:text-neutral-200">

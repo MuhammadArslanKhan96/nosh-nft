@@ -50,7 +50,6 @@ const CardNFT: FC<CardNFTProps> = ({
   const contractAddress = "0xdd89638c5ec6B5A8a0Dbbad41074480e4DCBDd98";
 
   const [username, setUserName] = useState<string | null>();
-  const [isLoadingSale, setIsLoadingSale] = useState<boolean>(false);
   const router = useRouter();
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
@@ -195,29 +194,6 @@ const CardNFT: FC<CardNFTProps> = ({
     }
   };
 
-  const renderAvatars = () => {
-    return (
-      <div className="flex -space-x-1 ">
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-      </div>
-    );
-  };
-
   return (
     <div className={`nc-CardNFT relative flex flex-col group ${className}`}>
       <div className="relative flex-shrink-0 ">
@@ -240,13 +216,7 @@ const CardNFT: FC<CardNFTProps> = ({
             />
           </Link>
         </div>
-        {/* {itemType === "video" && (
-          <ItemTypeVideoIcon className="absolute top-3 left-3 !w-9 !h-9" />
-        )}
 
-        {itemType === "audio" && (
-          <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
-        )} */}
         {userId ? (
           <>
             {" "}
@@ -264,7 +234,6 @@ const CardNFT: FC<CardNFTProps> = ({
         <div className="absolute top-3 inset-x-3 flex"></div>
       </div>
       <div className="px-2 py-5 space-y-3">
-        {/* <div className="flex justify-between">{renderAvatars()}</div> */}
         <h2 className={`text-lg font-medium`}>{name}</h2>
         <h2 className={`text-lg font-medium`}>{description}</h2>
 
@@ -303,31 +272,6 @@ const CardNFT: FC<CardNFTProps> = ({
             </div>
           </h5>
         </div>
-
-        {/* <div>
-          <h5>
-            <Link
-              href={{
-                pathname: "/user-profile",
-                query: {
-                  id: primaryOwner,
-                },
-              }}
-            >
-              <div className="flex items-center">
-                <Avatar
-                  imgUrl={imageUrl ? imageUrl : "/"}
-                  sizeClass="h-6 w-6"
-                  containerClassName="ring-2 ring-white"
-                />
-                <div className="ml-2 text-sm">
-                  <span className="font-normal">Creator:</span>{" "}
-                  <span className="font-medium">{username}</span>
-                </div>
-              </div>
-            </Link>
-          </h5>
-        </div> */}
 
         <div className="w-full border-b border-neutral-200/70 dark:border-neutral-700"></div>
 
@@ -371,11 +315,6 @@ const CardNFT: FC<CardNFTProps> = ({
               )}
             </>
           )}
-
-          {/* <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-            <ClockIcon className="w-4 h-4" />
-            <span className="ml-1 mt-0.5">14 hours left</span>
-          </div> */}
         </div>
       </div>
     </div>
