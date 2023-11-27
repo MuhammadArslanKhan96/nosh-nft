@@ -22,35 +22,25 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   const userContext = useUserContext();
   const router = useRouter();
 
-  const getWalletFunction = () => {
-    if (window.ethereum) {
-      window.ethereum
-        .request({ method: "eth_requestAccounts" })
-        .then((res: string[]) => {
-          const wallet = res.length > 0 ? String(res[0]) : null;
-          if (wallet) {
-            Cookies.set("wallet", wallet, {
-              expires: 1 / 24,
-            });
-            userContext.setUser({
-              ...userContext.user,
-              wallet: wallet,
-            });
-            router.push("/");
-          }
-        })
-        .catch((err: Error) => {
-          console.log(err);
-        });
-    } else {
-      toast.error("Please install metamask extension");
+  const checkUser = async () => {
+    const token = Cookies.get("loginToken");
+    const wallet = Cookies.get("wallet");
+    if (!token) {
+      router.push("/login");
+      return;
     }
+    if (!wallet) {
+      router.push("/connect-wallet");
+      toast.error("Connect wallet first");
+      return;
+    }
+    router.push("/upload-item");
   };
 
   const removeWalletFunction = async () => {
     Cookies.remove("wallet");
     await window.location.reload();
-    toast.success("Wallet disconnected");
+    await toast.success("Wallet disconnected");
   };
 
   return (
@@ -104,7 +94,8 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
               </div>
               <div></div>
               <ButtonPrimary
-                href="/upload-item"
+                onClick={checkUser}
+                // href="/upload-item"
                 className="self-center"
                 sizeClass="px-4 py-2 sm:px-5"
               >

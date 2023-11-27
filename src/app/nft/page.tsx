@@ -58,7 +58,6 @@ const MyNftPage = ({}) => {
                 You can view, update, disable and manage other nft settings.
               </span>
 
-              {/* <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div> */}
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10  mt-8 lg:mt-10">
                 {nft.map((nft) => (
                   <CardNFT

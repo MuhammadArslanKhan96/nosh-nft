@@ -41,23 +41,23 @@ const otherPageChildMenus: NavItemType[] = [
     href: "/all-collection" as Route,
     name: "Collections",
   },
-  {
-    id: ncNanoId(),
-    href: "/upload-item" as Route,
-    name: "Upload Item",
-    // children: [
-    //   {
-    //     id: ncNanoId(),
-    //     href: "/upload-item" as Route,
-    //     name: "Upload Item",
-    //   },
-    //   {
-    //     id: ncNanoId(),
-    //     href: "/connect-wallet" as Route,
-    //     name: "Connect Wallet",
-    //   },
-    // ],
-  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "/upload-item" as Route,
+  //   name: "Upload Item",
+  //   children: [
+  //     {
+  //       id: ncNanoId(),
+  //       href: "/upload-item" as Route,
+  //       name: "Upload Item",
+  //     },
+  //     {
+  //       id: ncNanoId(),
+  //       href: "/connect-wallet" as Route,
+  //       name: "Connect Wallet",
+  //     },
+  //   ],
+  // },
 
   // {
   //   id: ncNanoId(),

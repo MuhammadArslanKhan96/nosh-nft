@@ -91,7 +91,7 @@ const PageSignUp = () => {
               <Input
                 {...register("username")}
                 type="text"
-                placeholder="abc123"
+                placeholder="johndoe123"
                 className="mt-1"
               />
             </label>

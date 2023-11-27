@@ -9,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../loading";
 import { useSearchParams } from "next/navigation";
 import { NftType } from "@/types/Nft";
-
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 let AccountActions = [

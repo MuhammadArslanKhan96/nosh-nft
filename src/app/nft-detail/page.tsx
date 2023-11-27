@@ -1,5 +1,4 @@
 "use client";
-import ItemTypeVideoIcon from "@/components/ItemTypeVideoIcon";
 import NcImage from "@/shared/NcImage/NcImage";
 import Avatar from "@/shared/Avatar/Avatar";
 import collectionPng from "@/images/nfts/collection.png";
@@ -13,6 +12,7 @@ import Badge from "@/shared/Badge/Badge";
 import { toast } from "sonner";
 import ABI from "@/../contracts/ABI.json";
 import { ethers } from "ethers";
+import ItemTypeImageIcon from "@/components/ItemTypeImageIcon";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 declare let window: any;
 
@@ -90,15 +90,6 @@ const NftDetailPage = ({}) => {
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
         {/* ---------- 1 ----------  */}
         <div className="pb-9 space-y-5">
-          <div className="flex justify-between items-center">
-            {/* <Badge
-              href={"/collection" as Route}
-              name="Virtual Worlds"
-              color="green"
-            /> */}
-            {/* <LikeSaveBtns /> */}
-          </div>
-
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm">
             {/* <Link href={"/author" as Route} className="flex items-center "> */}
@@ -301,7 +292,7 @@ const NftDetailPage = ({}) => {
                 fill
               />
               {/* META TYPE */}
-              <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" />
+              <ItemTypeImageIcon className="absolute left-3 top-3 w-8 h-8 md:w-10 md:h-10" />
 
               {/* META FAVORITES */}
               {/* {userId ? (

@@ -1,25 +1,26 @@
 "use client";
+import { CollectionUploadItem } from "@/types/Collection";
+import { useUserContext } from "@/hooks/useUserContext";
 import { ChangeEvent, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import { useWallet } from "@/hooks/useWallet";
+import { toast } from "sonner";
+import { Route } from "next";
+import { z } from "zod";
 import Label from "@/components/Label/Label";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import FormItem from "@/components/FormItem";
-import { Route } from "next";
 import axios from "axios";
+import useFormPersist from "react-hook-form-persist";
 import Link from "next/link";
-import { FieldValues, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import Loading from "../loading";
-import { useUserContext } from "@/hooks/useUserContext";
 import Cookies from "js-cookie";
-import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/useAuth";
-import { CollectionUploadItem } from "@/types/Collection";
-import { useWallet } from "@/hooks/useWallet";
 import ABI from "@/../contracts/ABI.json";
 import dynamic from "next/dynamic";
 import Web3 from "web3";
@@ -42,13 +43,15 @@ const contractAddress = "0xdd89638c5ec6B5A8a0Dbbad41074480e4DCBDd98";
 const PageUploadItem = () => {
   useAuth();
   useWallet();
-  const homeRouter = useRouter();
   let tokenId: number | bigint;
+  let imageName: string;
+  let imageUrl: string;
+  const homeRouter = useRouter();
+  const formData = new FormData();
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");
   const userId = Cookies.get("userId");
   const wallet = Cookies.get("wallet");
-  const formData = new FormData();
   const [isOnSale, setIsOnSale] = useState(false);
   const [collections, setCollections] = useState<CollectionUploadItem[]>([]);
   const [collectionRows, setCollectionRows] = useState<number | null>(null);
@@ -57,15 +60,17 @@ const PageUploadItem = () => {
   const [selectedCollectionId, setSelectedCollectionId] = useState<
     number | null
   >(null);
-  let imageName: string;
-  let imageUrl: string;
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(nftSchema),
   });
+
+  useFormPersist("nft-form", { watch, setValue });
   const { isLoading, isError } = useQuery({
     queryKey: ["collections"],
     queryFn: async () => {

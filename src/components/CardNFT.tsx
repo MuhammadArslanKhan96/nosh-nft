@@ -107,6 +107,7 @@ const CardNFT: FC<CardNFTProps> = ({
           `${apiBaseUrl}/nfts/update/${userId}`,
           {
             id: id,
+            owner_wallet: wallet,
             status: false,
           },
           {
@@ -129,7 +130,6 @@ const CardNFT: FC<CardNFTProps> = ({
   };
 
   const handleOnSale = async () => {
-    // setIsLoadingSale(true);
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     const valueInWei = ethers.parseEther(price ? price : "0.0");
@@ -169,15 +169,7 @@ const CardNFT: FC<CardNFTProps> = ({
           toast.error("Error occured while putting NFT on sale");
         });
     }
-    // setIsLoadingSale(false);
   };
-
-  // if (isLoadingSale)
-  //   return (
-  //     <div className="w-full h-full">
-  //       <Loading />
-  //     </div>
-  //   );
 
   const handleRemoveFromSale = async () => {
     if (userId) {
