@@ -18,8 +18,6 @@ export interface ModalEditProps {
 }
 
 const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
-  // const textareaRef = useRef(null);
-  // const router = useRouter();
   const queryClient = useQueryClient();
   const { register, handleSubmit } = useForm();
   const mutation = useMutation(
@@ -32,21 +30,6 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
       },
     }
   );
-
-  // useEffect(() => {
-  //   if (show) {
-  //     setTimeout(() => {
-  //       const element: HTMLTextAreaElement | null = textareaRef.current;
-  //       if (element) {
-  //         (element as HTMLTextAreaElement).focus();
-  //         (element as HTMLTextAreaElement).setSelectionRange(
-  //           (element as HTMLTextAreaElement).value.length,
-  //           (element as HTMLTextAreaElement).value.length
-  //         );
-  //       }
-  //     }, 400);
-  //   }
-  // }, [show]);
 
   const onSubmit = (data: FieldValues) => {
     mutation.mutate({ id: id!, price: data.price });
@@ -72,8 +55,6 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, id }) => {
               className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300 sm:text-sm rounded-md"
             >
               <option>ETH</option>
-              {/* <option>BC</option>
-              <option>BTH</option> */}
             </select>
           </div>
         </div>
