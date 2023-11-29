@@ -68,6 +68,7 @@ const NftForSalePage = ({}) => {
                 primaryOwner={nft.primary_owner}
                 owner_wallet={nft.owner_wallet}
                 token_id={nft.token_id}
+                collection_address={nft.collection_address}
               />
             ))}
           </div>

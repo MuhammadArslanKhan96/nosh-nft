@@ -7,6 +7,7 @@ import Input from "@/shared/Input/Input";
 import Textarea from "@/shared/Textarea/Textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { ethers } from "ethers";
 import Cookies from "js-cookie";
 import { Route } from "next";
 import dynamic from "next/dynamic";
@@ -14,15 +15,20 @@ import { useRouter } from "next/navigation";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import ABI from "@/../contracts/ABI-NFTCollection.json";
+declare let window: any;
+const contractAddress = "0xaeb83c848e664ae9501a3560ea17EE08c0fe8e3E";
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const collectionSchema = z.object({
   name: z.string().min(3, "Minimum 3 characters required"),
+  symbol: z.string().min(3, "Minimum 3 characters required"),
   description: z.string().min(6, "Minimum 6 characters required"),
 });
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 const CreateCollectionPage = ({}) => {
   useAuth();
+  let address: string;
   const homeRouter = useRouter();
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");
@@ -37,13 +43,35 @@ const CreateCollectionPage = ({}) => {
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
+    if (typeof window.ethereum !== "undefined") {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+    }
+
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, ABI, signer);
+
+    try {
+      let tx = await contract.createCollection(data.name, data.symbol);
+      let receipt = await tx.wait();
+      address = receipt.logs[0].address;
+      console.log(address);
+      Cookies.set("collectionAddress", address);
+      console.log(receipt);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+
     await axios
       .post(
-        `${apiBaseUrl}/collection/create/${user.id}`,
+        `${apiBaseUrl}/collection/create`,
         {
           name: data.name,
           description: data.description,
           primaryOwner: user.id,
+          symbol: data.symbol,
+          address: address,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -80,15 +108,27 @@ const CreateCollectionPage = ({}) => {
                 className="flex-column space-y-10"
               >
                 <div>
-                  <Label>Title</Label>
+                  <Label>Name</Label>
                   <Input
                     {...register("name")}
                     className="mt-1.5"
-                    placeholder="Collection name"
+                    placeholder="Azuki collection"
                     type="text"
                   />
                   {errors.name && (
                     <p className="text-sm text-red-500 pt-3">{`${errors.name.message}`}</p>
+                  )}
+                </div>
+                <div>
+                  <Label>Symbol</Label>
+                  <Input
+                    {...register("symbol")}
+                    className="mt-1.5"
+                    placeholder="AZK"
+                    type="text"
+                  />
+                  {errors.symbol && (
+                    <p className="text-sm text-red-500 pt-3">{`${errors.symbol.message}`}</p>
                   )}
                 </div>
 
@@ -107,6 +147,7 @@ const CreateCollectionPage = ({}) => {
 
                 <div className="pt-2">
                   <ButtonPrimary
+                    loading={isSubmitting}
                     disabled={isSubmitting}
                     className="w-full"
                     type="submit"

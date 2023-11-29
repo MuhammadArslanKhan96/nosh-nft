@@ -25,6 +25,7 @@ export type NftType = {
   on_sale: boolean;
   owner_wallet: string;
   token_id: string;
+  collection_address: string;
 };
 
 export type NftSale = {
@@ -38,4 +39,5 @@ export type NftSale = {
   on_sale: boolean;
   owner_wallet: string;
   token_id: string;
+  collection_address: string;
 };

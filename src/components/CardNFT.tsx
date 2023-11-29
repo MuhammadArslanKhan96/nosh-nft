@@ -14,7 +14,7 @@ import Link from "next/link";
 import NftMoreDropdown from "./NftMoreDropdown";
 import { nftsImgs } from "@/contains/fakeData";
 import { ethers } from "ethers";
-import ABI from "@/../contracts/ABI.json";
+import ABI from "@/../contracts/ABI-NFTMarketplace.json";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 declare let window: any;
 
@@ -31,6 +31,7 @@ export interface CardNFTProps {
   onSale?: boolean;
   owner_wallet?: string;
   token_id?: string;
+  collection_address: string;
 }
 
 const CardNFT: FC<CardNFTProps> = ({
@@ -46,6 +47,7 @@ const CardNFT: FC<CardNFTProps> = ({
   owner_wallet,
   token_id,
   onSale,
+  collection_address,
 }) => {
   const contractAddress = "0xdd89638c5ec6B5A8a0Dbbad41074480e4DCBDd98";
 
@@ -85,7 +87,7 @@ const CardNFT: FC<CardNFTProps> = ({
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
 
-    const contract = new ethers.Contract(contractAddress, ABI, signer);
+    const contract = new ethers.Contract(collection_address, ABI, signer);
     const priceInt = ethers.parseEther(price ? price : "0.0");
     // const nft = await contract.nfts(token_id);
     // const price = nft.price;
@@ -133,7 +135,7 @@ const CardNFT: FC<CardNFTProps> = ({
     const signer = await provider.getSigner();
     const valueInWei = ethers.parseEther(price ? price : "0.0");
 
-    const contract = new ethers.Contract(contractAddress, ABI, signer);
+    const contract = new ethers.Contract(collection_address, ABI, signer);
 
     try {
       console.log(token_id, valueInWei);
@@ -171,6 +173,21 @@ const CardNFT: FC<CardNFTProps> = ({
   };
 
   const handleRemoveFromSale = async () => {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+
+    const contract = new ethers.Contract(collection_address, ABI, signer);
+
+    try {
+      console.log(token_id);
+      const transaction = await contract.removeNFTFromSale(token_id);
+      await transaction.wait();
+      console.log(`NFT with tokenId ${token_id} is removed from sale`);
+    } catch (error) {
+      toast.error("Error occured while removing NFT from sale");
+      console.error("An error occurred", error);
+      return;
+    }
     if (userId) {
       await axios
         .put(

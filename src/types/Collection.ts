@@ -19,4 +19,6 @@ export type CollectionUploadItem = {
   id: number;
   name: string;
   description: string;
+  symbol: string;
+  address: string;
 };

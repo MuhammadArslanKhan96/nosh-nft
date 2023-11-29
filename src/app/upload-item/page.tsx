@@ -21,7 +21,7 @@ import useFormPersist from "react-hook-form-persist";
 import Link from "next/link";
 import Loading from "../loading";
 import Cookies from "js-cookie";
-import ABI from "@/../contracts/ABI.json";
+import ABI from "@/../contracts/ABI-NFTMarketplace.json";
 import dynamic from "next/dynamic";
 import Web3 from "web3";
 declare let window: any;
@@ -50,6 +50,7 @@ const PageUploadItem = () => {
   const formData = new FormData();
   const { user } = useUserContext();
   const token = Cookies.get("loginToken");
+  const collectionsAddress = Cookies.get("collectionAddress");
   const userId = Cookies.get("userId");
   const wallet = Cookies.get("wallet");
   const [isOnSale, setIsOnSale] = useState(false);
@@ -60,6 +61,9 @@ const PageUploadItem = () => {
   const [selectedCollectionId, setSelectedCollectionId] = useState<
     number | null
   >(null);
+  const [selectedCollectionAddress, setSelectedCollectionAddress] = useState<
+    string | null
+  >(null);
   const {
     register,
     handleSubmit,
@@ -69,8 +73,8 @@ const PageUploadItem = () => {
   } = useForm({
     resolver: zodResolver(nftSchema),
   });
-
   useFormPersist("nft-form", { watch, setValue });
+
   const { isLoading, isError } = useQuery({
     queryKey: ["collections"],
     queryFn: async () => {
@@ -113,10 +117,10 @@ const PageUploadItem = () => {
       toast.error("NFT image is required");
       return;
     }
-    if (!selectedCollectionId) {
-      toast.error("Please select a collection");
-      return;
-    }
+    // if (!selectedCollectionId) {
+    //   toast.error("Please select a collection");
+    //   return;
+    // }
     let valueInWei = ethers.parseEther(data.price);
     console.log(valueInWei);
     const valueInWeiBigInt = BigInt(valueInWei);
@@ -128,7 +132,11 @@ const PageUploadItem = () => {
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, ABI, signer);
+    const contract = new ethers.Contract(
+      selectedCollectionAddress,
+      ABI,
+      signer
+    );
 
     try {
       const data = await contract.mintNFT(valueInWeiBigInt);
@@ -181,6 +189,7 @@ const PageUploadItem = () => {
           ownerWallet: wallet,
           collectionId: selectedCollectionId,
           tokenId: tokenId,
+          collectionAddress: selectedCollectionAddress,
         },
         {
           headers: {
@@ -381,6 +390,10 @@ const PageUploadItem = () => {
                                   } border-dashed rounded-xl shadow-md p-6 m-2 w-64`}
                                   onClick={() => {
                                     setSelectedCollectionId(collection.id);
+                                    setSelectedCollectionAddress(
+                                      collection.address
+                                    );
+                                    console.log(collection.address);
                                     console.log(collection.id);
                                   }}
                                 >
