@@ -106,36 +106,6 @@ export function UserProvider({ children }: UserProviderProps) {
     },
   });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     if (token) {
-  //       await axios
-  //         .get(`${apiBaseUrl}/user/get-context`, {
-  //           headers: {
-  //             Authorization: token,
-  //           },
-  //         })
-  //         .then((response) => {
-  //           // console.log(response.data.id);
-  //           // console.log(response.data.name);
-  //           setUser({
-  //             id: response.data.id,
-  //             name: response.data.name,
-  //             email: response.data.email,
-  //             bio: response.data?.bio,
-  //             website: response.data?.website,
-  //             facebook: response.data?.facebook,
-  //             twitter: response.data?.twitter,
-  //             telegram: response.data?.telegram,
-  //             imageUrl: response.data?.image_url,
-  //           });
-  //           setLoading(false);
-  //         });
-  //     }
-  //   };
-  //   fetchData();
-  // }, [token]);
-
   return (
     <UserContext.Provider value={{ user, setUser, fetchUser }}>
       {isLoading ? (
