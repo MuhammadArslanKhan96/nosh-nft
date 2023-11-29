@@ -7,6 +7,7 @@ import SiteHeader from "@/app/SiteHeader";
 import { UserProvider } from "@/context/userContext";
 import { Toaster } from "sonner";
 import Providers from "@/utils/queryProvider";
+import NextTopLoader from "nextjs-toploader";
 const poppins = Poppins({
   subsets: ["latin"],
   display: "swap",
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
+        <NextTopLoader />
         <Providers>
           <UserProvider>
             <SiteHeader />

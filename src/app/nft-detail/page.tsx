@@ -10,14 +10,13 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import Badge from "@/shared/Badge/Badge";
 import { toast } from "sonner";
-import ABI from "@/../contracts/ABI.json";
+import ABI from "@/../contracts/ABI-NFTMarketplace.json";
 import { ethers } from "ethers";
 import ItemTypeImageIcon from "@/components/ItemTypeImageIcon";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 declare let window: any;
 
 const NftDetailPage = ({}) => {
-  const contractAddress = "0xdd89638c5ec6B5A8a0Dbbad41074480e4DCBDd98";
   const userId = Cookies.get("userId");
   const token = Cookies.get("loginToken");
   const wallet = Cookies.get("wallet");
@@ -41,17 +40,19 @@ const NftDetailPage = ({}) => {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
 
-    const contract = new ethers.Contract(contractAddress, ABI, signer);
-    const priceInt = ethers.parseEther(data.price ? data.price : "0.0");
-    // const nft = await contract.nfts(token_id);
-    // const price = nft.price;
+    const contract = new ethers.Contract(
+      data[0].collection_address,
+      ABI,
+      signer
+    );
+    const priceInt = ethers.parseEther(data[0].price ? data[0].price : "0.0");
 
     try {
-      const transaction = await contract.buyNFT(data.token_id, {
+      const transaction = await contract.buyNFT(data[0].token_id, {
         value: priceInt,
       });
       await transaction.wait();
-      console.log(`NFT with tokenId ${data.token_id} has been bought`);
+      console.log(`NFT with tokenId ${data[0].token_id} has been bought`);
     } catch (error) {
       toast.error("Error occured while buying NFT");
       console.error("An error occurred", error);

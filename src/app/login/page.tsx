@@ -102,7 +102,11 @@ const PageLogin = () => {
             {errors.password && (
               <p className="text-sm text-red-500">{`${errors.password.message}`}</p>
             )}
-            <ButtonPrimary type="submit" disabled={isSubmitting}>
+            <ButtonPrimary
+              type="submit"
+              loading={isSubmitting}
+              disabled={isSubmitting}
+            >
               Continue
             </ButtonPrimary>
           </form>

@@ -40,6 +40,8 @@ const PageSignUp = () => {
       })
       .then((response) => {
         console.log(response.data);
+        toast.success("Account created successfully");
+
         homeRouter.push("/login" as Route);
       })
       .catch((error) => {
@@ -101,7 +103,11 @@ const PageSignUp = () => {
             {errors.password && (
               <p className="text-sm text-red-500">{`${errors.password.message}`}</p>
             )}
-            <ButtonPrimary disabled={isSubmitting} type="submit">
+            <ButtonPrimary
+              disabled={isSubmitting}
+              loading={isSubmitting}
+              type="submit"
+            >
               Continue
             </ButtonPrimary>
           </form>

@@ -285,7 +285,7 @@ const AccountPage = ({}) => {
                 {/* ---- */}
                 <div className="pt-2">
                   <ButtonPrimary
-                    loading={isLoading}
+                    loading={isSubmitting}
                     disabled={isSubmitting}
                     className="w-full"
                   >
