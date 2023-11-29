@@ -31,7 +31,7 @@ export interface CardNFTProps {
   onSale?: boolean;
   owner_wallet?: string;
   token_id?: string;
-  collection_address: string;
+  collection_address?: string;
 }
 
 const CardNFT: FC<CardNFTProps> = ({
@@ -43,8 +43,6 @@ const CardNFT: FC<CardNFTProps> = ({
   description,
   price,
   currentOwner,
-  primaryOwner,
-  owner_wallet,
   token_id,
   onSale,
   collection_address,
@@ -86,6 +84,10 @@ const CardNFT: FC<CardNFTProps> = ({
     }
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
+    if (!collection_address) {
+      toast.error(" Server error occured while buying NFT");
+      return;
+    }
 
     const contract = new ethers.Contract(collection_address, ABI, signer);
     const priceInt = ethers.parseEther(price ? price : "0.0");
@@ -135,6 +137,11 @@ const CardNFT: FC<CardNFTProps> = ({
     const signer = await provider.getSigner();
     const valueInWei = ethers.parseEther(price ? price : "0.0");
 
+    if (!collection_address) {
+      toast.error(" Server error occured putting NFT on sale");
+      return;
+    }
+
     const contract = new ethers.Contract(collection_address, ABI, signer);
 
     try {
@@ -175,6 +182,11 @@ const CardNFT: FC<CardNFTProps> = ({
   const handleRemoveFromSale = async () => {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
+
+    if (!collection_address) {
+      toast.error("Server error occured while removing NFT from sale");
+      return;
+    }
 
     const contract = new ethers.Contract(collection_address, ABI, signer);
 

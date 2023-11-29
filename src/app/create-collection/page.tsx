@@ -56,7 +56,6 @@ const CreateCollectionPage = ({}) => {
       let receipt = await tx.wait();
       address = receipt.logs[0].address;
       console.log(address);
-      Cookies.set("collectionAddress", address);
       console.log(receipt);
     } catch (error) {
       console.log(error);

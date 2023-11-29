@@ -78,6 +78,8 @@ const PageCollection = ({}) => {
                 imageUrl={nft.image_url}
                 price={nft.price}
                 onSale={nft.on_sale}
+                token_id={nft.token_id}
+                collection_address={nft.collection_address}
               />
             ))}
           </div>
