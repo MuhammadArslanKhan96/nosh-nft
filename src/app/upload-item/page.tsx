@@ -38,7 +38,6 @@ const nftSchema = z.object({
 });
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
-const contractAddress = "0xdd89638c5ec6B5A8a0Dbbad41074480e4DCBDd98";
 
 const PageUploadItem = () => {
   useAuth();
@@ -48,11 +47,10 @@ const PageUploadItem = () => {
   let imageUrl: string;
   const homeRouter = useRouter();
   const formData = new FormData();
-  const { user } = useUserContext();
   const token = Cookies.get("loginToken");
-  const collectionsAddress = Cookies.get("collectionAddress");
   const userId = Cookies.get("userId");
   const wallet = Cookies.get("wallet");
+  const { user } = useUserContext();
   const [isOnSale, setIsOnSale] = useState(false);
   const [collections, setCollections] = useState<CollectionUploadItem[]>([]);
   const [collectionRows, setCollectionRows] = useState<number | null>(null);
@@ -117,15 +115,13 @@ const PageUploadItem = () => {
       toast.error("NFT image is required");
       return;
     }
-    // if (!selectedCollectionId) {
-    //   toast.error("Please select a collection");
-    //   return;
-    // }
+    if (!selectedCollectionId) {
+      toast.error("Please select a collection");
+      return;
+    }
     let valueInWei = ethers.parseEther(data.price);
     console.log(valueInWei);
     const valueInWeiBigInt = BigInt(valueInWei);
-    // let valueinwei = ethers.formatEther(valueInWei);
-    // console.log(valueinwei);
     if (typeof window.ethereum !== "undefined") {
       await window.ethereum.request({ method: "eth_requestAccounts" });
     }
@@ -168,7 +164,8 @@ const PageUploadItem = () => {
         imageName = response.data.imageName;
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
+        throw error;
       });
     await axios
       .post(
@@ -213,7 +210,6 @@ const PageUploadItem = () => {
     <div className={`nc-PageUploadItem`}>
       <div className="container">
         <div className="my-12 sm:lg:my-16 lg:my-24 max-w-4xl mx-auto space-y-8 sm:space-y-10">
-          {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl sm:text-4xl font-semibold">Create Item</h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
@@ -227,7 +223,7 @@ const PageUploadItem = () => {
             <div>
               <h3 className="text-lg sm:text-2xl font-semibold">Image</h3>
               <span className="text-neutral-500 dark:text-neutral-400 text-sm">
-                File types supported: JPG, PNG, GIF, SVG. Max size: 100 MB
+                File types supported: JPG, PNG, GIF, SVG, PDF. Max size: 10 MB
               </span>
               <div className="mt-5 ">
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 dark:border-neutral-6000 border-dashed rounded-xl">
@@ -249,7 +245,7 @@ const PageUploadItem = () => {
                     <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
                       <label
                         htmlFor="file-upload"
-                        className="relative cursor-pointer  rounded-md font-medium text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+                        className="relative cursor-pointer rounded-md font-medium text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
                       >
                         <span>Upload a file</span>
                         <input
@@ -257,27 +253,36 @@ const PageUploadItem = () => {
                           id="file-upload"
                           name="file-upload"
                           type="file"
-                          accept="image/*"
+                          accept="image/*,application/pdf"
                           className="sr-only"
                         />
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                      PNG, JPG, GIF up to 10MB
-                    </p>
+                    <div>
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                        PNG, JPG, GIF, PDF up to 10MB
+                      </p>
+                    </div>
                   </div>
                 </div>
+                <p className="text-xs my-1 text-red-600 dark:text-red-600">
+                  *Only the first page of PDF will be displayed
+                </p>
               </div>
             </div>
             {selectedImage && (
               <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-neutral-300 dark:border-neutral-6000 border-dashed rounded-xl">
                 <div className="flex justify-center">
-                  <img
-                    src={selectedImage}
-                    alt="Selected"
-                    className="rounded-md w-1/3 object-contain"
-                  />
+                  {file?.type === "application/pdf" ? (
+                    <iframe src={selectedImage} width="300" height="400" />
+                  ) : (
+                    <img
+                      src={selectedImage}
+                      alt="Selected"
+                      className="rounded-md w-3/5 object-contain"
+                    />
+                  )}
                 </div>
               </div>
             )}

@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import ButtonPrimary from "@/shared/Button/ButtonPrimary";
 import NcImage from "@/shared/NcImage/NcImage";
 import metamaskImg from "@/images/metamask.webp";
@@ -7,6 +6,7 @@ import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { useUserContext } from "@/hooks/useUserContext";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 declare let window: any;
 
 const plans = [
@@ -16,7 +16,7 @@ const plans = [
   },
 ];
 const PageConnectWallet = ({}) => {
-  const [showModal, setShowModal] = useState(false);
+  useAuth();
   const { user, setUser } = useUserContext();
   const router = useRouter();
 
