@@ -4,10 +4,11 @@ import NcImage from "@/shared/NcImage/NcImage";
 import VerifyIcon from "./VerifyIcon";
 import Link from "next/link";
 import { useUserContext } from "@/hooks/useUserContext";
+import { StaticImageData } from "next/image";
 
 export interface CollectionCardProps {
   className?: string;
-  imgs?: string | string[];
+  imgs?: string | string[] | StaticImageData;
   name?: string;
   id?: string;
   description?: string;
