@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import Loading from "../loading";
 import { Collection } from "@/types/Collection";
+import { nftsImgs } from "@/contains/fakeData";
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASEURL;
 
 const AllCollectionPage = ({}) => {
@@ -63,7 +64,12 @@ const AllCollectionPage = ({}) => {
                   return (
                     <CollectionCard
                       key={collection.collection_id}
-                      imgs={collection.nfts[0]?.nft_image_url}
+                      // imgs={collection.nfts[0]?.nft_image_url}
+                      imgs={
+                        collection.nfts[0]?.nft_image_url
+                          ? collection.nfts[0]?.nft_image_url
+                          : nftsImgs[0]
+                      }
                       username={collection.user_name}
                       id={collection.collection_id}
                       name={collection.collection_name}
