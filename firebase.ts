@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: "cicryp-test",
   storageBucket: "cicryp-test.appspot.com",
   messagingSenderId: "14395736740",
-  appId: "1:14395736740:web:af9b49e2b83c63f8391c31",
+  appId: "1:14395736740:web:af9b49e2b83c63f8391c3",
 };
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
