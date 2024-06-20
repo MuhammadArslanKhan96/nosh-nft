@@ -26,7 +26,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
     const token = Cookies.get("loginToken");
     const wallet = Cookies.get("wallet");
     if (!token) {
-      router.push("/login");
+      router.push("/signup");
       return;
     }
     if (!wallet) {
