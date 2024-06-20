@@ -119,35 +119,35 @@ const PageUploadItem = () => {
       toast.error("Please select a collection");
       return;
     }
-    let valueInWei = ethers.parseEther(data.price);
-    console.log(valueInWei);
-    const valueInWeiBigInt = BigInt(valueInWei);
-    if (typeof window.ethereum !== "undefined") {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-    }
+    // let valueInWei = ethers.parseEther(data.price);
+    // console.log(valueInWei);
+    // const valueInWeiBigInt = BigInt(valueInWei);
+    // if (typeof window.ethereum !== "undefined") {
+    //   await window.ethereum.request({ method: "eth_requestAccounts" });
+    // }
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    const contract = new ethers.Contract(
-      selectedCollectionAddress,
-      ABI,
-      signer
-    );
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    // const signer = await provider.getSigner();
+    // const contract = new ethers.Contract(
+    //   selectedCollectionAddress,
+    //   ABI,
+    //   signer
+    // );
 
-    try {
-      const data = await contract.mintNFT(valueInWeiBigInt);
-      await provider.waitForTransaction(data.hash);
-      const receipt = await provider.getTransactionReceipt(data.hash);
-      tokenId = Web3.utils.hexToNumber(receipt?.logs[0].topics[3] ?? "");
-      console.log(Web3.utils.hexToNumber(receipt?.logs[0].topics[3] ?? ""));
-      console.log("Transaction sent: " + data.hash);
+    // try {
+    //   const data = await contract.mintNFT(valueInWeiBigInt);
+    //   await provider.waitForTransaction(data.hash);
+    //   const receipt = await provider.getTransactionReceipt(data.hash);
+    //   tokenId = Web3.utils.hexToNumber(receipt?.logs[0].topics[3] ?? "");
+    //   console.log(Web3.utils.hexToNumber(receipt?.logs[0].topics[3] ?? ""));
+    //   console.log("Transaction sent: " + data.hash);
 
-      await data.wait();
-      console.log("Minted successfully");
-    } catch (err) {
-      console.error("Error minting NFT: ", err);
-      return;
-    }
+    //   await data.wait();
+    //   console.log("Minted successfully");
+    // } catch (err) {
+    //   console.error("Error minting NFT: ", err);
+    //   return;
+    // }
 
     console.log(data);
 
@@ -185,7 +185,7 @@ const PageUploadItem = () => {
           currentOwner: user.id,
           ownerWallet: wallet,
           collectionId: selectedCollectionId,
-          tokenId: tokenId,
+          tokenId: 1,
           collectionAddress: selectedCollectionAddress,
         },
         {

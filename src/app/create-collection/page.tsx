@@ -43,24 +43,24 @@ const CreateCollectionPage = ({}) => {
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    if (typeof window.ethereum !== "undefined") {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-    }
+    // if (typeof window.ethereum !== "undefined") {
+    //   await window.ethereum.request({ method: "eth_requestAccounts" });
+    // }
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    const contract = new ethers.Contract(contractAddress, ABI, signer);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    // const signer = await provider.getSigner();
+    // const contract = new ethers.Contract(contractAddress, ABI, signer);
 
-    try {
-      let tx = await contract.createCollection(data.name, data.symbol);
-      let receipt = await tx.wait();
-      address = receipt.logs[0].address;
-      console.log(address);
-      console.log(receipt);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    // try {
+    //   let tx = await contract.createCollection(data.name, data.symbol);
+    //   let receipt = await tx.wait();
+    //   address = receipt.logs[0].address;
+    //   console.log(address);
+    //   console.log(receipt);
+    // } catch (error) {
+    //   console.log(error);
+    //   throw error;
+    // }
 
     await axios
       .post(

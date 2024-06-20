@@ -78,31 +78,31 @@ const CardNFT: FC<CardNFTProps> = ({
   );
 
   const handleSubmit = async () => {
-    if (!wallet) {
-      toast.error("Please connect wallet to buy NFT");
-      return;
-    }
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    if (!collection_address) {
-      toast.error(" Server error occured while buying NFT");
-      return;
-    }
+    // if (!wallet) {
+    //   toast.error("Please connect wallet to buy NFT");
+    //   return;
+    // }
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    // const signer = await provider.getSigner();
+    // if (!collection_address) {
+    //   toast.error(" Server error occured while buying NFT");
+    //   return;
+    // }
 
-    const contract = new ethers.Contract(collection_address, ABI, signer);
-    const priceInt = ethers.parseEther(price ? price : "0.0");
-    // const nft = await contract.nfts(token_id);
-    // const price = nft.price;
+    // const contract = new ethers.Contract(collection_address, ABI, signer);
+    // const priceInt = ethers.parseEther(price ? price : "0.0");
+    // // const nft = await contract.nfts(token_id);
+    // // const price = nft.price;
 
-    try {
-      const transaction = await contract.buyNFT(token_id, { value: priceInt });
-      await transaction.wait();
-      console.log(`NFT with tokenId ${token_id} has been bought`);
-    } catch (error) {
-      toast.error("Error occured while buying NFT");
-      console.error("An error occurred", error);
-      return;
-    }
+    // try {
+    //   const transaction = await contract.buyNFT(token_id, { value: priceInt });
+    //   await transaction.wait();
+    //   console.log(`NFT with tokenId ${token_id} has been bought`);
+    // } catch (error) {
+    //   toast.error("Error occured while buying NFT");
+    //   console.error("An error occurred", error);
+    //   return;
+    // }
 
     if (userId) {
       await axios
@@ -133,29 +133,30 @@ const CardNFT: FC<CardNFTProps> = ({
   };
 
   const handleOnSale = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    const valueInWei = ethers.parseEther(price ? price : "0.0");
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    // const signer = await provider.getSigner();
+    // const valueInWei = ethers.parseEther(price ? price : "0.0");
 
-    if (!collection_address) {
-      toast.error(" Server error occured putting NFT on sale");
-      return;
-    }
+    // if (!collection_address) {
+    //   toast.error(" Server error occured putting NFT on sale");
+    //   return;
+    // }
 
-    const contract = new ethers.Contract(collection_address, ABI, signer);
+    // const contract = new ethers.Contract(collection_address, ABI, signer);
 
-    try {
-      console.log(token_id, valueInWei);
-      const transaction = await contract.sellNFT(token_id, valueInWei);
-      await transaction.wait();
-      console.log(
-        `NFT with tokenId ${token_id} is now for sale at price ${price} ETH`
-      );
-    } catch (error) {
-      toast.error("Error occured while putting NFT on sale");
-      console.error("An error occurred", error);
-      return;
-    }
+    // try {
+    //   console.log(token_id, valueInWei);
+    //   const transaction = await contract.sellNFT(token_id, valueInWei);
+    //   await transaction.wait();
+    //   console.log(
+    //     `NFT with tokenId ${token_id} is now for sale at price ${price} ETH`
+    //   );
+    // } catch (error) {
+    //   toast.error("Error occured while putting NFT on sale");
+    //   console.error("An error occurred", error);
+    //   return;
+    // }
+
     if (userId) {
       await axios
         .put(
@@ -180,26 +181,27 @@ const CardNFT: FC<CardNFTProps> = ({
   };
 
   const handleRemoveFromSale = async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    // const signer = await provider.getSigner();
 
-    if (!collection_address) {
-      toast.error("Server error occured while removing NFT from sale");
-      return;
-    }
+    // if (!collection_address) {
+    //   toast.error("Server error occured while removing NFT from sale");
+    //   return;
+    // }
 
-    const contract = new ethers.Contract(collection_address, ABI, signer);
+    // const contract = new ethers.Contract(collection_address, ABI, signer);
 
-    try {
-      console.log(token_id);
-      const transaction = await contract.removeNFTFromSale(token_id);
-      await transaction.wait();
-      console.log(`NFT with tokenId ${token_id} is removed from sale`);
-    } catch (error) {
-      toast.error("Error occured while removing NFT from sale");
-      console.error("An error occurred", error);
-      return;
-    }
+    // try {
+    //   console.log(token_id);
+    //   const transaction = await contract.removeNFTFromSale(token_id);
+    //   await transaction.wait();
+    //   console.log(`NFT with tokenId ${token_id} is removed from sale`);
+    // } catch (error) {
+    //   toast.error("Error occured while removing NFT from sale");
+    //   console.error("An error occurred", error);
+    //   return;
+    // }
+
     if (userId) {
       await axios
         .put(
